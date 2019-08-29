@@ -16,8 +16,6 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 	
 	@Override
 	public int create(int groupId, int courseId) {
-		template.update(CREATE_GROUP_COURSE_SQL, 1,2,3,4,5);
-		// TODO Auto-generated method stub
-		return 0;
+		return template.update(CREATE_GROUP_COURSE_SQL, 1,2,3,4,5);
 	}
 }

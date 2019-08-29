@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.db.GroupCourseDAO;
 import am.dproc.sms.modules.UserBean;
+import am.dproc.sms.services.GroupCourseService;
 
 @RestController
 @Path("/")
 public class GroupCourseController {
 
 	@Autowired
-	GroupCourseDAO dao;
+	GroupCourseService groupCourseService;
 	
 	@Path("/enroll")
 	@POST
@@ -43,6 +44,6 @@ public class GroupCourseController {
 	
 	@Path("/test")
 	public int test() {
-		return dao.create(10, 11);
+		return groupCourseService.create(10, 11);
 	}
 }

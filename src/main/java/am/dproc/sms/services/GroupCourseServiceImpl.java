@@ -1,14 +1,19 @@
 package am.dproc.sms.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-@Service
-public class GroupCourseServiceImpl implements GroupService{
+import am.dproc.sms.db.GroupCourseDAO;
 
+@Service
+public class GroupCourseServiceImpl implements GroupCourseService{
+	@Autowired
+	GroupCourseDAO dao;
+	
 	@Override
-	public int create(String name) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int create(int groupId, int courseId) {
+		return dao.create(groupId, courseId);
 	}
 	
 }
