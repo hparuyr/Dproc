@@ -41,9 +41,4 @@ public class GroupCourseController {
 	public void assign() {
 		
 	}
-	
-	@Path("/test")
-	public int test() {
-		return groupCourseService.create(10, 11);
-	}
 }
