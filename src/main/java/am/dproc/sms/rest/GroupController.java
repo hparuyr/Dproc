@@ -1,5 +1,7 @@
 package am.dproc.sms.rest;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -31,7 +33,17 @@ public class GroupController {
 	
 	@GET
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public GroupBean get(@PathParam("id") int id) {
-		return null;
+		return groupService.get(id);
 	}
+	
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<GroupBean> get() {
+		return groupService.getAll();
+	}
+	
+	
 }

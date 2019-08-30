@@ -3,6 +3,7 @@ package am.dproc.sms.modules;
 public class GroupBean {
 	private int id;
 	private String name;
+	private int schoolId;
 	public int getId() {
 		return id;
 	}
@@ -15,4 +16,11 @@ public class GroupBean {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
+	}
+	
 }

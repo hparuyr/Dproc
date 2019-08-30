@@ -3,7 +3,7 @@ package am.dproc.sms.modules;
 public class CourseBean {
 	private int id;
 	private String name;
-	private String duration;
+	private int duration;
 	private String description;
 	private String location;
 	public int getId() {
@@ -18,10 +18,10 @@ public class CourseBean {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDuration() {
+	public int getDuration() {
 		return duration;
 	}
-	public void setDuration(String duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 	public String getDescription() {
