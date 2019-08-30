@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `dprocdb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
 -- -----------------------------------------------------
@@ -77,12 +77,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`TOPIC`
+-- Table `mydb`.`VIDEO`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`TOPIC` (
+CREATE TABLE IF NOT EXISTS `mydb`.`VIDEO` (
   `ID` INT NOT NULL AUTO_INCREMENT,
-  `VIDEO_URL` VARCHAR(255) NOT NULL,
-  `WEB_PAGE_URL` VARCHAR(255) NOT NULL,
+  `URL` VARCHAR(255) NOT NULL,
   `LESSON_ID` INT NOT NULL,
   PRIMARY KEY (`ID`),
   INDEX `LESSON_ID_idx` (`LESSON_ID` ASC) VISIBLE,
