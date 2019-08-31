@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.db.GroupCourseDAO;
 import am.dproc.sms.modules.UserBean;
 import am.dproc.sms.services.GroupCourseService;
 
