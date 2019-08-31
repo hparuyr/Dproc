@@ -14,43 +14,43 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.Course;
-import am.dproc.sms.services.CourseService;
+import am.dproc.sms.modules.Lesson;
+import am.dproc.sms.services.LessonService;
 
 @RestController
-@Path(value = "/course")
-public class CourseController {
+@Path(value = "/lesson")
+public class LessonController {
 
 	@Autowired
-	CourseService course;
+	LessonService lesson;
 
 	// Works
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public Course getCourse(@PathParam(value = "id") Integer id) {
-		return course.getCourse(id);
+	public Lesson getLesson(@PathParam(value = "id") Integer id) {
+		return lesson.getLesson(id);
 	}
 
 	// Works
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Course> getCourses() {
-		return course.getCourses();
+	public List<Lesson> getLesson() {
+		return lesson.getAllLesson();
 	}
 
 	// Works
 	@DELETE
 	@Path(value = "/{id}")
-	public Integer deleteCourse(@PathParam(value = "id") Integer id) {
-		return course.deleteCourse(id);
+	public Integer deleteLesson(@PathParam(value = "id")  Integer id) {
+		return lesson.deleteLesson(id);
 	}
 
 	// Works
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Integer addCourse(Course course) {
-		return this.course.addCourse(course);
+	public Integer addCourse(Lesson lesson) {
+		return this.lesson.addLesson(lesson);
 	}
-
+	
 }

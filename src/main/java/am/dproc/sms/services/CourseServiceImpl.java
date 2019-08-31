@@ -6,30 +6,52 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.CourseDAO;
-import am.dproc.sms.modules.CourseBean;
+import am.dproc.sms.modules.Course;
 
 @Service
-public class CourseServiceImpl implements CourseService{
+public class CourseServiceImpl implements CourseService {
+
 	@Autowired
-	CourseDAO dao;
+	CourseDAO course;
 
+	@Autowired
+	LessonService lesson;
+
+	// Works
 	@Override
-	public int create(String name, int duration, String description, String location) {
-		return dao.create(name, duration, description, location);
+	public Course getCourse(Integer id) {
+		Course course = this.course.getCourse(id);
+		course.setListOfLessons(lesson.getCourseLessons(id));
+		return course;
 	}
 
+	// Works
 	@Override
-	public CourseBean getById(int id) {
-		return dao.getById(id);
+	public List<Course> getCourses() {
+		return course.getCourses();
 	}
 
+	// Works
 	@Override
-	public List<CourseBean> getByName(String name) {
-		return dao.getByName(name);
+	public Integer deleteCourse(Integer id) {
+		return lesson.deleteLessonsOfCourse(id) + course.deleteCourse(id);
 	}
-
+	
+	// Works
 	@Override
-	public List<CourseBean> getAll() {
-		return dao.getAll();
+	public Integer addCourse(Course course) {
+		this.course.addCourse(course);
+		Integer courseID = this.course.getCourseID(course.getName());
+		if (course.getListOfLessons() != null) {
+			for (int i = 0; i < course.getListOfLessons().size(); i++) {
+				if (course.getListOfLessons().get(i).getCourseID() == null) {
+					course.getListOfLessons().get(i).setCourseID(courseID);
+				}
+			}
+		} else {
+			return 1;
+		}
+		return lesson.addLesson(course.getListOfLessons());
 	}
+	
 }
