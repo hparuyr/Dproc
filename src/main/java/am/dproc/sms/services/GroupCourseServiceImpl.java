@@ -13,22 +13,25 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	@Autowired
 	GroupCourseDAO dao;
 
+
 	@Override
-	public int create(int groupId, int courseId, long start, boolean finished, int teacherId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished) {
+		return dao.create(groupId, courseId, teacherId, startDate, isFinished);
 	}
 
 	@Override
 	public List<GroupCourseBean> getByGroupID(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getByGroupID(groupId);
 	}
 
 	@Override
 	public List<GroupCourseBean> getByCourseID(int courseId) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getByCourseID(courseId);
+	}
+
+	@Override
+	public List<GroupCourseBean> getAll() {
+		return dao.getAll();
 	}
 	
 	

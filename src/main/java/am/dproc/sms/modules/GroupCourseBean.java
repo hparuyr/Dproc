@@ -4,9 +4,9 @@ public class GroupCourseBean {
 	private int id;
 	private int groupId;
 	private int courseId;
+	private int teacherId;
 	private long startDate;
-	private boolean finished;
-	private int teacher;
+	private boolean isFinished;
 	public int getId() {
 		return id;
 	}
@@ -25,6 +25,12 @@ public class GroupCourseBean {
 	public void setCourseId(int courseId) {
 		this.courseId = courseId;
 	}
+	public int getTeacherId() {
+		return teacherId;
+	}
+	public void setTeacherId(int teacherId) {
+		this.teacherId = teacherId;
+	}
 	public long getStartDate() {
 		return startDate;
 	}
@@ -32,16 +38,15 @@ public class GroupCourseBean {
 		this.startDate = startDate;
 	}
 	public boolean isFinished() {
-		return finished;
+		return isFinished;
 	}
-	public void setFinished(boolean finished) {
-		this.finished = finished;
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
 	}
-	public int getTeacher() {
-		return teacher;
-	}
-	public void setTeacher(int teacher) {
-		this.teacher = teacher;
+	@Override
+	public String toString() {
+		return "GroupCourseBean [id=" + id + ", groupId=" + groupId + ", courseId=" + courseId + ", teacherId="
+				+ teacherId + ", startDate=" + startDate + ", isFinished=" + isFinished + "]";
 	}
 	
 	

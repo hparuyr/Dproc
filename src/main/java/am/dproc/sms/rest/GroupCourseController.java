@@ -5,15 +5,17 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import am.dproc.sms.modules.GroupCourseBean;
 import am.dproc.sms.modules.UserBean;
 import am.dproc.sms.services.GroupCourseService;
 
 @RestController
-@Path("/")
+@Path("/group/course")
 public class GroupCourseController {
 
 	@Autowired
@@ -35,9 +37,16 @@ public class GroupCourseController {
 		return user;
 	}
 	
-	@Path("/group/{gid}/course/{cid}")
+	@Path("/assign")
 	@POST
-	public void assign() {
-		
+	@Consumes(MediaType.APPLICATION_JSON)
+	public int assignCourseToGroup(GroupCourseBean groupCourseBean) {
+		return groupCourseService.create(
+					groupCourseBean.getGroupId(),
+					groupCourseBean.getCourseId(),
+					groupCourseBean.getTeacherId(),
+					groupCourseBean.getStartDate(),
+					groupCourseBean.isFinished()
+				);
 	}
 }
