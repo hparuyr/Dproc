@@ -16,32 +16,72 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 	@Autowired
 	JdbcTemplate template;
 	
-	public static String CREATE_GROUP_COURSE_SQL = "INSERT INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, IS_FINISHED, CREATION_DATE, CHANGE_DATE)"
+	public static String CREATE_SQL = "INSERT INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, IS_FINISHED, CREATION_DATE, CHANGE_DATE)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
-	public static String GET_GROUP_COURSE_BY_GROUP_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=?";
-	public static String GET_GROUP_COURSE_BY_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE COURSE_ID=?";
-	public static String GET_GROUP_COURSES_SQL = "SELECT * FROM GROUP_COURSE";
+	public static String GET_BY_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE ID=?";
+	public static String GET_BY_GROUP_AND_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=? AND COURSE_ID=?";
+	public static String GET_BY_GROUP_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=?";
+	public static String GET_BY_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE COURSE_ID=?";
+	public static String GET_ALL_SQL = "SELECT * FROM GROUP_COURSE";
+	public static String UPDATE_SQL = "UPDATE GROUP_COURSE SET GROUP_ID=?, COURSE_ID=?, TEACHER_ID=?, START_DATE=?, IS_FINISHED=?, CHANGE_DATE=? WHERE ID=?";
+	public static String DELETE_BY_GROUP_SQL = "DELETE FROM GROUP_COURSE WHERE GROUP_ID=?";
+	public static String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
+	public static String DELETE_ALL_SQL = "DELETE FROM GROUP_COURSE";
 	
-	// implemeted, check if works???
+	// works
 	@Override
 	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished) {
 		long currentTimeStamp = System.currentTimeMillis();
-		return template.update(CREATE_GROUP_COURSE_SQL, groupId, courseId, teacherId, startDate, isFinished, currentTimeStamp, currentTimeStamp);
+		return template.update(CREATE_SQL, groupId, courseId, teacherId, startDate, isFinished, currentTimeStamp, currentTimeStamp);
 	}
 
+	@Override
+	public GroupCourseBean getById(int id) {
+		return template.queryForObject(GET_BY_ID_SQL, new Object[] {id}, new GroupCourseMapper());
+	}
+
+	@Override
+	public GroupCourseBean getByGroupAndCourse(int groupId, int courseId) {
+		return template.queryForObject(GET_BY_GROUP_AND_COURSE_SQL, new Object[] {groupId, courseId}, new GroupCourseMapper());
+	}
+
+	// works
 	@Override
 	public List<GroupCourseBean> getByGroupID(int groupId) {
-		return template.query(GET_GROUP_COURSE_BY_GROUP_SQL, new Object[] {groupId}, new GroupCourseMapper());
+		return template.query(GET_BY_GROUP_SQL, new Object[] {groupId}, new GroupCourseMapper());
 	}
 
+	// works
 	@Override
 	public List<GroupCourseBean> getByCourseID(int courseId) {
-		return template.query(GET_GROUP_COURSE_BY_GROUP_SQL, new Object[] {courseId}, new GroupCourseMapper());
+		return template.query(GET_BY_COURSE_SQL, new Object[] {courseId}, new GroupCourseMapper());
 	}
 
 	@Override
 	public List<GroupCourseBean> getAll() {
-		return template.query(GET_GROUP_COURSES_SQL, new GroupCourseMapper());
+		return template.query(GET_ALL_SQL, new GroupCourseMapper());
+	}
+		
+	@Override
+	public int update(GroupCourseBean groupCourseBean) {
+		return template.update(UPDATE_SQL, groupCourseBean.getGroupId(), groupCourseBean.getCourseId(), groupCourseBean.getTeacherId(),
+				groupCourseBean.getStartDate(), groupCourseBean.isFinished(), System.currentTimeMillis(), groupCourseBean.getId());
+	}
+
+	//works
+	@Override
+	public int deleteByGroupID(int groupId) {
+		return template.update(DELETE_BY_GROUP_SQL, groupId);
+	}
+
+	@Override
+	public int deleteByCourseID(int courseId) {
+		return template.update(DELETE_BY_COURSE_SQL, courseId);
+	}
+
+	@Override
+	public int deleteAll() {
+		return template.update(DELETE_ALL_SQL);
 	}
 
 	private static class GroupCourseMapper implements RowMapper<GroupCourseBean>{
@@ -53,7 +93,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 			groupCourse.setCourseId(rs.getInt("COURSE_ID"));
 			groupCourse.setTeacherId(rs.getInt("TEACHER_ID"));
 			groupCourse.setStartDate(rs.getLong("START_DATE"));
-			groupCourse.setFinished(rs.getBoolean("IS_FINISHED"));
+			groupCourse.setIsFinished(rs.getBoolean("IS_FINISHED"));
 			return groupCourse;
 		}
 	}

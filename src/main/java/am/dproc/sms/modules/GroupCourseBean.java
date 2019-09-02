@@ -40,7 +40,7 @@ public class GroupCourseBean {
 	public boolean isFinished() {
 		return isFinished;
 	}
-	public void setFinished(boolean isFinished) {
+	public void setIsFinished(boolean isFinished) {
 		this.isFinished = isFinished;
 	}
 	@Override
