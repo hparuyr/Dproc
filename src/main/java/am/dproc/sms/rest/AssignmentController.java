@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.Assignment;
-
-import am.dproc.sms.services.AssignmentServiceImpl;
+import am.dproc.sms.models.Assignment;
+import am.dproc.sms.services.impl.AssignmentServiceImpl;
 
 @RestController
 @RequestMapping(path = "/assignment")

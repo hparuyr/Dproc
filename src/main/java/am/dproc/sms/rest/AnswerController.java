@@ -15,9 +15,9 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.AnswerBean;
-import am.dproc.sms.modules.Lesson;
-import am.dproc.sms.services.AnswerService;
+import am.dproc.sms.models.AnswerBean;
+import am.dproc.sms.models.Lesson;
+import am.dproc.sms.services.root.AnswerService;
 
 @RestController
 @Path(value = "/answer")

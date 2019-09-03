@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -17,9 +16,8 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.GroupCourseBean;
-import am.dproc.sms.modules.UserBean;
-import am.dproc.sms.services.GroupCourseService;
+import am.dproc.sms.models.GroupCourseBean;
+import am.dproc.sms.services.root.GroupCourseService;
 
 @RestController
 @Path("/group-course")
@@ -33,12 +31,12 @@ public class GroupCourseController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response assignCourseToGroup(GroupCourseBean groupCourseBean) {
-		int success = groupCourseService.create(groupCourseBean.getGroupId(), groupCourseBean.getCourseId(),
+		int id = groupCourseService.create(groupCourseBean.getGroupId(), groupCourseBean.getCourseId(),
 				groupCourseBean.getTeacherId(), groupCourseBean.getStartDate(), groupCourseBean.isFinished());
-		if (success == 1) {
-			return Response.status(Response.Status.CREATED).entity("Record is created").build();
+		if (id > 0) {
+			return Response.status(Response.Status.CREATED).entity(id).build();
 		} else {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Record was not created").build();
+			return Response.status(Response.Status.BAD_REQUEST).entity("Record was not created").build();
 		}
 	}
 
