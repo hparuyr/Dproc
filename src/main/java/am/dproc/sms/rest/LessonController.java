@@ -14,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.Lesson;
-import am.dproc.sms.services.LessonService;
+import am.dproc.sms.models.Lesson;
+import am.dproc.sms.services.root.LessonService;
 
 @RestController
 @Path(value = "/lesson")

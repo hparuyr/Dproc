@@ -15,8 +15,8 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.TestBean;
-import am.dproc.sms.services.TestService;
+import am.dproc.sms.models.TestBean;
+import am.dproc.sms.services.root.TestService;
 
 @RestController
 @Path(value = "/test")

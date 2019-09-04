@@ -14,8 +14,8 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.modules.Topic;
-import am.dproc.sms.services.TopicService;
+import am.dproc.sms.models.Topic;
+import am.dproc.sms.services.root.TopicService;
 
 @RestController
 @Path(value = "/topic")
