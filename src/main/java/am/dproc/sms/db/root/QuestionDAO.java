@@ -2,21 +2,21 @@ package am.dproc.sms.db.root;
 
 import java.util.List;
 
-import am.dproc.sms.models.QuestionBean;
+import am.dproc.sms.models.Question;
 
 public interface QuestionDAO {	
 
-	Integer createQuestion(QuestionBean question);
+	Integer createQuestion(Question question);
 	
-	QuestionBean getQuestion(Integer id);
+	Question getQuestion(Integer id);
 
-	List<QuestionBean> getAllQuestions();
+	List<Question> getAllQuestions();
 	
-	Integer updateQuestion(QuestionBean question);
+	Integer updateQuestion(Question question);
 	
 	Integer deleteQuestion(Integer id);
 
-	List<QuestionBean> getQuestionsForTest(Integer testId);	
+	List<Question> getQuestionsForTest(Integer testId);	
 
 }
 

@@ -16,13 +16,13 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.root.GroupCourseDAO;
-import am.dproc.sms.models.GroupCourseBean;
+import am.dproc.sms.models.GroupCourse;
 
 @Repository
-public class GroupCourseDAOImpl implements GroupCourseDAO{
+public class GroupCourseDAOImpl implements GroupCourseDAO {
 	@Autowired
 	JdbcTemplate template;
-	
+
 	public static String CREATE_SQL = "INSERT INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, IS_FINISHED, CREATION_DATE, CHANGE_DATE)"
 			+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
 	public static String GET_BY_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE ID=?";
@@ -34,7 +34,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 	public static String DELETE_BY_GROUP_SQL = "DELETE FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static String DELETE_ALL_SQL = "DELETE FROM GROUP_COURSE";
-	
+
 	// works
 	@Override
 	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished) {
@@ -42,7 +42,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 		long currentTimeStamp = System.currentTimeMillis();
 //		return template.update(CREATE_SQL, groupId, courseId, teacherId, startDate, isFinished, currentTimeStamp, currentTimeStamp);
 		template.update(new PreparedStatementCreator() {
-			
+
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
@@ -51,8 +51,8 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 				ps.setInt(3, teacherId);
 				ps.setLong(4, startDate);
 				ps.setBoolean(5, isFinished);
-				ps.setLong(6,currentTimeStamp);
-				ps.setLong(7,currentTimeStamp);
+				ps.setLong(6, currentTimeStamp);
+				ps.setLong(7, currentTimeStamp);
 				return ps;
 			}
 		}, keyHolder);
@@ -60,39 +60,41 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 	}
 
 	@Override
-	public GroupCourseBean getById(int id) {
-		return template.queryForObject(GET_BY_ID_SQL, new Object[] {id}, new GroupCourseMapper());
+	public GroupCourse getById(int id) {
+		return template.queryForObject(GET_BY_ID_SQL, new Object[] { id }, new GroupCourseMapper());
 	}
 
 	@Override
-	public GroupCourseBean getByGroupAndCourse(int groupId, int courseId) {
-		return template.queryForObject(GET_BY_GROUP_AND_COURSE_SQL, new Object[] {groupId, courseId}, new GroupCourseMapper());
-	}
-
-	// works
-	@Override
-	public List<GroupCourseBean> getByGroupID(int groupId) {
-		return template.query(GET_BY_GROUP_SQL, new Object[] {groupId}, new GroupCourseMapper());
+	public GroupCourse getByGroupAndCourse(int groupId, int courseId) {
+		return template.queryForObject(GET_BY_GROUP_AND_COURSE_SQL, new Object[] { groupId, courseId },
+				new GroupCourseMapper());
 	}
 
 	// works
 	@Override
-	public List<GroupCourseBean> getByCourseID(int courseId) {
-		return template.query(GET_BY_COURSE_SQL, new Object[] {courseId}, new GroupCourseMapper());
+	public List<GroupCourse> getByGroupID(int groupId) {
+		return template.query(GET_BY_GROUP_SQL, new Object[] { groupId }, new GroupCourseMapper());
+	}
+
+	// works
+	@Override
+	public List<GroupCourse> getByCourseID(int courseId) {
+		return template.query(GET_BY_COURSE_SQL, new Object[] { courseId }, new GroupCourseMapper());
 	}
 
 	@Override
-	public List<GroupCourseBean> getAll() {
+	public List<GroupCourse> getAll() {
 		return template.query(GET_ALL_SQL, new GroupCourseMapper());
 	}
-		
+
 	@Override
-	public int update(GroupCourseBean groupCourseBean) {
-		return template.update(UPDATE_SQL, groupCourseBean.getGroupId(), groupCourseBean.getCourseId(), groupCourseBean.getTeacherId(),
-				groupCourseBean.getStartDate(), groupCourseBean.isFinished(), System.currentTimeMillis(), groupCourseBean.getId());
+	public int update(GroupCourse groupCourse) {
+		return template.update(UPDATE_SQL, groupCourse.getGroupId(), groupCourse.getCourseId(),
+				groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.isFinished(),
+				System.currentTimeMillis(), groupCourse.getId());
 	}
 
-	//works
+	// works
 	@Override
 	public int deleteByGroupID(int groupId) {
 		return template.update(DELETE_BY_GROUP_SQL, groupId);
@@ -108,10 +110,10 @@ public class GroupCourseDAOImpl implements GroupCourseDAO{
 		return template.update(DELETE_ALL_SQL);
 	}
 
-	private static class GroupCourseMapper implements RowMapper<GroupCourseBean>{
+	private static class GroupCourseMapper implements RowMapper<GroupCourse> {
 		@Override
-		public GroupCourseBean mapRow(ResultSet rs, int rowNum) throws SQLException {
-			GroupCourseBean groupCourse = new GroupCourseBean();
+		public GroupCourse mapRow(ResultSet rs, int rowNum) throws SQLException {
+			GroupCourse groupCourse = new GroupCourse();
 			groupCourse.setId(rs.getInt("ID"));
 			groupCourse.setGroupId(rs.getInt("GROUP_ID"));
 			groupCourse.setCourseId(rs.getInt("COURSE_ID"));

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.GroupDAO;
-import am.dproc.sms.models.GroupBean;
+import am.dproc.sms.models.Group;
 import am.dproc.sms.services.root.GroupService;
 
 @Service
@@ -18,11 +18,11 @@ public class GroupServiceImpl implements GroupService{
 		return dao.create(name, schoolId);
 	}
 	
-	public GroupBean get(int id) {
+	public Group get(int id) {
 		return dao.get(id);
 	}
 
-	public List<GroupBean> getAll() {
+	public List<Group> getAll() {
 		return dao.getAll();
 	}
 	

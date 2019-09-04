@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.QuestionBean;
+import am.dproc.sms.models.Question;
 import am.dproc.sms.services.root.QuestionService;
 
 @RestController
@@ -28,26 +28,26 @@ public class QuestionController {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public QuestionBean getQuestion(@PathParam(value = "id") Integer id) {
+	public Question getQuestion(@PathParam(value = "id") Integer id) {
 		return questionService.getQuestion(id);
 	}
 
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/all")
-	public List<QuestionBean> getAllQuestions() {
+	public List<Question> getAllQuestions() {
 		return questionService.getAllQuestions();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Integer createQuestion(QuestionBean question) {
+	public Integer createQuestion(Question question) {
 		return questionService.createQuestion(question);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Integer updateQuestion(QuestionBean question) {
+	public Integer updateQuestion(Question question) {
 		return questionService.updateQuestion(question);
 	}
 

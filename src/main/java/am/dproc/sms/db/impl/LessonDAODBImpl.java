@@ -2,9 +2,12 @@ package am.dproc.sms.db.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -23,29 +26,27 @@ public class LessonDAODBImpl implements LessonDAO {
 	private static final String GET_LESSONS_BY_COURSE_ID = "SELECT * FROM mydb.LESSON WHERE COURSE_ID = ?";
 	private static final String GET_LESSONS_IDs_BY_COURSE_ID = "SELECT ID FROM mydb.LESSON WHERE COURSE_ID = ?";
 	private static final String GET_LESSON_ID = "SELECT ID FROM mydb.LESSON WHERE NAME = ?";
-	private static final String ADD_LESSON = "INSERT INTO mydb.LESSON (NAME, CONTENT, COURSE_ID) VALUES(?, ?, ?)";
-	private static final String DELETE_LESSONS_BY_COURSE_ID = "DELETE FROM mydb.LESSON WHERE COURSE_ID = ?";
+	private static final String GET_LESSON_ID_BY_COURSE_ID = "SELECT ID FROM mydb.LESSON WHERE NAME = ? AND COURSE_ID = ?";
+	private static final String ADD_LESSON = "INSERT INTO mydb.LESSON (NAME, CONTENT, CREATION_DATE, CHANGE_DATE, COURSE_ID) VALUES(?, ?, ?, ?, ?)";
 	private static final String DELETE_LESSON_BY_ID = "DELETE FROM mydb.LESSON WHERE ID = ?";
+	private static final String EDIT_LESSON_NAME = "UPDATE mydb.LESSON SET NAME = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String EDIT_LESSON_CONTENT = "UPDATE mydb.LESSON SET CONTENT = ?, CHANGE_DATE = ? WHERE ID = ?";
 
-	// Works
 	@Override
 	public Lesson getLesson(Integer id) {
 		return jdbctemplate.queryForObject(GET_LESSONS_BY_ID, new LessonMapper(), id);
 	}
 
-	// Works
 	@Override
 	public List<Lesson> getLessonsOfCourse(Integer courseID) {
 		return jdbctemplate.query(GET_LESSONS_BY_COURSE_ID, new LessonMapper(), courseID);
 	}
 
-	// Works
 	@Override
 	public List<Lesson> getAllLessons() {
 		return jdbctemplate.query(GET_LESSONS, new LessonMapper());
 	}
 
-	// Works
 	@Override
 	public List<Integer> getLessonsIDs(Integer courseID) {
 		return jdbctemplate.queryForList(GET_LESSONS_IDs_BY_COURSE_ID, Integer.class, courseID);
@@ -56,28 +57,45 @@ public class LessonDAODBImpl implements LessonDAO {
 		return jdbctemplate.queryForObject(GET_LESSON_ID, Integer.class, name);
 	}
 
-	// Works
 	@Override
-	public Integer deleteLesson(Integer id) {
-		return jdbctemplate.update(DELETE_LESSON_BY_ID, id);
+	public Integer getLessonID(String name, Integer courseID) {
+		return jdbctemplate.queryForObject(GET_LESSON_ID_BY_COURSE_ID, Integer.class, new Object[] { name, courseID });
 	}
 
-	// Works
 	@Override
-	public Integer deleteLessonsOfCourse(Integer courseID) {
-		return jdbctemplate.update(DELETE_LESSONS_BY_COURSE_ID, courseID);
+	public ResponseEntity<Integer> deleteLesson(Integer id) {
+		if (jdbctemplate.update(DELETE_LESSON_BY_ID, id) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
-	// ????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
 	@Override
-	public Integer deleteAllLessons() {
-		return null;
+	public ResponseEntity<Integer> addLesson(Lesson lesson, Integer courseID) {
+		Long currentTimeMillis = new java.util.Date().getTime();
+		if (jdbctemplate.update(ADD_LESSON, new Object[] { lesson.getName(), lesson.getContent(), currentTimeMillis,
+				currentTimeMillis, courseID }) == 1) {
+			return ResponseEntity.status(HttpStatus.CREATED).body(getLessonID(lesson.getName(), courseID));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
-	// Works
 	@Override
-	public Integer addLesson(Lesson lesson, Integer courseID) {
-		return jdbctemplate.update(ADD_LESSON, new Object[] { lesson.getName(), lesson.getContent(), courseID });
+	public ResponseEntity<Integer> editLessonName(Integer id, String name) {
+		Long currentTimeMillis = new java.util.Date().getTime();
+		if (jdbctemplate.update(EDIT_LESSON_NAME, new Object[] { name, currentTimeMillis, id }) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+	}
+
+	@Override
+	public ResponseEntity<Integer> editLessonContent(Integer id, String content) {
+		Long currentTimeMillis = new java.util.Date().getTime();
+		if (jdbctemplate.update(EDIT_LESSON_CONTENT, new Object[] { content, currentTimeMillis, id }) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
 	private static class LessonMapper implements RowMapper<Lesson> {
@@ -88,6 +106,8 @@ public class LessonDAODBImpl implements LessonDAO {
 			lesson.setName(rs.getString("name"));
 			lesson.setContent(rs.getString("content"));
 			lesson.setCourseID(rs.getInt("course_id"));
+			lesson.setCreationDate(new Date(rs.getLong("creation_date")));
+			lesson.setChangeDate(new Date(rs.getLong("change_date")));
 			return lesson;
 		}
 

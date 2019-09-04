@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.AnswerDAO;
-import am.dproc.sms.models.AnswerBean;
+import am.dproc.sms.models.Answer;
 import am.dproc.sms.services.root.AnswerService;
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -15,27 +15,27 @@ public class AnswerServiceImpl implements AnswerService {
 	AnswerDAO answerDAO;
 
 	@Override
-	public AnswerBean getAnswer(Integer id) {
+	public Answer getAnswer(Integer id) {
 		return answerDAO.getAnswer(id);
 	}
 
 	@Override
-	public List<AnswerBean> getAllAnswers() {
+	public List<Answer> getAllAnswers() {
 		return answerDAO.getAllAnswers();
 	}
 	
 	@Override
-	public List<AnswerBean> getAnswersForQuestion(Integer questionId) {
+	public List<Answer> getAnswersForQuestion(Integer questionId) {
 		return answerDAO.getAnswersForQuestion(questionId);
 	}
 
 	@Override
-	public int createAnswer(AnswerBean answer) {
+	public int createAnswer(Answer answer) {
 		return answerDAO.createAnswer(answer);
 	}
 
 	@Override
-	public int updateAnswer(AnswerBean answer) {
+	public int updateAnswer(Answer answer) {
 		return answerDAO.updateAnswer(answer);
 	}
 

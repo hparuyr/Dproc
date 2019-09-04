@@ -2,6 +2,8 @@ package am.dproc.sms.services.root;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import am.dproc.sms.models.Course;
 
 public interface CourseService {
@@ -10,9 +12,10 @@ public interface CourseService {
 	
 	public List<Course> getCourses();
 	
-	public Integer deleteCourse(Integer id);
+	public ResponseEntity<Integer> deleteCourse(Integer id);
 		
-	public Integer addCourse(Course course);
+	public ResponseEntity<Integer> addCourse(Course course);
 	
+	public ResponseEntity<Integer> editCourse(Course course);
 	
 }

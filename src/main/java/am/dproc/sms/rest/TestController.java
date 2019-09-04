@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.TestBean;
+import am.dproc.sms.models.Test;
 import am.dproc.sms.services.root.TestService;
 
 @RestController
@@ -27,14 +27,14 @@ public class TestController {
 	@GET
 	@Path(value = "/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public TestBean getTest(@PathParam(value = "id") Integer id) {
+	public Test getTest(@PathParam(value = "id") Integer id) {
 		return testService.getTest(id);
 	}
 
 	@GET
 	@Path(value = "/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TestBean> getAllTests() {
+	public List<Test> getAllTests() {
 		return testService.getAllTests();
 	}
 
@@ -46,13 +46,13 @@ public class TestController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Integer createTest(TestBean test) {
+	public Integer createTest(Test test) {
 		return testService.createTest(test);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Integer updateTest(TestBean test) {
+	public Integer updateTest(Test test) {
 		return testService.updateTest(test);
 	}
 

@@ -66,8 +66,8 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 	public Integer addAssignment(Assignment asi) {
 		// TODO Auto-generated method stub
 		return jdbctemplate.update(ADD_ASSIGNMENT,
-				new Object[] { asi.getStartedDate(),asi.getDeadLine(), asi.getTeacherIdGivenAsi(),
-						 asi.getTitle(), asi.getDescription(),asi.getCreationDate(), asi.getChangeDate() });
+				new Object[] { asi.getStartedDate(), asi.getDeadLine(), asi.getTeacherIdGivenAsi(), asi.getTitle(),
+						asi.getDescription(), asi.getCreationDate(), asi.getChangeDate() });
 	}
 
 	private static class AssignmentMapper implements RowMapper<Assignment> {

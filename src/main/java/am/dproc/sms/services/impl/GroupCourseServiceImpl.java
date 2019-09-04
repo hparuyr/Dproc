@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.GroupCourseDAO;
-import am.dproc.sms.models.GroupCourseBean;
+import am.dproc.sms.models.GroupCourse;
 import am.dproc.sms.services.root.GroupCourseService;
 
 @Service
@@ -21,33 +21,33 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	}
 
 	@Override
-	public GroupCourseBean getById(int id) {
+	public GroupCourse getById(int id) {
 		return dao.getById(id);
 	}
 
 	@Override
-	public GroupCourseBean getByGroupAndCourse(int groupId, int courseId) {
+	public GroupCourse getByGroupAndCourse(int groupId, int courseId) {
 		return dao.getByGroupAndCourse(groupId, courseId);
 	}
 
 	@Override
-	public List<GroupCourseBean> getByGroupID(int groupId) {
+	public List<GroupCourse> getByGroupID(int groupId) {
 		return dao.getByGroupID(groupId);
 	}
 
 	@Override
-	public List<GroupCourseBean> getByCourseID(int courseId) {
+	public List<GroupCourse> getByCourseID(int courseId) {
 		return dao.getByCourseID(courseId);
 	}
 
 	@Override
-	public List<GroupCourseBean> getAll() {
+	public List<GroupCourse> getAll() {
 		return dao.getAll();
 	}
 	
 	@Override
-	public int update(GroupCourseBean groupCourseBean) {
-		return dao.update(groupCourseBean);
+	public int update(GroupCourse groupCourse) {
+		return dao.update(groupCourse);
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 package am.dproc.sms.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.LessonDAO;
 import am.dproc.sms.models.Lesson;
-import am.dproc.sms.models.Topic;
 import am.dproc.sms.services.root.LessonService;
 import am.dproc.sms.services.root.TopicService;
 
@@ -17,7 +17,7 @@ public class LessonServiceImpl implements LessonService {
 
 	@Autowired
 	LessonDAO lesson;
-	
+
 	@Autowired
 	TopicService topic;
 
@@ -25,75 +25,39 @@ public class LessonServiceImpl implements LessonService {
 	@Override
 	public Lesson getLesson(Integer id) {
 		Lesson lesson = this.lesson.getLesson(id);
-		lesson.setListOfURLs(this.topic.getLessonTopics(id));
+		lesson.setListOfTopics(this.topic.getLessonTopics(id));
 		return lesson;
 	}
 
-	// Works
 	@Override
 	public List<Lesson> getCourseLessons(Integer courseID) {
-		List<Lesson> lessons = this.lesson.getLessonsOfCourse(courseID);
-		List<Integer> listOfLessonsIDs = this.lesson.getLessonsIDs(courseID);
-		for (int i = 0; i < lessons.size(); i++) {
-			lessons.get(i).setListOfURLs(topic.getLessonTopics(listOfLessonsIDs.get(i)));
-		}
-		return lessons;
+		return this.lesson.getLessonsOfCourse(courseID);
 	}
 
-	// Works
 	@Override
 	public List<Lesson> getAllLesson() {
 		return lesson.getAllLessons();
 	}
 
-	// Works
 	@Override
-	public Integer deleteLesson(Integer id) {
-		return topic.deleteTopic(id) + lesson.deleteLesson(id);
+	public ResponseEntity<Integer> deleteLesson(Integer id) {
+		return lesson.deleteLesson(id);
 	}
 
-	// Works
 	@Override
-	public Integer deleteLessonsOfCourse(Integer courseID) {
-		List<Integer> listOfLessonsIDs = lesson.getLessonsIDs(courseID);
-		for (int i = 0; i < listOfLessonsIDs.size(); i++) {
-			topic.deleteTopic(listOfLessonsIDs.get(i));
-		}
-		return lesson.deleteLessonsOfCourse(courseID);
+	public ResponseEntity<Integer> addLesson(Lesson lesson) {
+		return this.lesson.addLesson(lesson, lesson.getCourseID());
 	}
 
-	// Works
 	@Override
-	public Integer addLesson(Lesson lesson) {
-		this.lesson.addLesson(lesson, lesson.getCourseID());
-		Integer lessonID = this.lesson.getLessonID(lesson.getName());
-		for (int i = 0; i < lesson.getListOfURLs().size(); i++) {
-			if (lesson.getListOfURLs().get(i).getLessonID() == null) {
-				lesson.getListOfURLs().get(i).setLessonID(lessonID);
-			}
+	public ResponseEntity<Integer> editLesson(Lesson lesson) {
+		if (lesson.getName() != null) {
+			return this.lesson.editLessonName(lesson.getId(), lesson.getName());
+		} else if (lesson.getContent() != null) {
+			return this.lesson.editLessonContent(lesson.getId(), lesson.getContent());
 		}
-		return topic.addTopic(lesson.getListOfURLs());
-	}
-	
-	// Works
-	@Override
-	public Integer addLesson(List<Lesson> lessons) {
-		for (int i = 0; i < lessons.size(); i++) {
-			lesson.addLesson(lessons.get(i), lessons.get(i).getCourseID());
-		}
-		List<List<Topic>> topics = new ArrayList<>();
-		for (int i = 0; i < lessons.size(); i++) {
-			if (lessons.get(i).getListOfURLs() != null) {
-				Integer lessonID = this.lesson.getLessonID(lessons.get(i).getName());
-				for (int j = 0; j < lessons.get(i).getListOfURLs().size(); j++) {
-					if (lessons.get(i).getListOfURLs().get(j).getLessonID() == null) {
-						lessons.get(i).getListOfURLs().get(j).setLessonID(lessonID);
-					}
-				}
-				topics.add(lessons.get(i).getListOfURLs());
-			}
-		}
-		return topic.addListOfTopic(topics);
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
 }

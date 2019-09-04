@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.GroupBean;
+import am.dproc.sms.models.Group;
 import am.dproc.sms.services.root.GroupService;
 
 @RestController
@@ -34,14 +34,14 @@ public class GroupController {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public GroupBean get(@PathParam("id") int id) {
+	public Group get(@PathParam("id") int id) {
 		return groupService.get(id);
 	}
 	
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<GroupBean> get() {
+	public List<Group> get() {
 		return groupService.getAll();
 	}
 	

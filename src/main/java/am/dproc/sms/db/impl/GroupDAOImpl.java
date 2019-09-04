@@ -10,10 +10,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.root.GroupDAO;
-import am.dproc.sms.models.GroupBean;
+import am.dproc.sms.models.Group;
 
 @Repository
-public class GroupDAOImpl implements GroupDAO{
+public class GroupDAOImpl implements GroupDAO {
 	@Autowired
 	JdbcTemplate template;
 
@@ -21,30 +21,29 @@ public class GroupDAOImpl implements GroupDAO{
 	public static String GET_GROUP_SQL = "SELECT * FROM `GROUP` WHERE ID = ?";
 	public static String GET_GROUPS_SQL = "SELECT * FROM `GROUP`";
 
-	
 	public int create(String name, int schoolId) {
-		return template.update(CREATE_GROUP_SQL,name, schoolId);
+		return template.update(CREATE_GROUP_SQL, name, schoolId);
 	}
 
-	public GroupBean get(int id) {
-		GroupBean group = template.queryForObject(GET_GROUP_SQL, new Object[] {id}, new GroupMapper() );
+	public Group get(int id) {
+		Group group = template.queryForObject(GET_GROUP_SQL, new Object[] { id }, new GroupMapper());
 		return group;
 	}
-	
-	public List<GroupBean> getAll(){
-		List<GroupBean> groups = template.query(GET_GROUPS_SQL, new GroupMapper());
+
+	public List<Group> getAll() {
+		List<Group> groups = template.query(GET_GROUPS_SQL, new GroupMapper());
 		return groups;
 	}
-	
-	private static class GroupMapper implements RowMapper<GroupBean> {
+
+	private static class GroupMapper implements RowMapper<Group> {
 		@Override
-		public GroupBean mapRow(ResultSet rs, int rowNum) throws SQLException {
-			GroupBean group = new GroupBean();
+		public Group mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Group group = new Group();
 			group.setId(rs.getInt("ID"));
 			group.setName(rs.getString("NAME"));
 			group.setSchoolId(rs.getInt("SCHOOL_ID"));
 			return group;
 		}
-		
+
 	}
 }

@@ -2,20 +2,20 @@ package am.dproc.sms.services.root;
 
 import java.util.List;
 
-import am.dproc.sms.models.AnswerBean;
+import am.dproc.sms.models.Answer;
 
 public interface AnswerService {
 
-	AnswerBean getAnswer(Integer id);
+	Answer getAnswer(Integer id);
 
-	List<AnswerBean> getAllAnswers();
+	List<Answer> getAllAnswers();
 
-	int createAnswer(AnswerBean answer);
+	int createAnswer(Answer answer);
 
-	int updateAnswer(AnswerBean answer);
+	int updateAnswer(Answer answer);
 
 	int deleteAnswer(int id);
 
-	List<AnswerBean> getAnswersForQuestion(Integer questionId);
+	List<Answer> getAnswersForQuestion(Integer questionId);
 
 }

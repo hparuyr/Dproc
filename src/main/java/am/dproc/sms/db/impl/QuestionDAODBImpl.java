@@ -10,8 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.root.QuestionDAO;
-import am.dproc.sms.models.AnswerBean;
-import am.dproc.sms.models.QuestionBean;
+import am.dproc.sms.models.Question;
 
 @Repository
 public class QuestionDAODBImpl implements QuestionDAO {
@@ -27,30 +26,30 @@ public class QuestionDAODBImpl implements QuestionDAO {
 	private static final String DELETE_QUESTION = "delete from mydb.QUESTION where ID = ?";
 
 	@Override
-	public Integer createQuestion(QuestionBean question) {
+	public Integer createQuestion(Question question) {
 		return template.update(CREATE_QUESTION, question.getContent(), question.getTestId(),
 				System.currentTimeMillis());
 	}
 
 	@Override
-	public QuestionBean getQuestion(Integer id) {
+	public Question getQuestion(Integer id) {
 		return template.queryForObject(GET_QUESTION_BY_ID, new QuestionMapper(), id);
 	}
 
 	@Override
-	public List<QuestionBean> getAllQuestions() {
+	public List<Question> getAllQuestions() {
 		return template.query(GET_ALL_QUESTIONS, new QuestionMapper());
 	}
-	
+
 	@Override
-	public List<QuestionBean> getQuestionsForTest(Integer testId) {
+	public List<Question> getQuestionsForTest(Integer testId) {
 		return template.query(GET_QUESTIONS_FOR_TEST, new QuestionMapper(), testId);
 	}
 
 	@Override
-	public Integer updateQuestion(QuestionBean question) {
-		return template.update(UPDATE_QUESTION, question.getContent(), question.getTestId(),
-				System.currentTimeMillis(), question.getId());
+	public Integer updateQuestion(Question question) {
+		return template.update(UPDATE_QUESTION, question.getContent(), question.getTestId(), System.currentTimeMillis(),
+				question.getId());
 	}
 
 	@Override
@@ -58,11 +57,11 @@ public class QuestionDAODBImpl implements QuestionDAO {
 		return template.update(DELETE_QUESTION, id);
 	}
 
-	private static class QuestionMapper implements RowMapper<QuestionBean> {
+	private static class QuestionMapper implements RowMapper<Question> {
 
 		@Override
-		public QuestionBean mapRow(ResultSet rs, int rowNum) throws SQLException {
-			QuestionBean q = new QuestionBean();
+		public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
+			Question q = new Question();
 			q.setId(rs.getInt("ID"));
 			q.setContent(rs.getString("CONTENT"));
 			q.setTestId(rs.getInt("TEST_ID"));

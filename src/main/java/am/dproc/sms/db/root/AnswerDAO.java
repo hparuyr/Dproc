@@ -2,20 +2,20 @@ package am.dproc.sms.db.root;
 
 import java.util.List;
 
-import am.dproc.sms.models.AnswerBean;
+import am.dproc.sms.models.Answer;
 
-public interface AnswerDAO {	
+public interface AnswerDAO {
 
-	Integer createAnswer(AnswerBean answer);
+	Integer createAnswer(Answer answer);
 
-	AnswerBean getAnswer(Integer id);
-	
-	List<AnswerBean> getAllAnswers();
-	
-	Integer updateAnswer(AnswerBean answer);
-	
+	Answer getAnswer(Integer id);
+
+	List<Answer> getAllAnswers();
+
+	Integer updateAnswer(Answer answer);
+
 	Integer deleteAnswer(Integer id);
 
-	List<AnswerBean> getAnswersForQuestion(Integer questionId);	
+	List<Answer> getAnswersForQuestion(Integer questionId);
 
 }

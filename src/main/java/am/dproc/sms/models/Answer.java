@@ -1,6 +1,6 @@
 package am.dproc.sms.models;
 
-public class AnswerBean {
+public class Answer {
 
 	private Integer id;
 	private String content;

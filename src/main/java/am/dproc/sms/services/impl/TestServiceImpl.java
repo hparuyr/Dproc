@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.TestDAO;
-import am.dproc.sms.models.TestBean;
+import am.dproc.sms.models.Test;
 import am.dproc.sms.services.root.QuestionService;
 import am.dproc.sms.services.root.TestService;
 
@@ -19,26 +19,26 @@ public class TestServiceImpl implements TestService {
 	QuestionService questionService;
 
 	@Override
-	public TestBean getTest(Integer id) {
-		TestBean test = testDAO.getTest(id);
+	public Test getTest(Integer id) {
+		Test test = testDAO.getTest(id);
 		test.setQuestions(questionService.getQuestionsForTest(id));
 		return test;
 	}
 
 	@Override
-	public List<TestBean> getAllTests() {
-		List<TestBean> tests = testDAO.getAllTests();
+	public List<Test> getAllTests() {
+		List<Test> tests = testDAO.getAllTests();
 		tests.forEach(item -> item.setQuestions(questionService.getQuestionsForTest(item.getId())));
 		return tests;
 	}
 
 	@Override
-	public Integer createTest(TestBean test) {
+	public Integer createTest(Test test) {
 		return testDAO.createTest(test);
 	}
 
 	@Override
-	public Integer updateTest(TestBean test) {
+	public Integer updateTest(Test test) {
 		return testDAO.updateTest(test);
 	}
 
