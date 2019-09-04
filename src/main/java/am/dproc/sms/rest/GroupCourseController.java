@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.GroupCourseBean;
+import am.dproc.sms.models.GroupCourse;
 import am.dproc.sms.services.root.GroupCourseService;
 
 @RestController
@@ -30,9 +30,9 @@ public class GroupCourseController {
 	@Path("/assign")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response assignCourseToGroup(GroupCourseBean groupCourseBean) {
-		int id = groupCourseService.create(groupCourseBean.getGroupId(), groupCourseBean.getCourseId(),
-				groupCourseBean.getTeacherId(), groupCourseBean.getStartDate(), groupCourseBean.isFinished());
+	public Response assignCourseToGroup(GroupCourse groupCourse) {
+		int id = groupCourseService.create(groupCourse.getGroupId(), groupCourse.getCourseId(),
+				groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.isFinished());
 		if (id > 0) {
 			return Response.status(Response.Status.CREATED).entity(id).build();
 		} else {
@@ -43,14 +43,14 @@ public class GroupCourseController {
 	@Path("/{id}")
 	@GET
 	@Produces("application/json")
-	public GroupCourseBean getById(@PathParam("id") int id) {
+	public GroupCourse getById(@PathParam("id") int id) {
 		return groupCourseService.getById(id);
 	}
 
 	@Path("/{gid}/{cid}")
 	@GET
 	@Produces("application/json")
-	public GroupCourseBean getByGroupAndCourse(@PathParam("gid") int groupId,@PathParam("cid") int courseId) {
+	public GroupCourse getByGroupAndCourse(@PathParam("gid") int groupId,@PathParam("cid") int courseId) {
 		return groupCourseService.getByGroupAndCourse(groupId, courseId);
 	}
 
@@ -58,22 +58,22 @@ public class GroupCourseController {
 	@Path("/courseId/{id}")
 	@GET
 	@Produces("application/json")
-	public List<GroupCourseBean> getByCourseId(@PathParam("id") int courseId) {
+	public List<GroupCourse> getByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.getByCourseID(courseId);
 	}
 
 	// works
 	@GET
 	@Produces("application/json")
-	public List<GroupCourseBean> getAll() {
+	public List<GroupCourse> getAll() {
 		return groupCourseService.getAll();
 	}
 
 	// works
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	public int updateGroupId(GroupCourseBean groupCourseBean) {
-		return groupCourseService.update(groupCourseBean);
+	public int updateGroupId(GroupCourse groupCourse) {
+		return groupCourseService.update(groupCourse);
 	}
 	
 	// works

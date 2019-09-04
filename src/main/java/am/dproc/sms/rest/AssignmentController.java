@@ -17,10 +17,10 @@ import am.dproc.sms.services.impl.AssignmentServiceImpl;
 @RequestMapping(path = "/assignment")
 
 public class AssignmentController {
-	
+
 	@Autowired
 	AssignmentServiceImpl asiService;
-	
+
 	@GetMapping(value = "/{id}")
 	public Assignment getAssignment(Integer id) {
 		// TODO Auto-generated method stub
@@ -62,6 +62,5 @@ public class AssignmentController {
 		// TODO Auto-generated method stub
 		return asiService.addAssignment(asi);
 	}
-
 
 }

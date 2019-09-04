@@ -1,6 +1,7 @@
 package am.dproc.sms.models;
 
-public class UserBean {
+public class User {
+	
 	private int id;
 	private String firstname;
 	private String lastname;

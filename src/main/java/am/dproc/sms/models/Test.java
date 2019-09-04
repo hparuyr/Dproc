@@ -2,18 +2,18 @@ package am.dproc.sms.models;
 
 import java.util.List;
 
-public class TestBean {
+public class Test {
 
 	private Integer id;
 	private String title;
 	private Integer lessonId;
-	List<QuestionBean> questions;
+	List<Question> questions;
 
-	public List<QuestionBean> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(List<QuestionBean> questions) {
+	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 

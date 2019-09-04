@@ -10,9 +10,9 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.root.TestDAO;
-import am.dproc.sms.models.AnswerBean;
-import am.dproc.sms.models.QuestionBean;
-import am.dproc.sms.models.TestBean;
+import am.dproc.sms.models.Answer;
+import am.dproc.sms.models.Question;
+import am.dproc.sms.models.Test;
 
 @Repository
 public class TestDAODBImpl implements TestDAO {
@@ -26,24 +26,25 @@ public class TestDAODBImpl implements TestDAO {
 	private static final String DELETE_TEST = "delete from mydb.TEST where ID = ?";
 
 	@Override
-	public Integer createTest(TestBean test) {
+	public Integer createTest(Test test) {
 		return template.update(CREATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis());
 	}
 
 	@Override
-	public TestBean getTest(Integer id) {
-		TestBean test = template.queryForObject(GET_TEST_BY_ID, new TestMapper(), id);
+	public Test getTest(Integer id) {
+		Test test = template.queryForObject(GET_TEST_BY_ID, new TestMapper(), id);
 		return test;
 	}
 
 	@Override
-	public List<TestBean> getAllTests() {
+	public List<Test> getAllTests() {
 		return template.query(GET_ALL_TESTS, new TestMapper());
 	}
 
 	@Override
-	public Integer updateTest(TestBean test) {
-		return template.update(UPDATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis(), test.getId());
+	public Integer updateTest(Test test) {
+		return template.update(UPDATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis(),
+				test.getId());
 	}
 
 	@Override
@@ -51,28 +52,28 @@ public class TestDAODBImpl implements TestDAO {
 		return template.update(DELETE_TEST, id);
 	}
 
-	private static class TestMapper implements RowMapper<TestBean> {
+	private static class TestMapper implements RowMapper<Test> {
 		@Autowired
 		JdbcTemplate template;
 
 		@Override
-		public TestBean mapRow(ResultSet rs, int rownumber) throws SQLException {
-			TestBean test = new TestBean();
+		public Test mapRow(ResultSet rs, int rownumber) throws SQLException {
+			Test test = new Test();
 			test.setId(rs.getInt("ID"));
 			test.setTitle(rs.getString("TITLE"));
 			test.setLessonId(rs.getInt("LESSON_ID"));
 
-			//test.setQuestions(getQuestionsForTest(test.getId()));
+			// test.setQuestions(getQuestionsForTest(test.getId()));
 
 			return test;
 		}
 
-		private List<QuestionBean> getQuestionsForTest(Integer id) {
+		private List<Question> getQuestionsForTest(Integer id) {
 			return template.query("select ID, CONTENT from QUESTION where TEST_ID = ? ", new Object[] { id },
-					new RowMapper<QuestionBean>() {
+					new RowMapper<Question>() {
 						@Override
-						public QuestionBean mapRow(ResultSet rs, int rownumber) throws SQLException {
-							QuestionBean question = new QuestionBean();
+						public Question mapRow(ResultSet rs, int rownumber) throws SQLException {
+							Question question = new Question();
 							question.setId(rs.getInt("ID"));
 							question.setContent(rs.getString("CONTENT"));
 							question.setTestId(id);
@@ -85,12 +86,12 @@ public class TestDAODBImpl implements TestDAO {
 
 		}
 
-		private List<AnswerBean> getAnswersForQuestion(Integer id) {
+		private List<Answer> getAnswersForQuestion(Integer id) {
 			return template.query("select ID, CONTENT, SCORE from ANSWER where QUESTION_ID = :id ", new Object[] { id },
-					new RowMapper<AnswerBean>() {
+					new RowMapper<Answer>() {
 						@Override
-						public AnswerBean mapRow(ResultSet rs, int rownumber) throws SQLException {
-							AnswerBean answer = new AnswerBean();
+						public Answer mapRow(ResultSet rs, int rownumber) throws SQLException {
+							Answer answer = new Answer();
 							answer.setId(rs.getInt("ID"));
 							answer.setContent(rs.getString("CONTENT"));
 							answer.setScore(rs.getInt("SCORE"));

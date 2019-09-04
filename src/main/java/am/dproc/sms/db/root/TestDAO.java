@@ -2,17 +2,17 @@ package am.dproc.sms.db.root;
 
 import java.util.List;
 
-import am.dproc.sms.models.TestBean;
+import am.dproc.sms.models.Test;
 
 public interface TestDAO {	
 
-	Integer createTest(TestBean test);
+	Integer createTest(Test test);
 
-	TestBean getTest(Integer id);
+	Test getTest(Integer id);
 	
-	List<TestBean> getAllTests();
+	List<Test> getAllTests();
 	
-	Integer updateTest(TestBean test);
+	Integer updateTest(Test test);
 	
 	Integer deleteTest(Integer id);
 

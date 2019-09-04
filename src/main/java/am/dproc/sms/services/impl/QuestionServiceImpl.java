@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.QuestionDAO;
-import am.dproc.sms.models.AnswerBean;
-import am.dproc.sms.models.QuestionBean;
+import am.dproc.sms.models.Question;
 import am.dproc.sms.services.root.AnswerService;
 import am.dproc.sms.services.root.QuestionService;
 
@@ -16,38 +15,38 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Autowired
 	QuestionDAO questionDAO;
-	
+
 	@Autowired
 	AnswerService answerService;
 
 	@Override
-	public QuestionBean getQuestion(Integer id) {
-		QuestionBean question =  questionDAO.getQuestion(id);
+	public Question getQuestion(Integer id) {
+		Question question = questionDAO.getQuestion(id);
 		question.setAnswers(answerService.getAnswersForQuestion(id));
 		return question;
 	}
 
 	@Override
-	public List<QuestionBean> getAllQuestions() {
-		List<QuestionBean> questions =  questionDAO.getAllQuestions();
+	public List<Question> getAllQuestions() {
+		List<Question> questions = questionDAO.getAllQuestions();
 		questions.forEach(item -> item.setAnswers(answerService.getAnswersForQuestion(item.getId())));
 		return questions;
 	}
-	
+
 	@Override
-	public List<QuestionBean> getQuestionsForTest(Integer testId) {
-		List<QuestionBean> questions =  questionDAO.getQuestionsForTest(testId);
+	public List<Question> getQuestionsForTest(Integer testId) {
+		List<Question> questions = questionDAO.getQuestionsForTest(testId);
 		questions.forEach(item -> item.setAnswers(answerService.getAnswersForQuestion(item.getId())));
-		return questions;		
+		return questions;
 	}
 
 	@Override
-	public Integer createQuestion(QuestionBean question) {
+	public Integer createQuestion(Question question) {
 		return questionDAO.createQuestion(question);
 	}
 
 	@Override
-	public Integer updateQuestion(QuestionBean question) {
+	public Integer updateQuestion(Question question) {
 		return questionDAO.updateQuestion(question);
 	}
 

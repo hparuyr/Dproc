@@ -11,7 +11,7 @@ import am.dproc.sms.services.root.AssessmentService;
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
-	
+
 	@Autowired
 	AssessmentDAODBImpl asDao;
 

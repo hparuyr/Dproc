@@ -3,6 +3,8 @@ package am.dproc.sms.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.root.CourseDAO;
@@ -19,7 +21,6 @@ public class CourseServiceImpl implements CourseService {
 	@Autowired
 	LessonService lesson;
 
-	// Works
 	@Override
 	public Course getCourse(Integer id) {
 		Course course = this.course.getCourse(id);
@@ -27,33 +28,34 @@ public class CourseServiceImpl implements CourseService {
 		return course;
 	}
 
-	// Works
 	@Override
 	public List<Course> getCourses() {
 		return course.getCourses();
 	}
 
-	// Works
 	@Override
-	public Integer deleteCourse(Integer id) {
-		return lesson.deleteLessonsOfCourse(id) + course.deleteCourse(id);
+	public ResponseEntity<Integer> deleteCourse(Integer id) {
+		return course.deleteCourse(id);
 	}
-	
-	// Works
+
 	@Override
-	public Integer addCourse(Course course) {
-		this.course.addCourse(course);
-		Integer courseID = this.course.getCourseID(course.getName());
-		if (course.getListOfLessons() != null) {
-			for (int i = 0; i < course.getListOfLessons().size(); i++) {
-				if (course.getListOfLessons().get(i).getCourseID() == null) {
-					course.getListOfLessons().get(i).setCourseID(courseID);
-				}
-			}
-		} else {
-			return 1;
+	public ResponseEntity<Integer> addCourse(Course course) {
+		return this.course.addCourse(course);
+	}
+
+	@Override
+	public ResponseEntity<Integer> editCourse(Course course) {
+		if (course.getName() != null) {
+			return this.course.editCourseName(course.getId(), course.getName());
+		} else if (course.getDuration() != null) {
+			return this.course.editCourseDuration(course.getId(), course.getDuration());
+		} else if (course.getDescription() != null) {
+			return this.course.editCourseDescription(course.getId(), course.getDescription());
+		} else if (course.getLocation() != null) {
+			return this.course.editCourseLocation(course.getId(), course.getLocation());
 		}
-		return lesson.addLesson(course.getListOfLessons());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
-	
+
 }

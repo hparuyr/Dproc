@@ -4,14 +4,10 @@ import java.util.List;
 
 import am.dproc.sms.models.Assessment;
 
-
-
-
-
 public interface AssessmentDAO {
-	
+
 	public Assessment getAssessment(Integer id);
-	
+
 	public Assessment getAssessmentByTitle(String title);
 
 	public List<Assessment> getAllAssessments();

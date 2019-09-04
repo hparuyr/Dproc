@@ -10,8 +10,8 @@ import am.dproc.sms.models.Assignment;
 import am.dproc.sms.services.root.AssignmentService;
 
 @Service
-public class AssignmentServiceImpl implements AssignmentService{
-	
+public class AssignmentServiceImpl implements AssignmentService {
+
 	@Autowired
 	AssignmentDAODBImpl asiDao;
 

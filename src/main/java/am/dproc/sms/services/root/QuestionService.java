@@ -2,19 +2,19 @@ package am.dproc.sms.services.root;
 
 import java.util.List;
 
-import am.dproc.sms.models.QuestionBean;
+import am.dproc.sms.models.Question;
 
 public interface QuestionService {
-	QuestionBean getQuestion(Integer id);
+	Question getQuestion(Integer id);
 
-	List<QuestionBean> getAllQuestions();
+	List<Question> getAllQuestions();
 
-	Integer createQuestion(QuestionBean question);
+	Integer createQuestion(Question question);
 
-	Integer updateQuestion(QuestionBean question);
+	Integer updateQuestion(Question question);
 
 	Integer deleteQuestion(Integer id);
 
-	List<QuestionBean> getQuestionsForTest(Integer testId);
+	List<Question> getQuestionsForTest(Integer testId);
 
 }
