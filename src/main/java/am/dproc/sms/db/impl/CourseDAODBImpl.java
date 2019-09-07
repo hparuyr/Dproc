@@ -117,7 +117,6 @@ public class CourseDAODBImpl implements CourseDAO {
 			course.setChangeDate(new Date(rs.getLong("change_date")));
 			return course;
 		}
-
 	}
 
 }
