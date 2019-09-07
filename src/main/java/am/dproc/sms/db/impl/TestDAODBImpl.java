@@ -10,8 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.root.TestDAO;
-import am.dproc.sms.models.Answer;
-import am.dproc.sms.models.Question;
 import am.dproc.sms.models.Test;
 
 @Repository
@@ -53,9 +51,6 @@ public class TestDAODBImpl implements TestDAO {
 	}
 
 	private static class TestMapper implements RowMapper<Test> {
-		@Autowired
-		JdbcTemplate template;
-
 		@Override
 		public Test mapRow(ResultSet rs, int rownumber) throws SQLException {
 			Test test = new Test();
@@ -63,43 +58,7 @@ public class TestDAODBImpl implements TestDAO {
 			test.setTitle(rs.getString("TITLE"));
 			test.setLessonId(rs.getInt("LESSON_ID"));
 
-			// test.setQuestions(getQuestionsForTest(test.getId()));
-
 			return test;
-		}
-
-		private List<Question> getQuestionsForTest(Integer id) {
-			return template.query("select ID, CONTENT from QUESTION where TEST_ID = ? ", new Object[] { id },
-					new RowMapper<Question>() {
-						@Override
-						public Question mapRow(ResultSet rs, int rownumber) throws SQLException {
-							Question question = new Question();
-							question.setId(rs.getInt("ID"));
-							question.setContent(rs.getString("CONTENT"));
-							question.setTestId(id);
-
-							question.setAnswers(getAnswersForQuestion(question.getId()));
-
-							return question;
-						}
-					});
-
-		}
-
-		private List<Answer> getAnswersForQuestion(Integer id) {
-			return template.query("select ID, CONTENT, SCORE from ANSWER where QUESTION_ID = :id ", new Object[] { id },
-					new RowMapper<Answer>() {
-						@Override
-						public Answer mapRow(ResultSet rs, int rownumber) throws SQLException {
-							Answer answer = new Answer();
-							answer.setId(rs.getInt("ID"));
-							answer.setContent(rs.getString("CONTENT"));
-							answer.setScore(rs.getInt("SCORE"));
-							answer.setQuestionId(id);
-
-							return answer;
-						}
-					});
 		}
 	}
 }
