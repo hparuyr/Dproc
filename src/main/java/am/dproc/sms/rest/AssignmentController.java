@@ -2,65 +2,95 @@ package am.dproc.sms.rest;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.ws.rs.core.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Assignment;
 import am.dproc.sms.services.impl.AssignmentServiceImpl;
 
 @RestController
-@RequestMapping(path = "/assignment")
-
+@Path(value = "/assignment")
 public class AssignmentController {
 
 	@Autowired
 	AssignmentServiceImpl asiService;
 
-	@GetMapping(value = "/{id}")
-	public Assignment getAssignment(Integer id) {
-		// TODO Auto-generated method stub
+	@GET
+	@Path(value = "/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Assignment getAssignment(@PathParam(value = "id") Integer id) {
 		return asiService.getAssignment(id);
 	}
 
-	@GetMapping(value = "/")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assignment> getAllAssignments() {
 		// TODO Auto-generated method stub
 		return asiService.getAllAssignments();
 	}
 
-	@GetMapping(value = "/{title}")
-	public List<Assignment> getAllAssignments(String title) {
-		// TODO Auto-generated method stub
+	@GET
+	@Path(value = "title/{title}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Assignment> getAllAssignments(@PathParam(value = "title") String title) {
 		return asiService.getAllAssignments(title);
 	}
 
-	@GetMapping(value = "/{teacherId}")
-	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId) {
-		// TODO Auto-generated method stub
+	@GET
+	@Path(value = "teacher/{teacherId}")	
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Assignment> getAssignmentsByTeacherId(@PathParam(value = "teacherId") Integer teacherId) {
 		return asiService.getAssignmentsByTeacherId(teacherId);
 	}
 
-	@DeleteMapping(value = "/{id}")
-	public Integer deleteAssignment(Integer id) {
-		// TODO Auto-generated method stub
-		return asiService.deleteAssignment(id);
+	@GET
+	@Path(value = "/feedback/{id}")	
+	public String getAssignmentFeedback(@PathParam(value = "id") Integer id) {
+		return asiService.getAssignmentFeedback(id);
 	}
 
-	@DeleteMapping(value = "/")
+	@DELETE
+	@Path(value = "/{id}")	
+	public Integer deleteAssignment(@PathParam(value = "id") Integer id) {
+		return asiService.deleteAssignment(id);
+	}
+	
+	@DELETE
+	@Path(value = "/feedback/{id}")	
+	public Integer deleteAssignmentFeedback(@PathParam(value = "id") Integer id) {
+		return asiService.deleteAssignmentFeedback(id);
+	}
+	
+	@POST
+	@Path(value = "/feedback/{teacherId}/{assignmentId}/{comment}")	
+	public Integer addAssignmentFeedback(@PathParam(value = "teacherId") Integer teacherId, @PathParam(value = "assignmentId") Integer assignmentId, @PathParam(value = "comment") String comment) {
+		return asiService.addAssignmentFeedback(teacherId, assignmentId, comment);
+	}
+	
+	@PUT
+	@Path(value = "/feedback/{id}/{comment}")	
+	public Integer updateAssignmentFeedback(@PathParam(value = "id") Integer id, @PathParam(value = "comment") String comment) {
+		return asiService.updateAssignmentFeedback(id, comment);
+	}
+
+	@DELETE
 	public Integer deleteAllAssignments() {
-		// TODO Auto-generated method stub
 		return asiService.deleteAllAssignments();
 	}
 
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Integer addAssignment(Assignment asi) {
-		// TODO Auto-generated method stub
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+		public Integer addAssignment(Assignment asi) {
 		return asiService.addAssignment(asi);
 	}
-
 }

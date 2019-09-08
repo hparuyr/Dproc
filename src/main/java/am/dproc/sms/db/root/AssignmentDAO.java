@@ -20,4 +20,12 @@ public interface AssignmentDAO {
 
 	public Integer addAssignment(Assignment asi);
 
+	String getAssignmentFeedback(Integer id);
+
+	Integer addAssignmentFeedback(Integer teacherId, Integer assignmentId, String comment);
+
+	Integer updateAssignmentFeedback(Integer id, String comment);
+
+	Integer deleteAssignmentFeedback(Integer id);
+
 }

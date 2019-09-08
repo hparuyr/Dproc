@@ -4,6 +4,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
 import am.dproc.sms.rest.AnswerController;
+import am.dproc.sms.rest.AssessmentController;
+import am.dproc.sms.rest.AssignmentController;
 import am.dproc.sms.rest.CourseController;
 import am.dproc.sms.rest.GroupController;
 import am.dproc.sms.rest.GroupCourseController;
@@ -28,5 +30,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(TestController.class);
 		register(TestResultController.class);
 		register(ScheduleController.class);
+		register(AssessmentController.class);
+		register(AssignmentController.class);			
 	}
 }
