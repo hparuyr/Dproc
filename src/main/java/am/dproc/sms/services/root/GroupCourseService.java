@@ -5,7 +5,7 @@ import java.util.List;
 import am.dproc.sms.models.GroupCourse;
 
 public interface GroupCourseService {
-	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished);
+	public int create(GroupCourse groupCourse);
 	public GroupCourse getById(int id);
 	public GroupCourse getByGroupAndCourse(int groupId, int courseId);
 	public List<GroupCourse> getByGroupID(int groupId);

@@ -12,6 +12,7 @@ import am.dproc.sms.rest.GroupCourseController;
 import am.dproc.sms.rest.LessonController;
 import am.dproc.sms.rest.QuestionController;
 import am.dproc.sms.rest.ScheduleController;
+import am.dproc.sms.rest.SurveyController;
 import am.dproc.sms.rest.TestController;
 import am.dproc.sms.rest.TestResultController;
 import am.dproc.sms.rest.TopicController;
@@ -32,5 +33,6 @@ public class JerseyConfig extends ResourceConfig {
 		register(ScheduleController.class);
 		register(AssessmentController.class);
 		register(AssignmentController.class);			
+		register(SurveyController.class);
 	}
 }
