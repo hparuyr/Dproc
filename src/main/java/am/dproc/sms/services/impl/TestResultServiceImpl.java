@@ -13,13 +13,13 @@ public class TestResultServiceImpl implements TestResultService {
 	
 
 	@Override
-	public Integer createTestResult(Integer testId, Integer userId, Double score) {
-		return testResultDAO.createTestResult(testId, userId, score);
+	public Integer createTestResult(Integer testId, Integer studentId, Double score) {
+		return testResultDAO.createTestResult(testId, studentId, score);
 	}
 
 	@Override
-	public Double getLastTestResultForUser(Integer testId, Integer userId) {
-		return testResultDAO.getLastTestResultForUser(testId, userId);
+	public Double getLastTestResultForUser(Integer testId, Integer studentId) {
+		return testResultDAO.getLastTestResultForUser(testId, studentId);
 	}
 
 	@Override
@@ -28,13 +28,13 @@ public class TestResultServiceImpl implements TestResultService {
 	}
 
 	@Override
-	public Double getAverageTestResultForUser(Integer userId) {
-		return testResultDAO.getAverageTestResultForUser(userId);
+	public Double getAverageTestResultForUser(Integer studentId) {
+		return testResultDAO.getAverageTestResultForUser(studentId);
 	}
 
 	@Override
-	public Integer updateTestResultForUser(Integer testId, Integer userId, Double score) {
-		return testResultDAO.updateTestResultForUser(testId, userId, score);
+	public Integer updateTestResultForUser(Integer testId, Integer studentId, Double score) {
+		return testResultDAO.updateTestResultForUser(testId, studentId, score);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class TestResultServiceImpl implements TestResultService {
 	}
 
 	@Override
-	public Integer deleteTestResultForUser(Integer testId, Integer userId) {
-		return testResultDAO.deleteTestResultForUser(testId, userId);
+	public Integer deleteTestResultForUser(Integer testId, Integer studentId) {
+		return testResultDAO.deleteTestResultForUser(testId, studentId);
 	}
 }

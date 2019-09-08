@@ -57,4 +57,24 @@ public class AssignmentServiceImpl implements AssignmentService {
 		return asiDao.addAssignment(asi);
 	}
 
+	@Override
+	public String getAssignmentFeedback(Integer id) {
+		return asiDao.getAssignmentFeedback(id);
+	}
+
+	@Override
+	public Integer addAssignmentFeedback(Integer teacherId, Integer assignmentId, String comment) {
+		return asiDao.addAssignmentFeedback(teacherId, assignmentId, comment);
+	}
+	
+	@Override
+	public Integer updateAssignmentFeedback(Integer id, String comment) {
+		return asiDao.updateAssignmentFeedback(id, comment);
+	}
+
+	@Override
+	public Integer deleteAssignmentFeedback(Integer id) {
+		return asiDao.deleteAssignmentFeedback(id);
+	}
+
 }

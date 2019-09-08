@@ -21,17 +21,17 @@ public class TestResultController {
 	TestResultService testResultService;
 
 	@POST
-	@Path(value = "/{testId}/{userId}/{score}")
+	@Path(value = "/{testId}/{studentId}/{score}")
 	public Integer createTestResult(@PathParam(value = "testId") Integer testId,
-			@PathParam(value = "userId") Integer userId, @PathParam(value = "score") Double score) {
-		return testResultService.createTestResult(testId, userId, score);
+			@PathParam(value = "studentId") Integer studentId, @PathParam(value = "score") Double score) {
+		return testResultService.createTestResult(testId, studentId, score);
 	}
 
 	@GET
-	@Path(value = "/last/{testId}/{userId}")
+	@Path(value = "/last/{testId}/{studentId}")
 	public Double getLastTestResultForUser(@PathParam(value = "testId") Integer testId,
-			@PathParam(value = "userId") Integer userId) {
-		return testResultService.getLastTestResultForUser(testId, userId);
+			@PathParam(value = "studentId") Integer studentId) {
+		return testResultService.getLastTestResultForUser(testId, studentId);
 	}
 
 	@GET
@@ -41,16 +41,16 @@ public class TestResultController {
 	}
 
 	@GET
-	@Path(value = "/avg/{userId}")
-	public Double getAverageTestResultForUser(@PathParam(value = "userId") Integer userId) {
-		return testResultService.getAverageTestResultForUser(userId);
+	@Path(value = "/avg/{studentId}")
+	public Double getAverageTestResultForUser(@PathParam(value = "studentId") Integer studentId) {
+		return testResultService.getAverageTestResultForUser(studentId);
 	}
 
 	@PUT
-	@Path(value = "/{testId}/{userId}/{score}")
+	@Path(value = "/{testId}/{studentId}/{score}")
 	public Integer updateTestResultForUser(@PathParam(value = "testId") Integer testId,
-			@PathParam(value = "userId") Integer userId, @PathParam(value = "score") Double score) {
-		return testResultService.updateTestResultForUser(testId, userId, score);
+			@PathParam(value = "studentId") Integer studentId, @PathParam(value = "score") Double score) {
+		return testResultService.updateTestResultForUser(testId, studentId, score);
 	}
 
 	@PUT
@@ -66,9 +66,9 @@ public class TestResultController {
 	}
 
 	@DELETE
-	@Path(value = "/{testId}/{userId}")
-	public Integer deleteTestResultForUser(@PathParam(value = "testId") Integer testId, @PathParam(value = "userId") Integer userId) {
-		return testResultService.deleteTestResultForUser(testId, userId);
+	@Path(value = "/{testId}/{studentId}")
+	public Integer deleteTestResultForUser(@PathParam(value = "testId") Integer testId, @PathParam(value = "studentId") Integer studentId) {
+		return testResultService.deleteTestResultForUser(testId, studentId);
 	}
 
 }
