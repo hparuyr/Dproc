@@ -8,23 +8,46 @@ import org.springframework.stereotype.Service;
 import am.dproc.sms.db.root.GroupDAO;
 import am.dproc.sms.models.Group;
 import am.dproc.sms.services.root.GroupService;
+import am.dproc.sms.services.root.StudentService;
 
 @Service
 public class GroupServiceImpl implements GroupService{
 	@Autowired
-	GroupDAO dao;
+	GroupDAO group;
 	
-	public int create(String name, int schoolId) {
-		return dao.create(name, schoolId);
-	}
-	
-	public Group get(int id) {
-		return dao.get(id);
+	@Autowired
+	StudentService student;
+
+	@Override
+	public Integer addGroup(Group group) {
+		return this.group.addGroup(group);
 	}
 
-	public List<Group> getAll() {
-		return dao.getAll();
+	@Override
+	public Group getGroup(Integer id) {
+		Group group = this.group.getGroup(id);
+		group.setListOfStudents(this.student.getGroupStudents(id));
+		return group;
 	}
-	
-	
+	@Override
+	public List<Group> getSchoolGroups(Integer schoolId) {
+			return this.group.getGroupsBySchoolId(schoolId);
+		}
+	@Override
+	public List<Group> getGroups() {
+		return group.getGroups();
+	}
+
+	@Override
+	public Integer updateGroup(Group group) {
+		if (group.getName() != null) {
+			return this.group.updateGroupName(group.getId(), group.getName());
+		}
+		return 0;
+	}
+
+	@Override
+	public Integer deleteGroup(Integer id) {
+		return this.group.deleteGroup(id);
+	}
 }

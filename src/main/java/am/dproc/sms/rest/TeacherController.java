@@ -17,21 +17,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.Group;
-import am.dproc.sms.services.root.GroupService;
+import am.dproc.sms.models.Teacher;
+import am.dproc.sms.services.root.TeacherService;
 
 @RestController
-@Path("/group")
-public class GroupController {
+@Path("/teacher")
+public class TeacherController {
 	@Autowired
-	GroupService group;
+	TeacherService teacher;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON})
-	public ResponseEntity<Integer> addGroup(Group group) {
-		if(this.group.addGroup(group)==1) {
-		return ResponseEntity.status(HttpStatus.OK)
+	public ResponseEntity<Integer> addTeacher(Teacher teacher) {
+		if(this.teacher.addTeacher(teacher)==1) {
+		return ResponseEntity.status(HttpStatus.CREATED)
 		        .body(1);
 	}
 		else {
@@ -43,22 +43,22 @@ public class GroupController {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public Group getGroup(@PathParam(value = "id") Integer id) {
-		return group.getGroup(id);
+	public Teacher getTeacher(@PathParam(value = "id") Integer id) {
+		return teacher.gerTeacher(id);
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Group> getGroups() {
-		return group.getGroups();
+	public List<Teacher> getTeachers() {
+		return teacher.getTeachers();
 	}
 	
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON})
-	public ResponseEntity<Integer> updateGroup(Group group) {
-		if( this.group.updateGroup(group)==1) {
+	public ResponseEntity<Integer> updateTeacher(Teacher teacher) {
+		if( this.teacher.updateTeacher(teacher)==1) {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body(1);
 		}
@@ -71,8 +71,8 @@ public class GroupController {
 	@DELETE
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public ResponseEntity<Integer> deleteUser(@PathParam(value = "id") Integer id) {
-		if( group.deleteGroup(id)==1) {
+	public ResponseEntity<Integer> deleteTeacher(@PathParam(value = "id") Integer id) {
+		if( teacher.deleteTeacher(id)==1) {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body(1);
 		}
@@ -81,6 +81,5 @@ public class GroupController {
 		            .body(0);
 		}
 	}
-	
 	
 }

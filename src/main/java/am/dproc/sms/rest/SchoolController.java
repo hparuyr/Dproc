@@ -17,20 +17,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.models.Group;
-import am.dproc.sms.services.root.GroupService;
+import am.dproc.sms.models.School;
+import am.dproc.sms.services.root.SchoolService;
 
 @RestController
-@Path("/group")
-public class GroupController {
+@Path("/school")
+public class SchoolController {
 	@Autowired
-	GroupService group;
+	SchoolService school;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON})
-	public ResponseEntity<Integer> addGroup(Group group) {
-		if(this.group.addGroup(group)==1) {
+	public ResponseEntity<Integer> addSchool(School school) {
+		if(this.school.addSchool(school)==1) {
 		return ResponseEntity.status(HttpStatus.OK)
 		        .body(1);
 	}
@@ -43,22 +43,22 @@ public class GroupController {
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public Group getGroup(@PathParam(value = "id") Integer id) {
-		return group.getGroup(id);
+	public School getSchool(@PathParam(value = "id") Integer id) {
+		return school.getSchool(id);
 	}
 	
 	@GET
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Group> getGroups() {
-		return group.getGroups();
+	public List<School> getSchools() {
+		return school.getSchools();
 	}
 	
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({MediaType.APPLICATION_JSON})
-	public ResponseEntity<Integer> updateGroup(Group group) {
-		if( this.group.updateGroup(group)==1) {
+	public ResponseEntity<Integer> updateSchool(School school) {
+		if( this.school.updateSchool(school)==1) {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body(1);
 		}
@@ -71,8 +71,8 @@ public class GroupController {
 	@DELETE
 	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
-	public ResponseEntity<Integer> deleteUser(@PathParam(value = "id") Integer id) {
-		if( group.deleteGroup(id)==1) {
+	public ResponseEntity<Integer> deleteSchool(@PathParam(value = "id") Integer id) {
+		if( school.deleteSchool(id)==1) {
 			return ResponseEntity.status(HttpStatus.OK)
 			        .body(1);
 		}
@@ -81,6 +81,7 @@ public class GroupController {
 		            .body(0);
 		}
 	}
+	
 	
 	
 }
