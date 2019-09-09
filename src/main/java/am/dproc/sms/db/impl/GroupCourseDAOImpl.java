@@ -37,7 +37,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 
 	// works
 	@Override
-	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished) {
+	public int create(GroupCourse groupCourse) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		long currentTimeStamp = System.currentTimeMillis();
 //		return template.update(CREATE_SQL, groupId, courseId, teacherId, startDate, isFinished, currentTimeStamp, currentTimeStamp);
@@ -46,11 +46,11 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
-				ps.setInt(1, groupId);
-				ps.setInt(2, courseId);
-				ps.setInt(3, teacherId);
-				ps.setLong(4, startDate);
-				ps.setBoolean(5, isFinished);
+				ps.setInt(1, groupCourse.getGroupId());
+				ps.setInt(2, groupCourse.getCourseId());
+				ps.setInt(3, groupCourse.getTeacherId());
+				ps.setLong(4, groupCourse.getStartDate());
+				ps.setBoolean(5, groupCourse.isFinished());
 				ps.setLong(6, currentTimeStamp);
 				ps.setLong(7, currentTimeStamp);
 				return ps;

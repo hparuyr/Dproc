@@ -6,7 +6,7 @@ import am.dproc.sms.models.GroupCourse;
 
 public interface GroupCourseDAO {
 	
-	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished);
+	public int create(GroupCourse groupCourse);
 
 	public GroupCourse getById(int id);
 

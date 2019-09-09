@@ -31,8 +31,7 @@ public class GroupCourseController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response assignCourseToGroup(GroupCourse groupCourse) {
-		int id = groupCourseService.create(groupCourse.getGroupId(), groupCourse.getCourseId(),
-				groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.isFinished());
+		int id = groupCourseService.create(groupCourse);
 		if (id > 0) {
 			return Response.status(Response.Status.CREATED).entity(id).build();
 		} else {

@@ -16,8 +16,8 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 
 
 	@Override
-	public int create(int groupId, int courseId, int teacherId, long startDate, boolean isFinished) {
-		return dao.create(groupId, courseId, teacherId, startDate, isFinished);
+	public int create(GroupCourse groupCourse) {
+		return dao.create(groupCourse);
 	}
 
 	@Override
