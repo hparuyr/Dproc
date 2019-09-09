@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.AnswerDAO;
+import am.dproc.sms.db.interfaces.AnswerDAO;
 import am.dproc.sms.models.Answer;
-import am.dproc.sms.services.root.AnswerService;
+import am.dproc.sms.services.interfaces.AnswerService;
 @Service
 public class AnswerServiceImpl implements AnswerService {
 

@@ -3,14 +3,12 @@ package am.dproc.sms.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.LessonDAO;
+import am.dproc.sms.db.interfaces.LessonDAO;
 import am.dproc.sms.models.Lesson;
-import am.dproc.sms.services.root.LessonService;
-import am.dproc.sms.services.root.TopicService;
+import am.dproc.sms.services.interfaces.LessonService;
+import am.dproc.sms.services.interfaces.TopicService;
 
 @Service
 public class LessonServiceImpl implements LessonService {
@@ -21,7 +19,6 @@ public class LessonServiceImpl implements LessonService {
 	@Autowired
 	TopicService topic;
 
-	// Works
 	@Override
 	public Lesson getLesson(Integer id) {
 		Lesson lesson = this.lesson.getLesson(id);
@@ -40,24 +37,31 @@ public class LessonServiceImpl implements LessonService {
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteLesson(Integer id) {
-		return lesson.deleteLesson(id);
+	public Integer deleteLesson(Integer id) {
+		if (getLesson(id).getListOfTopics().size() == 0) {
+			return lesson.deleteLesson(id);
+		}
+		return 0;
 	}
 
 	@Override
-	public ResponseEntity<Integer> addLesson(Lesson lesson) {
+	public Integer addLesson(Lesson lesson) {
+		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseID() == null) {
+			return 0;
+		}
 		return this.lesson.addLesson(lesson, lesson.getCourseID());
 	}
 
 	@Override
-	public ResponseEntity<Integer> editLesson(Lesson lesson) {
+	public Integer editLesson(Lesson lesson) {
 		if (lesson.getName() != null) {
 			return this.lesson.editLessonName(lesson.getId(), lesson.getName());
-		} else if (lesson.getContent() != null) {
+		}
+		if (lesson.getContent() != null) {
 			return this.lesson.editLessonContent(lesson.getId(), lesson.getContent());
 		}
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return 0;
 	}
 
 }

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Question;
-import am.dproc.sms.services.root.QuestionService;
+import am.dproc.sms.services.interfaces.QuestionService;
 
 @RestController
 @Path(value = "/question")

@@ -2,17 +2,14 @@ package am.dproc.sms.db.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.CourseDAO;
+import am.dproc.sms.db.interfaces.CourseDAO;
 import am.dproc.sms.models.Course;
 
 @Repository
@@ -42,66 +39,45 @@ public class CourseDAODBImpl implements CourseDAO {
 	}
 
 	@Override
-	public Integer getCourseID(String name) {
+	public Integer getCourseID(String name, Long currentTimeMillis) {
 		return jdbctemplate.queryForObject(GET_COURSE_ID, Integer.class, name);
 	}
 
 	@Override
-	public ResponseEntity<Integer> deleteCourse(Integer id) {
-		if (jdbctemplate.update(DELETE_COURSE_BY_ID, id) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+	public Integer deleteCourse(Integer id) {
+		return jdbctemplate.update(DELETE_COURSE_BY_ID, id);
 	}
 
 	@Override
-	public ResponseEntity<Integer> addCourse(Course course) {
+	public Integer addCourse(Course course) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		if (jdbctemplate.update(ADD_COURSE, new Object[] { course.getName(), course.getDuration(),
-				course.getDescription(), course.getLocation(), currentTimeMillis, currentTimeMillis }) == 1) {
-			return ResponseEntity.status(HttpStatus.CREATED).body(getCourseID(course.getName()));
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		jdbctemplate.update(ADD_COURSE, new Object[] { course.getName(), course.getDuration(),
+				course.getDescription(), course.getLocation(), currentTimeMillis, currentTimeMillis });
+		return getCourseID(course.getName(), currentTimeMillis);
 	}
 
 	@Override
-	public ResponseEntity<Integer> editCourseName(Integer id, String name) {
+	public Integer editCourseName(Integer id, String name) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		if (jdbctemplate.update(EDIT_COURSE_NAME, new Object[] { name, currentTimeMillis, id }) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return jdbctemplate.update(EDIT_COURSE_NAME, new Object[] { name, currentTimeMillis, id });
 	}
 
 	@Override
-	public ResponseEntity<Integer> editCourseDuration(Integer id, String duration) {
+	public Integer editCourseDuration(Integer id, String duration) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		if (jdbctemplate.update(EDIT_COURSE_DURATION, new Object[] { duration, currentTimeMillis, id }) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return jdbctemplate.update(EDIT_COURSE_DURATION, new Object[] { duration, currentTimeMillis, id });
 	}
 
 	@Override
-	public ResponseEntity<Integer> editCourseDescription(Integer id, String description) {
+	public Integer editCourseDescription(Integer id, String description) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		if (jdbctemplate.update(EDIT_COURSE_DESCRIPTION, new Object[] { description, currentTimeMillis, id }) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return jdbctemplate.update(EDIT_COURSE_DESCRIPTION, new Object[] { description, currentTimeMillis, id });
 	}
 
 	@Override
-	public ResponseEntity<Integer> editCourseLocation(Integer id, String location) {
+	public Integer editCourseLocation(Integer id, String location) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		if (jdbctemplate.update(EDIT_COURSE_LOCATION, new Object[] { location, currentTimeMillis, id }) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return jdbctemplate.update(EDIT_COURSE_LOCATION, new Object[] { location, currentTimeMillis, id });
 	}
 
 	private static class CourseMapper implements RowMapper<Course> {
@@ -113,10 +89,10 @@ public class CourseDAODBImpl implements CourseDAO {
 			course.setDuration(rs.getString("duration"));
 			course.setDescription(rs.getString("description"));
 			course.setLocation(rs.getString("location"));
-			course.setCreationDate(new Date(rs.getLong("creation_date")));
-			course.setChangeDate(new Date(rs.getLong("change_date")));
+			course.setCreationDate(rs.getLong("creation_date"));
 			return course;
 		}
+
 	}
 
 }

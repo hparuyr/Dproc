@@ -32,8 +32,8 @@ import org.springframework.web.client.RestTemplate;
 
 import am.dproc.sms.models.SurveyQuestion;
 import am.dproc.sms.models.SurveyResult;
-import am.dproc.sms.services.root.SurveyQuestionService;
-import am.dproc.sms.services.root.SurveyResultService;
+import am.dproc.sms.services.interfaces.SurveyQuestionService;
+import am.dproc.sms.services.interfaces.SurveyResultService;
 
 @RestController
 @Path("/survey")

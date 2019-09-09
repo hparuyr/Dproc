@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.SurveyQuestionDAO;
+import am.dproc.sms.db.interfaces.SurveyQuestionDAO;
 import am.dproc.sms.models.SurveyQuestion;
-import am.dproc.sms.services.root.SurveyQuestionService;
+import am.dproc.sms.services.interfaces.SurveyQuestionService;
 
 @Service
 public class SurveyQuestionServiceImpl implements SurveyQuestionService {

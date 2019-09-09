@@ -3,8 +3,8 @@ package am.dproc.sms.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.TestResultDAO;
-import am.dproc.sms.services.root.TestResultService;
+import am.dproc.sms.db.interfaces.TestResultDAO;
+import am.dproc.sms.services.interfaces.TestResultService;
 
 @Service
 public class TestResultServiceImpl implements TestResultService {

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.ScheduleRecord;
-import am.dproc.sms.services.root.ScheduleService;
+import am.dproc.sms.services.interfaces.ScheduleService;
 
 @RestController
 @Path(value = "/schedule")

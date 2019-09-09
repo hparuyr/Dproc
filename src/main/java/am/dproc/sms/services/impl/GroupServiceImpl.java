@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.GroupDAO;
+import am.dproc.sms.db.interfaces.GroupDAO;
 import am.dproc.sms.models.Group;
-import am.dproc.sms.services.root.GroupService;
+import am.dproc.sms.services.interfaces.GroupService;
 
 @Service
 public class GroupServiceImpl implements GroupService{

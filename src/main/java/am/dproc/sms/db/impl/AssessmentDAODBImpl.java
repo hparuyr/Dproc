@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.AssessmentDAO;
+import am.dproc.sms.db.interfaces.AssessmentDAO;
 import am.dproc.sms.models.Assessment;
 
 @Repository

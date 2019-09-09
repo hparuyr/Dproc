@@ -13,11 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Topic;
-import am.dproc.sms.services.root.TopicService;
+import am.dproc.sms.services.interfaces.TopicService;
 
 @RestController
 @Path(value = "/topic")
@@ -43,21 +44,31 @@ public class TopicController {
 	@Path(value = "/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> deleteTopic(@PathParam(value = "id") Integer id) {
-		return topic.deleteTopic(id);
+		if (topic.deleteTopic(id) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addTopic(Topic topic) {
-		return this.topic.addTopic(topic);
+		Integer id = this.topic.addTopic(topic);
+		if (id == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Message", "All fields must be filled!").body(0);
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(id);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> editTopic(Topic topic) {
-		return this.topic.editTopic(topic);
+		if (this.topic.editTopic(topic) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
 
 }

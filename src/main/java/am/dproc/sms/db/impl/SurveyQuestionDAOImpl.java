@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.SurveyQuestionDAO;
+import am.dproc.sms.db.interfaces.SurveyQuestionDAO;
 import am.dproc.sms.models.SurveyQuestion;
 
 @Repository

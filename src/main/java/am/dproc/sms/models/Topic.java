@@ -1,14 +1,11 @@
 package am.dproc.sms.models;
 
-import java.util.Date;
-
 public class Topic {
 
 	private Integer id;
 	private String videoURL;
 	private String webPageURL;
-	private Date creationDate;
-	private Date changeDate;
+	private Long creationDateMillis;
 	private Integer lessonID;
 
 	public Integer getId() {
@@ -48,20 +45,12 @@ public class Topic {
 		return "Url [" + "ID : " + id + " Video Url : " + videoURL + " Web Page Url : " + webPageURL + "]";
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
+	public Long getCreationDate() {
+		return creationDateMillis;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Date getChangeDate() {
-		return changeDate;
-	}
-
-	public void setChangeDate(Date changeDate) {
-		this.changeDate = changeDate;
+	public void setCreationDate(Long creationDateMillis) {
+		this.creationDateMillis = creationDateMillis;
 	}
 
 }
