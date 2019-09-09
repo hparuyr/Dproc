@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.QuestionDAO;
+import am.dproc.sms.db.interfaces.QuestionDAO;
 import am.dproc.sms.models.Question;
-import am.dproc.sms.services.root.AnswerService;
-import am.dproc.sms.services.root.QuestionService;
+import am.dproc.sms.services.interfaces.AnswerService;
+import am.dproc.sms.services.interfaces.QuestionService;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {

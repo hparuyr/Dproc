@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Answer;
-import am.dproc.sms.services.root.AnswerService;
+import am.dproc.sms.services.interfaces.AnswerService;
 
 @RestController
 @Path(value = "/answer")

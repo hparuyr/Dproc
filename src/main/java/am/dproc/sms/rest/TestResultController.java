@@ -10,7 +10,7 @@ import javax.ws.rs.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import am.dproc.sms.services.root.TestResultService;
+import am.dproc.sms.services.interfaces.TestResultService;
 
 
 

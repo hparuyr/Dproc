@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.TestDAO;
+import am.dproc.sms.db.interfaces.TestDAO;
 import am.dproc.sms.models.Test;
-import am.dproc.sms.services.root.QuestionService;
-import am.dproc.sms.services.root.TestService;
+import am.dproc.sms.services.interfaces.QuestionService;
+import am.dproc.sms.services.interfaces.TestService;
 
 @Service
 public class TestServiceImpl implements TestService {

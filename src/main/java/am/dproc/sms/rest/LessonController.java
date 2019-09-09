@@ -13,11 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Lesson;
-import am.dproc.sms.services.root.LessonService;
+import am.dproc.sms.services.interfaces.LessonService;
 
 @RestController
 @Path(value = "/lesson")
@@ -27,37 +28,47 @@ public class LessonController {
 	LessonService lesson;
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Lesson getLesson(@PathParam(value = "id") Integer id) {
 		return lesson.getLesson(id);
 	}
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Lesson> getLessons() {
 		return lesson.getAllLesson();
 	}
 
 	@DELETE
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
-	public ResponseEntity<Integer> deleteLesson(@PathParam(value = "id")  Integer id) {
-		return lesson.deleteLesson(id);
+	public ResponseEntity<Integer> deleteLesson(@PathParam(value = "id") Integer id) {
+		if (lesson.deleteLesson(id) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Message", "First you must delete the topics of this lesson!").body(0);
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addCourse(Lesson lesson) {
-		return this.lesson.addLesson(lesson);
+		Integer id = this.lesson.addLesson(lesson);
+		if (id == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Message", "All fields must be filled!").body(0);
+		}
+		return ResponseEntity.status(HttpStatus.CREATED).body(id);
 	}
-	
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({MediaType.APPLICATION_JSON})
+	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> editLesson(Lesson lesson) {
-		return this.lesson.editLesson(lesson);
+		if (this.lesson.editLesson(lesson) == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(1);
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
 	}
-	
+
 }

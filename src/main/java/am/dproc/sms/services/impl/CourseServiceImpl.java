@@ -3,14 +3,12 @@ package am.dproc.sms.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.CourseDAO;
+import am.dproc.sms.db.interfaces.CourseDAO;
 import am.dproc.sms.models.Course;
-import am.dproc.sms.services.root.CourseService;
-import am.dproc.sms.services.root.LessonService;
+import am.dproc.sms.services.interfaces.CourseService;
+import am.dproc.sms.services.interfaces.LessonService;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -32,30 +30,39 @@ public class CourseServiceImpl implements CourseService {
 	public List<Course> getCourses() {
 		return course.getCourses();
 	}
-
+	
 	@Override
-	public ResponseEntity<Integer> deleteCourse(Integer id) {
-		return course.deleteCourse(id);
+	public Integer deleteCourse(Integer id) {
+		if (getCourse(id).getListOfLessons().size() == 0) {
+			return course.deleteCourse(id);
+		}
+		return 0;
 	}
 
 	@Override
-	public ResponseEntity<Integer> addCourse(Course course) {
+	public Integer addCourse(Course course) {
+		if (course.getName() == null || course.getDuration() == null || course.getDescription() == null || course.getLocation() == null) {
+			return 0;
+		}
 		return this.course.addCourse(course);
 	}
 
 	@Override
-	public ResponseEntity<Integer> editCourse(Course course) {
+	public Integer editCourse(Course course) {
 		if (course.getName() != null) {
 			return this.course.editCourseName(course.getId(), course.getName());
-		} else if (course.getDuration() != null) {
+		}
+		if (course.getDuration() != null) {
 			return this.course.editCourseDuration(course.getId(), course.getDuration());
-		} else if (course.getDescription() != null) {
+		}
+		if (course.getDescription() != null) {
 			return this.course.editCourseDescription(course.getId(), course.getDescription());
-		} else if (course.getLocation() != null) {
+		}
+		if (course.getLocation() != null) {
 			return this.course.editCourseLocation(course.getId(), course.getLocation());
 		}
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return 0;
 	}
 
 }

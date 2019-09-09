@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Group;
-import am.dproc.sms.services.root.GroupService;
+import am.dproc.sms.services.interfaces.GroupService;
 
 @RestController
 @Path("/group")

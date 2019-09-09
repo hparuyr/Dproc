@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.QuestionDAO;
+import am.dproc.sms.db.interfaces.QuestionDAO;
 import am.dproc.sms.models.Question;
 
 @Repository

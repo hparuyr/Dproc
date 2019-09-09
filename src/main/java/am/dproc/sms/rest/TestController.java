@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Test;
-import am.dproc.sms.services.root.TestService;
+import am.dproc.sms.services.interfaces.TestService;
 
 @RestController
 @Path(value = "/test")

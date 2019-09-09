@@ -13,7 +13,7 @@ public class SmsApplication {
 	}
 
 	@Bean
-	   public RestTemplate getRestTemplate() {
-	      return new RestTemplate();
-	   }
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
+	}
 }

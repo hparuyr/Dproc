@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.ScheduleDAO;
+import am.dproc.sms.db.interfaces.ScheduleDAO;
 import am.dproc.sms.models.ScheduleRecord;
-import am.dproc.sms.services.root.ScheduleService;
+import am.dproc.sms.services.interfaces.ScheduleService;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {

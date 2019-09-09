@@ -16,14 +16,14 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Assignment;
-import am.dproc.sms.services.impl.AssignmentServiceImpl;
+import am.dproc.sms.services.interfaces.AssignmentService;
 
 @RestController
 @Path(value = "/assignment")
 public class AssignmentController {
 
 	@Autowired
-	AssignmentServiceImpl asiService;
+	AssignmentService asiService;
 
 	@GET
 	@Path(value = "/{id}")
@@ -35,7 +35,6 @@ public class AssignmentController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assignment> getAllAssignments() {
-		// TODO Auto-generated method stub
 		return asiService.getAllAssignments();
 	}
 
@@ -47,39 +46,41 @@ public class AssignmentController {
 	}
 
 	@GET
-	@Path(value = "teacher/{teacherId}")	
+	@Path(value = "teacher/{teacherId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assignment> getAssignmentsByTeacherId(@PathParam(value = "teacherId") Integer teacherId) {
 		return asiService.getAssignmentsByTeacherId(teacherId);
 	}
 
 	@GET
-	@Path(value = "/feedback/{id}")	
+	@Path(value = "/feedback/{id}")
 	public String getAssignmentFeedback(@PathParam(value = "id") Integer id) {
 		return asiService.getAssignmentFeedback(id);
 	}
 
 	@DELETE
-	@Path(value = "/{id}")	
+	@Path(value = "/{id}")
 	public Integer deleteAssignment(@PathParam(value = "id") Integer id) {
 		return asiService.deleteAssignment(id);
 	}
-	
+
 	@DELETE
-	@Path(value = "/feedback/{id}")	
+	@Path(value = "/feedback/{id}")
 	public Integer deleteAssignmentFeedback(@PathParam(value = "id") Integer id) {
 		return asiService.deleteAssignmentFeedback(id);
 	}
-	
+
 	@POST
-	@Path(value = "/feedback/{teacherId}/{assignmentId}/{comment}")	
-	public Integer addAssignmentFeedback(@PathParam(value = "teacherId") Integer teacherId, @PathParam(value = "assignmentId") Integer assignmentId, @PathParam(value = "comment") String comment) {
+	@Path(value = "/feedback/{teacherId}/{assignmentId}/{comment}")
+	public Integer addAssignmentFeedback(@PathParam(value = "teacherId") Integer teacherId,
+			@PathParam(value = "assignmentId") Integer assignmentId, @PathParam(value = "comment") String comment) {
 		return asiService.addAssignmentFeedback(teacherId, assignmentId, comment);
 	}
-	
+
 	@PUT
-	@Path(value = "/feedback/{id}/{comment}")	
-	public Integer updateAssignmentFeedback(@PathParam(value = "id") Integer id, @PathParam(value = "comment") String comment) {
+	@Path(value = "/feedback/{id}/{comment}")
+	public Integer updateAssignmentFeedback(@PathParam(value = "id") Integer id,
+			@PathParam(value = "comment") String comment) {
 		return asiService.updateAssignmentFeedback(id, comment);
 	}
 
@@ -90,7 +91,7 @@ public class AssignmentController {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-		public Integer addAssignment(Assignment asi) {
+	public Integer addAssignment(Assignment asi) {
 		return asiService.addAssignment(asi);
 	}
 }

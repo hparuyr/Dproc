@@ -1,6 +1,5 @@
 package am.dproc.sms.models;
 
-import java.util.Date;
 import java.util.List;
 
 public class Course {
@@ -10,8 +9,7 @@ public class Course {
 	private String duration;
 	private String description;
 	private String location;
-	private Date creationDate;
-	private Date changeDate;
+	private Long creationDateMillis;
 	private List<Lesson> listOfLessons;
 
 	public Integer getId() {
@@ -68,20 +66,12 @@ public class Course {
 				+ description + " Location : " + location + "]";
 	}
 
-	public Date getCreationDate() {
-		return creationDate;
+	public Long getCreationDate() {
+		return creationDateMillis;
 	}
 
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public Date getChangeDate() {
-		return changeDate;
-	}
-
-	public void setChangeDate(Date changeDate) {
-		this.changeDate = changeDate;
+	public void setCreationDate(Long creationDateMillis) {
+		this.creationDateMillis = creationDateMillis;
 	}
 
 }

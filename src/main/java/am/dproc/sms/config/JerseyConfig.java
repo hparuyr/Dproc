@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import am.dproc.sms.rest.AnswerController;
 import am.dproc.sms.rest.AssessmentController;
 import am.dproc.sms.rest.AssignmentController;
+import am.dproc.sms.rest.ClassroomController;
 import am.dproc.sms.rest.CourseController;
 import am.dproc.sms.rest.GroupController;
 import am.dproc.sms.rest.GroupCourseController;
 import am.dproc.sms.rest.LessonController;
 import am.dproc.sms.rest.QuestionController;
 import am.dproc.sms.rest.ScheduleController;
+import am.dproc.sms.rest.StudentCommentController;
 import am.dproc.sms.rest.SurveyController;
 import am.dproc.sms.rest.TestController;
 import am.dproc.sms.rest.TestResultController;
@@ -26,13 +28,15 @@ public class JerseyConfig extends ResourceConfig {
 		register(CourseController.class);
 		register(LessonController.class);
 		register(TopicController.class);
+		register(ClassroomController.class);
+		register(StudentCommentController.class);
 		register(AnswerController.class);
 		register(QuestionController.class);
 		register(TestController.class);
 		register(TestResultController.class);
 		register(ScheduleController.class);
 		register(AssessmentController.class);
-		register(AssignmentController.class);			
+		register(AssignmentController.class);
 		register(SurveyController.class);
 	}
 }
