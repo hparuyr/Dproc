@@ -12,7 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.LessonDAO;
+import am.dproc.sms.db.interfaces.LessonDAO;
 import am.dproc.sms.models.Lesson;
 
 @Repository

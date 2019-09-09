@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Student;
-import am.dproc.sms.services.root.StudentService;
+import am.dproc.sms.services.interfaces.StudentService;
 
 @RestController
 @Path("/student")

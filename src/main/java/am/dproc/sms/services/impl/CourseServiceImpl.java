@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.CourseDAO;
+import am.dproc.sms.db.interfaces.CourseDAO;
 import am.dproc.sms.models.Course;
-import am.dproc.sms.services.root.CourseService;
-import am.dproc.sms.services.root.LessonService;
+import am.dproc.sms.services.interfaces.CourseService;
+import am.dproc.sms.services.interfaces.LessonService;
 
 @Service
 public class CourseServiceImpl implements CourseService {

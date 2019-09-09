@@ -3,9 +3,9 @@ package am.dproc.sms.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.StudentInfoDAO;
+import am.dproc.sms.db.interfaces.StudentInfoDAO;
 import am.dproc.sms.models.StudentInfo;
-import am.dproc.sms.services.root.StudentInfoService;
+import am.dproc.sms.services.interfaces.StudentInfoService;
 
 @Service
 public class StudentInfoServiceImpl implements StudentInfoService{

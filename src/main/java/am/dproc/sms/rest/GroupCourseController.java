@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.GroupCourse;
-import am.dproc.sms.services.root.GroupCourseService;
+import am.dproc.sms.services.interfaces.GroupCourseService;
 
 @RestController
 @Path("/group-course")

@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.GroupCourseDAO;
+import am.dproc.sms.db.interfaces.GroupCourseDAO;
 import am.dproc.sms.models.GroupCourse;
-import am.dproc.sms.services.root.GroupCourseService;
+import am.dproc.sms.services.interfaces.GroupCourseService;
 
 @Service
 public class GroupCourseServiceImpl implements GroupCourseService{

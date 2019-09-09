@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.AdminDAO;
+import am.dproc.sms.db.interfaces.AdminDAO;
 import am.dproc.sms.models.Admin;
-import am.dproc.sms.services.root.AdminInfoService;
-import am.dproc.sms.services.root.AdminService;
+import am.dproc.sms.services.interfaces.AdminInfoService;
+import am.dproc.sms.services.interfaces.AdminService;
 
 @Service
 public class AdminServiceImpl implements AdminService{

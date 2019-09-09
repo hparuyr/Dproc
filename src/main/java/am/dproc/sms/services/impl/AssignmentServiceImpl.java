@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.impl.AssignmentDAODBImpl;
 import am.dproc.sms.models.Assignment;
-import am.dproc.sms.services.root.AssignmentService;
+import am.dproc.sms.services.interfaces.AssignmentService;
 
 @Service
 public class AssignmentServiceImpl implements AssignmentService {

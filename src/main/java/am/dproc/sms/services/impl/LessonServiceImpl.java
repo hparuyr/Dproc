@@ -7,10 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.LessonDAO;
+import am.dproc.sms.db.interfaces.LessonDAO;
 import am.dproc.sms.models.Lesson;
-import am.dproc.sms.services.root.LessonService;
-import am.dproc.sms.services.root.TopicService;
+import am.dproc.sms.services.interfaces.LessonService;
+import am.dproc.sms.services.interfaces.TopicService;
 
 @Service
 public class LessonServiceImpl implements LessonService {

@@ -15,7 +15,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.GroupCourseDAO;
+import am.dproc.sms.db.interfaces.GroupCourseDAO;
 import am.dproc.sms.models.GroupCourse;
 
 @Repository

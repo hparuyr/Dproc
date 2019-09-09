@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.TeacherInfo;
-import am.dproc.sms.services.root.TeacherInfoService;
+import am.dproc.sms.services.interfaces.TeacherInfoService;
 
 
 @RestController

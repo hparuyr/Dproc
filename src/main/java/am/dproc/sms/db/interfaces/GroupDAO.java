@@ -1,4 +1,4 @@
-package am.dproc.sms.db.root;
+package am.dproc.sms.db.interfaces;
 
 
 import java.util.List;

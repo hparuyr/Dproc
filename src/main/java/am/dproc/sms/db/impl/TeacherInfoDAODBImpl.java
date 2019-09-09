@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import am.dproc.sms.db.root.TeacherInfoDAO;
+import am.dproc.sms.db.interfaces.TeacherInfoDAO;
 import am.dproc.sms.models.TeacherInfo;
 
 @Repository

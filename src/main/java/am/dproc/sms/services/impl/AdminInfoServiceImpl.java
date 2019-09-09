@@ -3,9 +3,9 @@ package am.dproc.sms.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.AdminInfoDAO;
+import am.dproc.sms.db.interfaces.AdminInfoDAO;
 import am.dproc.sms.models.AdminInfo;
-import am.dproc.sms.services.root.AdminInfoService;
+import am.dproc.sms.services.interfaces.AdminInfoService;
 
 @Service
 public class AdminInfoServiceImpl implements AdminInfoService {

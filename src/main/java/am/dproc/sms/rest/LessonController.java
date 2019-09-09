@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Lesson;
-import am.dproc.sms.services.root.LessonService;
+import am.dproc.sms.services.interfaces.LessonService;
 
 @RestController
 @Path(value = "/lesson")

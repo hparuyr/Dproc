@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.TeacherDAO;
+import am.dproc.sms.db.interfaces.TeacherDAO;
 import am.dproc.sms.models.Teacher;
-import am.dproc.sms.services.root.TeacherInfoService;
-import am.dproc.sms.services.root.TeacherService;
+import am.dproc.sms.services.interfaces.TeacherInfoService;
+import am.dproc.sms.services.interfaces.TeacherService;
 
 @Service
 public class TeacherServiceImpl implements TeacherService{

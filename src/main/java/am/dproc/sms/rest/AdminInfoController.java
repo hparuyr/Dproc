@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.AdminInfo;
-import am.dproc.sms.services.root.AdminInfoService;
+import am.dproc.sms.services.interfaces.AdminInfoService;
 
 @RestController
 @Path("/adminInfo")

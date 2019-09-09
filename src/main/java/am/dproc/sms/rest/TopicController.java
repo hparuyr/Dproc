@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Topic;
-import am.dproc.sms.services.root.TopicService;
+import am.dproc.sms.services.interfaces.TopicService;
 
 @RestController
 @Path(value = "/topic")

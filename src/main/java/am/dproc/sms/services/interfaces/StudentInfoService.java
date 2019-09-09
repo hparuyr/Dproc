@@ -1,4 +1,4 @@
-package am.dproc.sms.services.root;
+package am.dproc.sms.services.interfaces;
 
 import am.dproc.sms.models.StudentInfo;
 

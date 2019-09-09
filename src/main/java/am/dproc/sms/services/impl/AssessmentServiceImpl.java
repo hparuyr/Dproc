@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.impl.AssessmentDAODBImpl;
 import am.dproc.sms.models.Assessment;
-import am.dproc.sms.services.root.AssessmentService;
+import am.dproc.sms.services.interfaces.AssessmentService;
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {

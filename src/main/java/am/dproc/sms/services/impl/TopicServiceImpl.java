@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.root.TopicDAO;
+import am.dproc.sms.db.interfaces.TopicDAO;
 import am.dproc.sms.models.Topic;
-import am.dproc.sms.services.root.TopicService;
+import am.dproc.sms.services.interfaces.TopicService;
 
 @Service
 public class TopicServiceImpl implements TopicService {
