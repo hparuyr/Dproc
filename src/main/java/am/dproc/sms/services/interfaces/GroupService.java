@@ -5,7 +5,16 @@ import java.util.List;
 import am.dproc.sms.models.Group;
 
 public interface GroupService {
-	public int create(String name, int schoolId);
-	public Group get(int id) ;
-	public List<Group> getAll();	
+
+	public Integer addGroup(Group group);
+
+	public Group getGroup(Integer id);
+
+	public List<Group> getSchoolGroups(Integer schoolId);
+
+	public List<Group> getGroups();
+
+	public Integer updateGroup(Group group);
+
+	public Integer deleteGroup(Integer id);
 }
