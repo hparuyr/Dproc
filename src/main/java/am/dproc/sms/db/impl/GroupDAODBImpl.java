@@ -62,10 +62,10 @@ public class GroupDAODBImpl implements GroupDAO {
 		@Override
 		public Group mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Group group = new Group();
-			group.setId(rs.getInt("id"));
-			group.setName(rs.getString("name"));
-			group.setCreationDate(rs.getLong("creation_date"));
-			group.setSchoolId(rs.getInt("schoolId "));
+			group.setId(rs.getInt("ID"));
+			group.setName(rs.getString("NAME"));
+			group.setCreationDate(rs.getLong("CREATION_DATE"));
+			group.setSchoolId(rs.getInt("SCHOOL_ID"));
 			return group;
 		}
 
