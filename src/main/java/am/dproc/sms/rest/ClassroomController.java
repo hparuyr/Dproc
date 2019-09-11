@@ -52,10 +52,7 @@ public class ClassroomController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteCourse(@PathParam(value = "id") Integer id) {
-		if (classroom.deleteClassRoom(id) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
-		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Message", "First you must delete the lessons of this course!").body(0);
+		return ResponseEntity.status(HttpStatus.OK).body(classroom.deleteClassRoom(id));
 	}
 
 	@POST

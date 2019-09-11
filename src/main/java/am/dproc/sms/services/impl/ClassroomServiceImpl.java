@@ -37,7 +37,8 @@ public class ClassroomServiceImpl implements ClassroomService {
 
 	@Override
 	public Integer addClassroom(Classroom classroom) {
-		if (classroom.getNumber() == null || classroom.getCapacity() == null || classroom.getSubject() == null || classroom.getType() == null) {
+		if (classroom.getNumber() == null || classroom.getCapacity() == null || classroom.getSubject() == null
+				|| classroom.getType() == null) {
 			return 0;
 		}
 		return this.classroom.addClassroom(classroom);

@@ -33,19 +33,16 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 
 	@Override
 	public Assignment getAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.queryForObject(GET_ASSIGNMENT_BY_ID, new AssignmentMapper(), id);
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSIGNMENTS, new AssignmentMapper());
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments(String title) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSIGNMENTS_BY_TITLE, new AssignmentMapper(), title);
 	}
 
@@ -66,19 +63,16 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 
 	@Override
 	public Integer deleteAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ASSIGNMENT_BY_ID, id);
 	}
 
 	@Override
 	public Integer deleteAllAssignments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ALL_ASSIGMENTS);
 	}
 
 	@Override
 	public Integer addAssignment(Assignment asi) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(ADD_ASSIGNMENT, new Object[] { asi.getStartedDate(), asi.getDeadLine(),
 				asi.getTeacherIdGivenAsi(), asi.getTitle(), asi.getDescription(), System.currentTimeMillis() });
 	}

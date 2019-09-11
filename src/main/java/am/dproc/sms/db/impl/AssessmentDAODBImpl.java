@@ -29,49 +29,41 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
 	@Override
 	public Assessment getAssessment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.queryForObject(GET_ASSESSMENT_BY_ID, new AssessmentMapper(), id);
 	}
 
 	@Override
 	public Assessment getAssessmentByTitle(String title) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.queryForObject(GET_ALL_ASSESSMENT_BY_TITLE, new AssessmentMapper(), title);
 	}
 
 	@Override
 	public List<Assessment> getAllAssessments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSESSMENTS, new AssessmentMapper());
 	}
 
 	@Override
 	public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_USER_ID, new AssessmentMapper(), userId);
 	}
 
 	@Override
 	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID, new AssessmentMapper(), assignmentId);
 	}
 
 	@Override
 	public Integer deleteAssessment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ASSESSMENT_BY_ID, id);
 	}
 
 	@Override
 	public Integer deleteAllAssessments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ALL_ASSESSMENT);
 	}
 
 	@Override
 	public Integer addAssessment(Assessment asses) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(ADD_ASSESSMENT, new Object[] { asses.getId(), asses.getTitle(), asses.getScore(),
 				asses.getUserId(), asses.getAssignmentId() });
 	}
