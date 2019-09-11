@@ -1,15 +1,14 @@
 package am.dproc.sms.models;
 
-public class Student {
+public class Teacher {
 	private Integer id;
 	private String name;
 	private String surname;
 	private String email;
 	private String password;
-	private String status;
 	private Long creationDate;
-	private Integer groupId;
-	private StudentInfo studentInfo;
+	private Integer schoolId;
+	private TeacherInfo teacherInfo;
 
 	public Integer getId() {
 		return id;
@@ -51,14 +50,6 @@ public class Student {
 		this.password = password;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public Long getCreationDate() {
 		return creationDate;
 	}
@@ -67,20 +58,19 @@ public class Student {
 		this.creationDate = creationDate;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
+	public Integer getSchoolId() {
+		return schoolId;
 	}
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
+	public void setSchoolId(Integer schoolId) {
+		this.schoolId = schoolId;
 	}
 
-	public StudentInfo getStudentInfo() {
-		return studentInfo;
+	public TeacherInfo getTeacherInfo() {
+		return teacherInfo;
 	}
 
-	public void setStudentInfo(StudentInfo studentInfo) {
-		this.studentInfo = studentInfo;
+	public void setTeacherInfo(TeacherInfo teacherInfo) {
+		this.teacherInfo = teacherInfo;
 	}
-
 }

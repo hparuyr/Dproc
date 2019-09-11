@@ -3,6 +3,8 @@ package am.dproc.sms.config;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
+import am.dproc.sms.rest.AdminController;
+import am.dproc.sms.rest.AdminInfoController;
 import am.dproc.sms.rest.AnswerController;
 import am.dproc.sms.rest.AssessmentController;
 import am.dproc.sms.rest.AssignmentController;
@@ -13,8 +15,13 @@ import am.dproc.sms.rest.GroupCourseController;
 import am.dproc.sms.rest.LessonController;
 import am.dproc.sms.rest.QuestionController;
 import am.dproc.sms.rest.ScheduleController;
+import am.dproc.sms.rest.SchoolController;
 import am.dproc.sms.rest.StudentCommentController;
+import am.dproc.sms.rest.StudentController;
+import am.dproc.sms.rest.StudentInfoController;
 import am.dproc.sms.rest.SurveyController;
+import am.dproc.sms.rest.TeacherController;
+import am.dproc.sms.rest.TeacherInfoController;
 import am.dproc.sms.rest.TestController;
 import am.dproc.sms.rest.TestResultController;
 import am.dproc.sms.rest.TopicController;
@@ -23,7 +30,14 @@ import am.dproc.sms.rest.TopicController;
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
+		register(SchoolController.class);
 		register(GroupController.class);
+		register(AdminController.class);
+		register(AdminInfoController.class);
+		register(TeacherController.class);
+		register(TeacherInfoController.class);
+		register(StudentController.class);
+		register(StudentInfoController.class);
 		register(GroupCourseController.class);
 		register(CourseController.class);
 		register(LessonController.class);

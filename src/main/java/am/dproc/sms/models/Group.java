@@ -1,15 +1,19 @@
 package am.dproc.sms.models;
 
-public class Group {
-	private int id;
-	private String name;
-	private int schoolId;
+import java.util.List;
 
-	public int getId() {
+public class Group {
+	private Integer id;
+	private String name;
+	private Long creationDate;
+	private Integer schoolId;
+	private List<Student> listOfStudents;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -21,12 +25,28 @@ public class Group {
 		this.name = name;
 	}
 
-	public int getSchoolId() {
+	public Integer getSchoolId() {
 		return schoolId;
 	}
 
-	public void setSchoolId(int schoolId) {
+	public void setSchoolId(Integer schoolId) {
 		this.schoolId = schoolId;
+	}
+
+	public Long getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public List<Student> getListOfStudents() {
+		return listOfStudents;
+	}
+
+	public void setListOfStudents(List<Student> listOfStudents) {
+		this.listOfStudents = listOfStudents;
 	}
 
 }
