@@ -10,6 +10,8 @@ public interface StudentDAO {
 
 	public Student getStudent(Integer id);
 
+	public Student getStudentByEmail(String email);
+
 	public List<Student> getStudents();
 
 	public List<Student> getStudentsByGroupId(Integer groupId);

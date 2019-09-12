@@ -20,6 +20,7 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	private static final String ADD_STUDENT = "INSERT INTO mydb.STUDENT (NAME, SURNAME, EMAIL, PASSWORD, STATUS, CREATION_DATE,CHANGE_DATE, GROUP_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.STUDENT WHERE ID = ?";
+	private static final String GET_STUDENT_BY_EMAIL = "SELECT * FROM mydb.STUDENT WHERE EMAIL = ?";
 	private static final String GET_STUDENTS = "SELECT * FROM mydb.STUDENT";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.STUDENT WHER ID = ?";
 	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT * FROM mydb.STUDENT WHERE GROUP_ID = ?";
@@ -44,6 +45,11 @@ public class StudentDAODBImpl implements StudentDAO {
 		return jdbctemplate.queryForObject(GET_STUDENT_BY_ID, new StudentMapper(), id);
 	}
 
+	@Override
+	public Student getStudentByEmail(String email) {
+		return jdbctemplate.queryForObject(GET_STUDENT_BY_EMAIL, new StudentMapper(), email);
+	}
+	
 	@Override
 	public List<Student> getStudents() {
 		return jdbctemplate.query(GET_STUDENTS, new StudentMapper());

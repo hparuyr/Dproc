@@ -3,6 +3,7 @@ package am.dproc.sms.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
@@ -17,9 +18,12 @@ public class StudentServiceImpl implements StudentService {
 	StudentDAO student;
 	@Autowired
 	StudentInfoService studentInfo;
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public Integer addStudent(Student student) {
+		student.setPassword(passwordEncoder.encode(student.getPassword())); ;
 		return this.student.addStudent(student);
 	}
 
@@ -30,6 +34,14 @@ public class StudentServiceImpl implements StudentService {
 		return student;
 	}
 
+	@Override
+	public Student getStudentByEmail(String email) {
+		Student student = this.student.getStudentByEmail(email);
+		student.setStudentInfo(this.studentInfo.getStudentInfoByStudentId(student.getId()));
+		return student;
+		
+	}
+	
 	@Override
 	public List<Student> getGroupStudents(Integer groupId) {
 		return this.student.getStudentsByGroupId(groupId);
