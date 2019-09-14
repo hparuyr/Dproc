@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.StudentComment;
 import am.dproc.sms.services.interfaces.StudentCommentService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/comments")
+@Api(value = "StudentCommentController")
 public class StudentCommentController {
 
 	@Autowired

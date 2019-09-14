@@ -34,9 +34,11 @@ import am.dproc.sms.models.SurveyQuestion;
 import am.dproc.sms.models.SurveyResult;
 import am.dproc.sms.services.interfaces.SurveyQuestionService;
 import am.dproc.sms.services.interfaces.SurveyResultService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path("/survey")
+@Api(value = "SurveyController")
 public class SurveyController {
 
 	@Autowired

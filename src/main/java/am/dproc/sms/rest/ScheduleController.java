@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.ScheduleRecord;
 import am.dproc.sms.services.interfaces.ScheduleService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/schedule")
+@Api(value = "ScheduleController")
 public class ScheduleController {
 	@Autowired
 	ScheduleService scheduleService;

@@ -1,5 +1,8 @@
 package am.dproc.sms.config;
 
+import javax.annotation.PostConstruct;
+import javax.ws.rs.ApplicationPath;
+
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,12 +17,17 @@ import am.dproc.sms.rest.LessonController;
 import am.dproc.sms.rest.QuestionController;
 import am.dproc.sms.rest.ScheduleController;
 import am.dproc.sms.rest.StudentCommentController;
+import am.dproc.sms.rest.StudentReportController;
 import am.dproc.sms.rest.SurveyController;
 import am.dproc.sms.rest.TestController;
 import am.dproc.sms.rest.TestResultController;
 import am.dproc.sms.rest.TopicController;
+import io.swagger.jaxrs.config.BeanConfig;
+import io.swagger.jaxrs.listing.ApiListingResource;
+import io.swagger.jaxrs.listing.SwaggerSerializers;
 
 @Configuration
+@ApplicationPath("/api")
 public class JerseyConfig extends ResourceConfig {
 
 	public JerseyConfig() {
@@ -38,5 +46,21 @@ public class JerseyConfig extends ResourceConfig {
 		register(AssessmentController.class);
 		register(AssignmentController.class);
 		register(SurveyController.class);
+	}
+
+	@PostConstruct
+	public void init() {
+		this.configureSwagger();
+	}
+
+	private void configureSwagger() {
+		this.register(ApiListingResource.class);
+		this.register(SwaggerSerializers.class);
+
+		BeanConfig swaggerConfigBean = new BeanConfig();
+		swaggerConfigBean.setBasePath("/api");
+		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
+		swaggerConfigBean.setPrettyPrint(true);
+		swaggerConfigBean.setScan(true);
 	}
 }

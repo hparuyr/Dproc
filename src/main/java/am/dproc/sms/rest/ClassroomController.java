@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Classroom;
 import am.dproc.sms.services.interfaces.ClassroomService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/classroom")
+@Api(value = "ClassroomController")
 public class ClassroomController {
 
 	@Autowired
