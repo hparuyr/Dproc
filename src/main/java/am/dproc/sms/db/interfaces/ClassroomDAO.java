@@ -12,8 +12,6 @@ public interface ClassroomDAO {
 	
 	public List<Classroom> getClassrooms(Integer min, Integer max);
 	
-	public Integer getClassroomID(Classroom classroom, Long currentTimeMillis);
-				
 	public Integer deleteClassroom(Integer id);
 			
 	public Integer addClassroom(Classroom classroom);
