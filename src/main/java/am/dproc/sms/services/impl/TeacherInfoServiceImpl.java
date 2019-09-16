@@ -6,7 +6,7 @@ import am.dproc.sms.db.interfaces.TeacherInfoDAO;
 import am.dproc.sms.models.TeacherInfo;
 import am.dproc.sms.services.interfaces.TeacherInfoService;
 
-public class TeacherInfoServiceImpl  implements TeacherInfoService{
+public class TeacherInfoServiceImpl implements TeacherInfoService {
 
 	@Autowired
 	TeacherInfoDAO teacherInfo;
@@ -24,14 +24,16 @@ public class TeacherInfoServiceImpl  implements TeacherInfoService{
 	@Override
 	public Integer updateTeacherInfo(TeacherInfo teacherInfo) {
 		if (teacherInfo.getPassportId() != null) {
-			return this.teacherInfo.updateTeacherInfoPassportId(teacherInfo.getTeacherId(), teacherInfo.getPassportId());
+			return this.teacherInfo.updateTeacherInfoPassportId(teacherInfo.getTeacherId(),
+					teacherInfo.getPassportId());
 		} else if (teacherInfo.getSocialCardId() != null) {
-			return this.teacherInfo.updateTeacherInfoSocialCardId(teacherInfo.getTeacherId(), teacherInfo.getSocialCardId());
+			return this.teacherInfo.updateTeacherInfoSocialCardId(teacherInfo.getTeacherId(),
+					teacherInfo.getSocialCardId());
 		} else if (teacherInfo.getBirthDate() != null) {
 			return this.teacherInfo.updateTeacherInfoBirthDate(teacherInfo.getTeacherId(), teacherInfo.getBirthDate());
 		} else if (teacherInfo.getImageUrl() != null) {
 			return this.teacherInfo.updateTeacherInfoImageUrl(teacherInfo.getTeacherId(), teacherInfo.getImageUrl());
-		} 
+		}
 		return 0;
 	}
 

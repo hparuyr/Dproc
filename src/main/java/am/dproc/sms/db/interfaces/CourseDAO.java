@@ -10,8 +10,6 @@ public interface CourseDAO {
 		
 	public List<Course> getCourses();
 	
-	public Integer getCourseID(String name, Long currentTimeMillis);
-				
 	public Integer deleteCourse(Integer id);
 			
 	public Integer addCourse(Course course);

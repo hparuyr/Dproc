@@ -12,8 +12,6 @@ public interface TopicDAO {
 	
 	public List<Topic> getAllTopics();
 	
-	public Integer getTopicID(String videoURL, String webPageURL, Integer lessonID, Long currentTimeMillis);
-		
 	public Integer deleteTopic(Integer id);
 	
 	public Integer addTopic(Topic topic);
