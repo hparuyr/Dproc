@@ -1,5 +1,6 @@
 package am.dproc.sms.rest;
 
+import java.io.File;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Test;
 import am.dproc.sms.services.interfaces.TestService;
+import am.dproc.sms.utils.PDFUtils;
 
 @RestController
 @Path(value = "/test")
@@ -39,9 +41,10 @@ public class TestController {
 	}
 
 	@GET
-	@Path(value = "/hi")
-	public String hi() {
-		return "HI";
+	@Path(value = "/pdf")
+	@Produces("application/pdf")
+	public File hi() throws Exception {
+		return PDFUtils.manipulatePdf();
 	}
 
 	@POST
