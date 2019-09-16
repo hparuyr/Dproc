@@ -26,17 +26,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
-		String email = username;
-		Student student = studentDao.getStudentByEmail(email);
+		Student student = studentDao.getStudentByEmail(username);
 
 		if (student == null) {
-			throw new UsernameNotFoundException(email);
+			throw new UsernameNotFoundException(username);
 		}
 
-		String info = jdbctemplate.queryForObject("select info from student where email = ?",
-				new Object[] { student.getEmail() }, String.class);
 		HashSet<GrantedAuthority> authorities = new HashSet<>();
-		GrantedAuthority authority = new SimpleGrantedAuthority(info);
+		GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
 		authorities.add(authority);
 		
 		return new User(student.getEmail(), student.getPassword(), authorities);
