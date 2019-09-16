@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Group;
 import am.dproc.sms.services.interfaces.GroupService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path("/group")
+@Api(value = "GroupController")
 public class GroupController {
 	@Autowired
 	GroupService group;

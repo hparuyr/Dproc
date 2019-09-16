@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Assignment;
 import am.dproc.sms.services.interfaces.AssignmentService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/assignment")
+@Api(value = "AssignmentController")
 public class AssignmentController {
 
 	@Autowired

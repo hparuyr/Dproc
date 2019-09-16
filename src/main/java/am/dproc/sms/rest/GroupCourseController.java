@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.GroupCourse;
 import am.dproc.sms.services.interfaces.GroupCourseService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path("/group-course")
+@Api(value = "GroupCourseController")
 public class GroupCourseController {
 
 	@Autowired

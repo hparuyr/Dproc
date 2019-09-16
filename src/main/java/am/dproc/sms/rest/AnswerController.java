@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Answer;
 import am.dproc.sms.services.interfaces.AnswerService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/answer")
+@Api(value = "AnswerController")
 public class AnswerController {
 
 	@Autowired
