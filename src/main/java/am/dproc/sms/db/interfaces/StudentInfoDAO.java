@@ -8,9 +8,9 @@ public interface StudentInfoDAO {
 
 	public StudentInfo getStudentInfo(Integer studentId);
 
-	public Integer updateStudentInfoPassportId(Integer studentId, Integer passportId);
+	public Integer updateStudentInfoPassportId(Integer studentId, String passportId);
 
-	public Integer updateStudentInfoSocialCardId(Integer studentId, Integer socialCardId);
+	public Integer updateStudentInfoSocialCardId(Integer studentId, String socialCardId);
 
 	public Integer updateStudentInfoBirthDate(Integer studentId, Long birthDate);
 

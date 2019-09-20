@@ -1,5 +1,7 @@
 package am.dproc.sms.controllers;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,32 +15,33 @@ public class LoginController {
 
 	@RequestMapping("/")
 	public String redir() {
-		System.out.println("=========>>>>>>>>>>>>>>>>>>>>>>>inside redir");
+		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside redir");
 		return "redirect:/login";
 	}
 	
 	@GetMapping("home")
 	public String home() {
-		System.out.println("=========>>>>>>>>>>>>>>>>>>>>>>>inside home");
+		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>>>>>>inside home");
 		return "/home";
 	}
 
 	@GetMapping("login")
 	public String login() {
-		System.out.println("=========>>>>>>>>>>>>>>>>>>>>>>>inside login");
+		logTime();
+		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>inside login");
 		return "/login";
 	}
 	
 	@GetMapping("welcome")
 	public String welcome() {
-		System.out.println("=========>>>>>>>>>>>>>>>>>>>>>>>inside welcome");
+		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside welcome");
 		return "/welcome";
 	}
 
 
 	@RequestMapping(value = "registration")
 	public String registration(Model model) {
-		System.out.println("=========>>>>>>>>>>>>>>>>>>>>>>>inside registration");
+		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside registration");
 		model.addAttribute("user", new Student());
 		return "/registration";
 	}
@@ -53,4 +56,13 @@ public class LoginController {
 		return ("<h1>Welcome Admin</h1>");
 	}
 
+	// todo delete time utils
+	private void logTime() {
+		System.out.println(currentTime());;
+	}
+	
+	private String currentTime() {
+		return LocalDateTime.now().toString().replace("T", " ");
+	}
+	
 }

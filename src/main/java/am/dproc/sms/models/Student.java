@@ -7,7 +7,7 @@ public class Student {
 	private String email;
 	private String password;
 	private String status;
-	private Long creationDate;
+//	private Long creationDate;
 	private Integer groupId;
 	private StudentInfo studentInfo;
 
@@ -59,13 +59,13 @@ public class Student {
 		this.status = status;
 	}
 
-	public Long getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Long creationDate) {
-		this.creationDate = creationDate;
-	}
+//	public Long getCreationDate() {
+//		return creationDate;
+//	}
+//
+//	public void setCreationDate(Long creationDate) {
+//		this.creationDate = creationDate;
+//	}
 
 	public Integer getGroupId() {
 		return groupId;

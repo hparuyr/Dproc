@@ -39,14 +39,14 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	}
 
 	@Override
-	public Integer updateStudentInfoPassportId(Integer studentId, Integer passportId) {
+	public Integer updateStudentInfoPassportId(Integer studentId, String passportId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_PASSPORT_ID,
 				new Object[] { passportId, currentTimeMillis, studentId });
 	}
 
 	@Override
-	public Integer updateStudentInfoSocialCardId(Integer studentId, Integer socialCardId) {
+	public Integer updateStudentInfoSocialCardId(Integer studentId, String socialCardId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_SOCIAL_CARD_ID,
 				new Object[] { socialCardId, currentTimeMillis, studentId });
@@ -75,13 +75,13 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 		@Override
 		public StudentInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			StudentInfo studentInfo = new StudentInfo();
-			studentInfo.setPassportId(rs.getInt("passportId"));
-			studentInfo.setSocialCardId(rs.getInt("socialCardId"));
-			studentInfo.setBirthDate(rs.getLong("birthDate"));
+			studentInfo.setPassportId(rs.getString("PASSPORT_ID"));
+			studentInfo.setSocialCardId(rs.getString("SOCIAL_CARD_ID"));
+			studentInfo.setBirthDate(rs.getLong("BIRTH_DATE"));
 			;
-			studentInfo.setImageUrl(rs.getString("imageUrl"));
-			studentInfo.setCreationDate(rs.getLong("creation_date"));
-			studentInfo.setStudentId(rs.getInt("studentId"));
+			studentInfo.setImageUrl(rs.getString("IMAGE_URL"));
+//			studentInfo.setCreationDate(rs.getLong("creation_date"));
+			studentInfo.setStudentId(rs.getInt("STUDENT_ID"));
 			return studentInfo;
 		}
 

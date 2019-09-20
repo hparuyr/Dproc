@@ -116,7 +116,7 @@ public class StudentDAODBImpl implements StudentDAO {
 			student.setEmail(rs.getString("email"));
 			student.setPassword(rs.getString("password"));
 			student.setStatus(rs.getString("status"));
-			student.setCreationDate(rs.getLong("creation_date"));
+//			student.setCreationDate(rs.getLong("creation_date"));
 			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}
