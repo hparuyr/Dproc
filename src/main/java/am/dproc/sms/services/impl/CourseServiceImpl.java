@@ -32,6 +32,12 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public List<Course> getCoursesByGroupId(Integer groupId) {
+		return course.getCoursesByGroupId(groupId);
+	}
+
+
+	@Override
 	public Integer deleteCourse(Integer id) {
 		if (getCourse(id).getListOfLessons().size() == 0) {
 			return course.deleteCourse(id);

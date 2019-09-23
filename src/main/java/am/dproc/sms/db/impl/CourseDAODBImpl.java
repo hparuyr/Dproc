@@ -23,6 +23,7 @@ public class CourseDAODBImpl implements CourseDAO {
 	JdbcTemplate jdbctemplate;
 
 	private static final String GET_COURSE_BY_ID = "SELECT * FROM mydb.COURSE WHERE ID = ?";
+	private static final String GET_COURSES_BY_GROUP_ID = "SELECT C.* FROM COURSE C JOIN GROUP_COURSE GC ON C.ID = GC.COURSE_ID WHERE GC.GROUP_ID = ?";
 	private static final String GET_COURSES = "SELECT * FROM mydb.COURSE";
 	private static final String DELETE_COURSE_BY_ID = "DELETE FROM mydb.COURSE WHERE ID = ?";
 	private static final String ADD_COURSE = "INSERT INTO mydb.COURSE (NAME, DURATION, DESCRIPTION, LOCATION, CREATION_DATE, CHANGE_DATE) VALUES(?, ?, ?, ?, ?, ?)";
@@ -39,6 +40,11 @@ public class CourseDAODBImpl implements CourseDAO {
 	@Override
 	public List<Course> getCourses() {
 		return jdbctemplate.query(GET_COURSES, new CourseMapper());
+	}
+
+	@Override
+	public List<Course> getCoursesByGroupId(Integer groupId) {
+		return jdbctemplate.query(GET_COURSES_BY_GROUP_ID, new CourseMapper(), groupId);
 	}
 
 	@Override

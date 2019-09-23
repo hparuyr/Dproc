@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -35,7 +36,12 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 
 	@Override
 	public StudentInfo getStudentInfo(Integer studentId) {
-		return jdbctemplate.queryForObject(GET_STUDENT_INFO_BY_STUDENT_ID, new StudentInfoMapper(), studentId);
+		try {
+			return jdbctemplate.queryForObject(GET_STUDENT_INFO_BY_STUDENT_ID, new StudentInfoMapper(), studentId);
+		} catch (EmptyResultDataAccessException ex) {
+			ex.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override
@@ -75,13 +81,10 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 		@Override
 		public StudentInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			StudentInfo studentInfo = new StudentInfo();
-			studentInfo.setPassportId(rs.getInt("passportId"));
-			studentInfo.setSocialCardId(rs.getInt("socialCardId"));
-			studentInfo.setBirthDate(rs.getLong("birthDate"));
-			;
-			studentInfo.setImageUrl(rs.getString("imageUrl"));
-			studentInfo.setCreationDate(rs.getLong("creation_date"));
-			studentInfo.setStudentId(rs.getInt("studentId"));
+			studentInfo.setPassportId(rs.getInt("PASSPORT_ID"));
+			studentInfo.setSocialCardId(rs.getInt("SOCIAL_CARD_ID"));
+			//studentInfo.setBirthDate(rs.getLong("birthDate"));
+			studentInfo.setImageUrl(rs.getString("IMAGE_URL"));
 			return studentInfo;
 		}
 

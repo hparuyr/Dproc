@@ -23,6 +23,13 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 	private static final String GET_ALL_ASSESSMENT_BY_TITLE = "SELECT * FROM mydb.ASSESSMENT WHERE TITLE = ?";
 	private static final String GET_ALL_ASSESSMENT_BY_USER_ID = "SELECT * FROM mydb.ASSESSMENT WHERE ASSIGNMENT_ID = ?";
 	private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE TEACHER_ID_GIVEN_ASI = ?";
+	private static final String GET_AVG_SCORE_BY_STUDENT_COURSE = "SELECT AVG(ASM.SCORE) as avgScore \r\n" +
+			                                                      "FROM ASSESSMENT ASM \r\n" +
+                                                      			  "  JOIN ASSIGNMENT ASGN ON ASM.ASSIGNMENT_ID = ASGN.ID\r\n" +
+			                                                      "  JOIN LESSON L ON L.ID = ASGN.LESSON_ID\r\n" +
+			                                                      "  JOIN COURSE C ON C.ID = L.COURSE_ID\r\n" +
+			                                                      "WHERE ASM.STUDENT_ID = ? AND C.ID = ?\r\n";
+	private static final String GET_AVG_SCORE_BY_STUDENT = "SELECT AVG(SCORE) as avgScore FROM ASSESSMENT WHERE STUDENT_ID = ?";
 	private static final String DELETE_ASSESSMENT_BY_ID = "DELETE FROM mydb.ASSESSMENT WHERE ID = ?";
 	private static final String DELETE_ALL_ASSESSMENT = "DELETE FROM mydb.ASSESSMENT";
 	private static final String ADD_ASSESSMENT = "INSERT INTO mydb.ASSESSMENT (TITLE, SCORE, CREATION_DATE, CHANGE_DATE,USER_ID, ASSIGNMENT_ID,) VALUES (?, ?, ?, ?, ?, ?)";
@@ -50,6 +57,16 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 	@Override
 	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
 		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID, new AssessmentMapper(), assignmentId);
+	}
+
+	@Override
+	public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {
+		return jdbctemplate.queryForObject(GET_AVG_SCORE_BY_STUDENT_COURSE, Double.class, studentId, courseId);
+	}
+
+	@Override
+	public Double getAverageScoreByStudent(Integer studentId) {
+		return jdbctemplate.queryForObject(GET_AVG_SCORE_BY_STUDENT, Double.class, studentId);
 	}
 
 	@Override
@@ -84,7 +101,5 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
 			return assessment;
 		}
-
 	}
-
 }

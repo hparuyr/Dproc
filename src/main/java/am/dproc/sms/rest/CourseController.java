@@ -42,6 +42,13 @@ public class CourseController {
 		return course.getCourses();
 	}
 
+	@GET
+	@Path(value="/group/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Course> getCoursesByGroupId(@PathParam(value="id") Integer id) {
+		return course.getCoursesByGroupId(id);
+	}
+
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")

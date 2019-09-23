@@ -41,6 +41,10 @@ public class AssessmentServiceImpl implements AssessmentService {
 	}
 
 	@Override
+	public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {
+		return asDao.getAverageScoreByStudentCourse(studentId, courseId);
+	}
+	@Override
 	public Integer deleteAssessment(Integer id) {
 		return asDao.deleteAssessment(id);
 	}
@@ -53,6 +57,11 @@ public class AssessmentServiceImpl implements AssessmentService {
 	@Override
 	public Integer addAssessment(Assessment asses) {
 		return asDao.addAssessment(asses);
+	}
+
+	@Override
+	public Double getAverageScoreByStudent(Integer studentId) {
+		return asDao.getAverageScoreByStudent(studentId);
 	}
 
 }

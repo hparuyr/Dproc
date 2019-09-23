@@ -22,6 +22,7 @@ import am.dproc.sms.rest.SchoolController;
 import am.dproc.sms.rest.StudentCommentController;
 import am.dproc.sms.rest.StudentController;
 import am.dproc.sms.rest.StudentInfoController;
+import am.dproc.sms.rest.StudentReportController;
 import am.dproc.sms.rest.SurveyController;
 import am.dproc.sms.rest.TeacherController;
 import am.dproc.sms.rest.TeacherInfoController;
@@ -59,6 +60,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(AssessmentController.class);
 		register(AssignmentController.class);
 		register(SurveyController.class);
+		register(StudentReportController.class);
 	}
 
 	@PostConstruct

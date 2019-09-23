@@ -21,4 +21,8 @@ public interface AssessmentService {
 	public Integer deleteAllAssessments();
 
 	public Integer addAssessment(Assessment asi);
+
+	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
+
+	public Double getAverageScoreByStudent(Integer studentId);
 }

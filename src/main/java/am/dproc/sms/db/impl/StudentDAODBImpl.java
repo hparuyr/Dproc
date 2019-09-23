@@ -104,16 +104,13 @@ public class StudentDAODBImpl implements StudentDAO {
 		@Override
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
-			student.setId(rs.getInt("id"));
-			student.setName(rs.getString("name"));
-			student.setSurname(rs.getString("surname"));
-			student.setEmail(rs.getString("email"));
-			student.setPassword(rs.getString("password"));
-			student.setStatus(rs.getString("status"));
-			student.setCreationDate(rs.getLong("creation_date"));
-			student.setGroupId(rs.getInt("groupId"));
+			student.setId(rs.getInt("ID"));
+			student.setName(rs.getString("NAME"));
+			student.setSurname(rs.getString("SURNAME"));
+			student.setEmail(rs.getString("EMAIL"));
+			student.setPassword(rs.getString("PASSWORD"));
+			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}
-
 	}
 }

@@ -22,4 +22,8 @@ public interface AssessmentDAO {
 
 	public Integer addAssessment(Assessment asi);
 
+	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
+
+	Double getAverageScoreByStudent(Integer studentId);
+
 }

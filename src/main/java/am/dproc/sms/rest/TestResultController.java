@@ -31,9 +31,9 @@ public class TestResultController {
 
 	@GET
 	@Path(value = "/last/{testId}/{studentId}")
-	public Double getLastTestResultForUser(@PathParam(value = "testId") Integer testId,
+	public Double getLastTestResultForStudent(@PathParam(value = "testId") Integer testId,
 			@PathParam(value = "studentId") Integer studentId) {
-		return testResultService.getLastTestResultForUser(testId, studentId);
+		return testResultService.getLastTestResultForStudent(testId, studentId);
 	}
 
 	@GET
@@ -44,15 +44,21 @@ public class TestResultController {
 
 	@GET
 	@Path(value = "/avg/{studentId}")
-	public Double getAverageTestResultForUser(@PathParam(value = "studentId") Integer studentId) {
-		return testResultService.getAverageTestResultForUser(studentId);
+	public Double getAverageTestResultForStudent(@PathParam(value = "studentId") Integer studentId) {
+		return testResultService.getAverageTestResultForStudent(studentId);
+	}
+
+	@GET
+	@Path(value = "/avg/{studentId}/{courseId}")
+	public Double getAverageTestResultForStudentCourse(@PathParam(value = "studentId") Integer studentId, @PathParam(value = "courseId") Integer courseId) {
+		return testResultService.getAverageTestResultForStudentCourse(studentId, courseId);
 	}
 
 	@PUT
 	@Path(value = "/{testId}/{studentId}/{score}")
-	public Integer updateTestResultForUser(@PathParam(value = "testId") Integer testId,
+	public Integer updateTestResultForStudent(@PathParam(value = "testId") Integer testId,
 			@PathParam(value = "studentId") Integer studentId, @PathParam(value = "score") Double score) {
-		return testResultService.updateTestResultForUser(testId, studentId, score);
+		return testResultService.updateTestResultForStudent(testId, studentId, score);
 	}
 
 	@PUT
@@ -69,8 +75,8 @@ public class TestResultController {
 
 	@DELETE
 	@Path(value = "/{testId}/{studentId}")
-	public Integer deleteTestResultForUser(@PathParam(value = "testId") Integer testId, @PathParam(value = "studentId") Integer studentId) {
-		return testResultService.deleteTestResultForUser(testId, studentId);
+	public Integer deleteTestResultForStudent(@PathParam(value = "testId") Integer testId, @PathParam(value = "studentId") Integer studentId) {
+		return testResultService.deleteTestResultForStudent(testId, studentId);
 	}
 
 }

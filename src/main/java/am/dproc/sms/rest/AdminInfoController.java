@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.AdminInfo;
 import am.dproc.sms.services.interfaces.AdminInfoService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path("/adminInfo")
+@Api(value = "AdminInfoController")
 public class AdminInfoController {
 
 	@Autowired
