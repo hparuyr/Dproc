@@ -31,4 +31,6 @@ public interface StudentDAO {
 	public Integer updateStudentGroupId(Integer id, Integer groupId);
 
 	public Integer deleteStudent(Integer id);
+
+	public int[] addStudents(List<Student> students);
 }

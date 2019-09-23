@@ -1,11 +1,15 @@
 package am.dproc.sms.controllers;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import am.dproc.sms.models.Student;
 
@@ -38,14 +42,33 @@ public class LoginController {
 		return "/welcome";
 	}
 
-
-	@RequestMapping(value = "registration")
+	@GetMapping(value = "registration")
 	public String registration(Model model) {
 		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside registration");
 		model.addAttribute("user", new Student());
 		return "/registration";
 	}
 
+//	@PostMapping(value = "registration")
+//	public String register(@ModelAttribute Student student) throws IllegalArgumentException, IllegalAccessException {
+//		Field[] fields = student.getClass().getDeclaredFields();
+//		for (int i = 0; i < fields.length; i++) {
+//			Field field = fields[i];
+//			String fieldName = field.getName();
+//			Object value = field.get(student);
+//			System.out.println("field: "+fieldName + " value: "+value );
+//		}
+//		
+//		return "/registration";
+//	}
+	
+	@PostMapping(value = "registration")
+	public String register(@RequestParam(name = "bdate") String date){
+		System.out.println("date: "+ date);
+		
+		return "/registration";
+	}
+	
 	@RequestMapping(value = "user")
 	public String user() {
 		return ("<h1>Welcome User</h1>");

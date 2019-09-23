@@ -26,6 +26,11 @@ public class StudentServiceImpl implements StudentService {
 		student.setPassword(passwordEncoder.encode(student.getPassword())); ;
 		return this.student.addStudent(student);
 	}
+	
+	@Override
+	public int[] addStudents(List<Student> students) {
+		return student.addStudents(students);
+	}
 
 	@Override
 	public Student getStudent(Integer id) {

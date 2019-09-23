@@ -8,6 +8,8 @@ public interface GroupDAO {
 
 	public Integer addGroup(Group group);
 
+	public List<Integer> addGroups(List<Group> groups);
+
 	public Group getGroup(Integer id);
 
 	public List<Group> getGroups();
@@ -17,5 +19,4 @@ public interface GroupDAO {
 	public Integer updateGroupName(Integer id, String name);
 
 	public Integer deleteGroup(Integer id);
-
 }

@@ -8,6 +8,8 @@ public interface StudentService {
 
 	public Integer addStudent(Student student);
 
+	public int[] addStudents(List<Student> students);
+
 	public Student getStudent(Integer id);
 
 	public Student getStudentByEmail(String email);

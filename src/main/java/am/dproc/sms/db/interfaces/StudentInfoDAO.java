@@ -1,10 +1,14 @@
 package am.dproc.sms.db.interfaces;
 
+import java.util.List;
+
 import am.dproc.sms.models.StudentInfo;
 
 public interface StudentInfoDAO {
 
 	public Integer addStudentInfo(StudentInfo studentInfo);
+
+	public int[] addStudentInfos(List<StudentInfo> infos);
 
 	public StudentInfo getStudentInfo(Integer studentId);
 
