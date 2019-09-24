@@ -6,7 +6,7 @@ public class Student {
 	private String surname;
 	private String email;
 	private String password;
-	private String status;
+	private Integer status;
 //	private Long creationDate;
 	private Integer groupId;
 	private StudentInfo studentInfo;
@@ -51,11 +51,11 @@ public class Student {
 		this.password = password;
 	}
 
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

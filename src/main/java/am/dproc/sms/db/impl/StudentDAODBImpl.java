@@ -144,7 +144,7 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
-	public Integer updateStudentStatus(Integer id, String status) {
+	public Integer updateStudentStatus(Integer id, int status) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_STATUS, new Object[] { status, currentTimeMillis, id });
 	}
@@ -169,7 +169,7 @@ public class StudentDAODBImpl implements StudentDAO {
 			student.setSurname(rs.getString("surname"));
 			student.setEmail(rs.getString("email"));
 			student.setPassword(rs.getString("password"));
-			student.setStatus(rs.getString("status"));
+			student.setStatus(rs.getInt("status"));
 //			student.setCreationDate(rs.getLong("creation_date"));
 			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;

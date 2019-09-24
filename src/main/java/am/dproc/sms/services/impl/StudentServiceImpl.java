@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.models.Student;
+import am.dproc.sms.models.StudentStatus;
 import am.dproc.sms.services.interfaces.StudentInfoService;
 import am.dproc.sms.services.interfaces.StudentService;
 
@@ -24,6 +25,8 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Integer addStudent(Student student) {
 		student.setPassword(passwordEncoder.encode(student.getPassword())); ;
+		student.setStatus(StudentStatus.PENDING.ordinal());
+		student.setGroupId(1);
 		return this.student.addStudent(student);
 	}
 	

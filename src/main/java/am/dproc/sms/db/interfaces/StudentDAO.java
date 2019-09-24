@@ -26,7 +26,7 @@ public interface StudentDAO {
 
 	public Integer updateStudentPassword(Integer id, String password);
 
-	public Integer updateStudentStatus(Integer id, String status);
+	public Integer updateStudentStatus(Integer id, int status);
 
 	public Integer updateStudentGroupId(Integer id, Integer groupId);
 
