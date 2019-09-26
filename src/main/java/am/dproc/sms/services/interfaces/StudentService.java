@@ -8,7 +8,11 @@ public interface StudentService {
 
 	public Integer addStudent(Student student);
 
+	public int[] addStudents(List<Student> students);
+
 	public Student getStudent(Integer id);
+
+	public Student getStudentByEmail(String email);
 
 	public List<Student> getGroupStudents(Integer groupId);
 
@@ -17,5 +21,4 @@ public interface StudentService {
 	public Integer updateStudent(Student student);
 
 	public Integer deleteStudent(Integer id);
-
 }

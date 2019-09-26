@@ -10,6 +10,8 @@ public interface StudentDAO {
 
 	public Student getStudent(Integer id);
 
+	public Student getStudentByEmail(String email);
+
 	public List<Student> getStudents();
 
 	public List<Student> getStudentsByGroupId(Integer groupId);
@@ -24,9 +26,11 @@ public interface StudentDAO {
 
 	public Integer updateStudentPassword(Integer id, String password);
 
-	public Integer updateStudentStatus(Integer id, String status);
+	public Integer updateStudentStatus(Integer id, int status);
 
 	public Integer updateStudentGroupId(Integer id, Integer groupId);
 
 	public Integer deleteStudent(Integer id);
+
+	public int[] addStudents(List<Student> students);
 }

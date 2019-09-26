@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,19 @@ public class StudentController {
 		}
 	}
 
+	@Path("/all")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addStudents(List<Student> student) {
+		int[] ids = this.student.addStudents(student);
+		if (ids.length > 0) {
+			return Response.status(Response.Status.CREATED).entity(ids).build();
+		} else {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+	}
+	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")

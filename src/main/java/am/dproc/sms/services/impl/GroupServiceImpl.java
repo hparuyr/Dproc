@@ -22,6 +22,11 @@ public class GroupServiceImpl implements GroupService {
 	public Integer addGroup(Group group) {
 		return this.group.addGroup(group);
 	}
+	
+	@Override
+	public List<Integer> addGroups(List<Group> groups) {
+		return group.addGroups(groups);
+	}
 
 	@Override
 	public Group getGroup(Integer id) {

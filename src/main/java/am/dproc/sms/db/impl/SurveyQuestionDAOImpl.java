@@ -21,6 +21,7 @@ public class SurveyQuestionDAOImpl implements SurveyQuestionDAO{
 	
 	public static final String BATCH_CREATE = "INSERT INTO SURVEY_QUESTION (CONTENT, INPUT_NAME, CREATION_DATE, CHANGE_DATE) VALUES (?, ?, ?, ?)";
 	public static final String GET_ALL = "SELECT * FROM SURVEY_QUESTION";
+	PreparedStatement ps;
 	
 	@Override
 	public int create(String content, String inputName) {

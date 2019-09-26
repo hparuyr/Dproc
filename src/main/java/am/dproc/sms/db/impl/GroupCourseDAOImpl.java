@@ -35,12 +35,10 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	public static final String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static final String DELETE_ALL_SQL = "DELETE FROM GROUP_COURSE";
 
-	// works
 	@Override
 	public int create(GroupCourse groupCourse) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		long currentTimeStamp = System.currentTimeMillis();
-//		return template.update(CREATE_SQL, groupId, courseId, teacherId, startDate, isFinished, currentTimeStamp, currentTimeStamp);
 		template.update(new PreparedStatementCreator() {
 
 			@Override

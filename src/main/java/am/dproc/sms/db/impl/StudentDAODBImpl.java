@@ -1,16 +1,28 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.models.Student;
+import am.dproc.sms.models.StudentStatus;
 
 @Repository
 public class StudentDAODBImpl implements StudentDAO {
@@ -20,6 +32,7 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	private static final String ADD_STUDENT = "INSERT INTO mydb.STUDENT (NAME, SURNAME, EMAIL, PASSWORD, STATUS, CREATION_DATE,CHANGE_DATE, GROUP_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.STUDENT WHERE ID = ?";
+	private static final String GET_STUDENT_BY_EMAIL = "SELECT * FROM mydb.STUDENT WHERE EMAIL = ?";
 	private static final String GET_STUDENTS = "SELECT * FROM mydb.STUDENT";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.STUDENT WHER ID = ?";
 	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT * FROM mydb.STUDENT WHERE GROUP_ID = ?";
@@ -33,6 +46,7 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Integer addStudent(Student student) {
+//		KeyHolder
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(ADD_STUDENT,
 				new Object[] { student.getName(), student.getSurname(), student.getEmail(), student.getPassword(),
@@ -40,8 +54,54 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
+	public int[] addStudents(List<Student> students) {
+		Long currentTimeMillis = System.currentTimeMillis();
+
+		return jdbctemplate.execute(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_STUDENT,Statement.RETURN_GENERATED_KEYS);
+				for (Student student : students) {
+					ps.setString(1, student.getName());
+					ps.setString(2, student.getSurname());
+					ps.setString(3, student.getEmail());
+					ps.setString(4, student.getPassword());
+					// add StudentStatus type to student object
+					ps.setInt(5,  StudentStatus.PENDING.ordinal());
+					ps.setLong(6, currentTimeMillis);
+					ps.setLong(7, currentTimeMillis);
+					ps.setInt(8,  student.getGroupId());
+					ps.addBatch();
+				}
+				ps.executeBatch();
+				return ps;
+			}
+		}, new PreparedStatementCallback<int[]>() {
+			@Override
+			public int[] doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ResultSet rs = ps.getGeneratedKeys();
+				int curId;
+				int[] ids = new int[students.size()];
+				int current = 0;
+				while (rs.next()) {
+					curId = rs.getInt(1);
+					ids[current] = curId;
+					current++;
+					System.out.println(curId);
+				}
+				return ids;
+			}
+		});
+	}
+
+	@Override
 	public Student getStudent(Integer id) {
 		return jdbctemplate.queryForObject(GET_STUDENT_BY_ID, new StudentMapper(), id);
+	}
+
+	@Override
+	public Student getStudentByEmail(String email) {
+		return jdbctemplate.queryForObject(GET_STUDENT_BY_EMAIL, new StudentMapper(), email);
 	}
 
 	@Override
@@ -84,7 +144,7 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
-	public Integer updateStudentStatus(Integer id, String status) {
+	public Integer updateStudentStatus(Integer id, int status) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_STATUS, new Object[] { status, currentTimeMillis, id });
 	}
@@ -104,11 +164,12 @@ public class StudentDAODBImpl implements StudentDAO {
 		@Override
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
-			student.setId(rs.getInt("ID"));
-			student.setName(rs.getString("NAME"));
-			student.setSurname(rs.getString("SURNAME"));
-			student.setEmail(rs.getString("EMAIL"));
-			student.setPassword(rs.getString("PASSWORD"));
+			student.setId(rs.getInt("id"));
+			student.setName(rs.getString("name"));
+			student.setSurname(rs.getString("surname"));
+			student.setEmail(rs.getString("email"));
+			student.setPassword(rs.getString("password"));
+			student.setStatus(rs.getInt("status"));
 			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}

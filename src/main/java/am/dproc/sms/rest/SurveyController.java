@@ -50,7 +50,8 @@ public class SurveyController {
 	@Autowired
 	RestTemplate restTemplate;
 	
-	@Bean(initMethod = "initSurvey")
+	@Path("/init")
+	@POST
 	public void initSurvey() throws IOException {
 		if(getSurvey().size() > 0) {
 			return;

@@ -1,26 +1,26 @@
 package am.dproc.sms.models;
 
 public class StudentInfo {
-	private Integer passportId;
-	private Integer socialCardId;
+	private String passportId;
+	private String socialCardId;
 	private Long birthDate;
 	private String imageUrl;
-	private Long creationDate;
+//	private Long creationDate;
 	private Integer studentId;
 
-	public Integer getPassportId() {
+	public String getPassportId() {
 		return passportId;
 	}
 
-	public void setPassportId(Integer passportId) {
+	public void setPassportId(String passportId) {
 		this.passportId = passportId;
 	}
 
-	public Integer getSocialCardId() {
+	public String getSocialCardId() {
 		return socialCardId;
 	}
 
-	public void setSocialCardId(Integer socialCardId) {
+	public void setSocialCardId(String socialCardId) {
 		this.socialCardId = socialCardId;
 	}
 
@@ -32,13 +32,13 @@ public class StudentInfo {
 		this.imageUrl = imageUrl;
 	}
 
-	public Long getCreationDate() {
-		return creationDate;
-	}
+//	public Long getCreationDate() {
+//		return creationDate;
+//	}
 
-	public void setCreationDate(Long creationDate) {
-		this.creationDate = creationDate;
-	}
+//	public void setCreationDate(Long creationDate) {
+//		this.creationDate = creationDate;
+//	}
 
 	public Integer getStudentId() {
 		return studentId;
