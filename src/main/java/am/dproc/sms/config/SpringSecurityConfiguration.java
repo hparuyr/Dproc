@@ -40,10 +40,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * 
 	 * }
 	 */	
-//	@Bean
-//	public PasswordEncoder getPasswordEncoder() {
-//		return NoOpPasswordEncoder.getInstance();
-//	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -64,4 +60,5 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
+    
 }

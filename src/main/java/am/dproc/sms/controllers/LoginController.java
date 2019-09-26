@@ -1,6 +1,7 @@
 package am.dproc.sms.controllers;
 
 import java.lang.reflect.Field;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import am.dproc.sms.models.Student;
 import am.dproc.sms.services.interfaces.StudentService;
@@ -29,8 +31,12 @@ public class LoginController {
 	StudentService studentService;
 	
 	@RequestMapping("/")
-	public String redir() {
+	public String redir(Principal user) {
 		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside redir");
+		
+		if(user != null) {
+			return "welcome";
+		}
 		return "redirect:/login";
 	}
 	
@@ -96,11 +102,13 @@ public class LoginController {
 
 	
 	@RequestMapping(value = "user")
+	@ResponseBody
 	public String user() {
 		return ("<h1>Welcome User</h1>");
 	}
 
 	@RequestMapping(value = "admin")
+	@ResponseBody
 	public String admin() {
 		return ("<h1>Welcome Admin</h1>");
 	}
