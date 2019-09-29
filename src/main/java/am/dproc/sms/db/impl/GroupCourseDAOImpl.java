@@ -30,12 +30,12 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	public static String GET_BY_GROUP_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static String GET_BY_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static String GET_ALL_SQL = "SELECT * FROM GROUP_COURSE";
+	public static String GET_BY_TEACHER_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE TEACHER_ID = ?";
 	public static String UPDATE_SQL = "UPDATE GROUP_COURSE SET GROUP_ID=?, COURSE_ID=?, TEACHER_ID=?, START_DATE=?, IS_FINISHED=?, CHANGE_DATE=? WHERE ID=?";
 	public static String DELETE_BY_GROUP_SQL = "DELETE FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static String DELETE_ALL_SQL = "DELETE FROM GROUP_COURSE";
 
-	// works
 	@Override
 	public int create(GroupCourse groupCourse) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -70,13 +70,11 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 				new GroupCourseMapper());
 	}
 
-	// works
 	@Override
 	public List<GroupCourse> getByGroupID(int groupId) {
 		return template.query(GET_BY_GROUP_SQL, new Object[] { groupId }, new GroupCourseMapper());
 	}
 
-	// works
 	@Override
 	public List<GroupCourse> getByCourseID(int courseId) {
 		return template.query(GET_BY_COURSE_SQL, new Object[] { courseId }, new GroupCourseMapper());
@@ -86,6 +84,11 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	public List<GroupCourse> getAll() {
 		return template.query(GET_ALL_SQL, new GroupCourseMapper());
 	}
+	
+	@Override
+	public List<GroupCourse> getByTeacherID(Integer id) {
+		return template.query(GET_BY_TEACHER_ID_SQL, new GroupCourseMapper(), id);
+	}
 
 	@Override
 	public int update(GroupCourse groupCourse) {
@@ -94,7 +97,6 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 				System.currentTimeMillis(), groupCourse.getId());
 	}
 
-	// works
 	@Override
 	public int deleteByGroupID(int groupId) {
 		return template.update(DELETE_BY_GROUP_SQL, groupId);

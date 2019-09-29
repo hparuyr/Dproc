@@ -15,12 +15,18 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentDAO student;
+	
 	@Autowired
 	StudentInfoService studentInfo;
 
 	@Override
 	public Integer addStudent(Student student) {
 		return this.student.addStudent(student);
+	}
+	
+	@Override
+	public int[] addStudents(List<Student> students) {
+		return student.addStudents(students);
 	}
 
 	@Override

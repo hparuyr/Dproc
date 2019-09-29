@@ -1,0 +1,39 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:fragment="header-css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+</head>
+<body>
+	<div th:fragment="header">
+		<!-- this is header -->
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<h2>
+						<span class="badge badge-primary">[[${username}]]</span>
+					</h2>
+				</div>
+				<div class="col-sm-7"></div>
+				<div class="col-sm-1">
+					<h2>
+						<a th:href="@{/logout}" type="button" class="btn btn-primary"><span class="fa fa-sign-out"></span></a>
+						<button onclick="window.location.href='/logout'"><span class="fa fa-sign-out"></span></button>
+						
+					</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

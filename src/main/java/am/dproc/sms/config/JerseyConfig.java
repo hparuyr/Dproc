@@ -6,6 +6,7 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
+import am.dproc.sms.controllers.CSVExportController;
 import am.dproc.sms.rest.AdminController;
 import am.dproc.sms.rest.AdminInfoController;
 import am.dproc.sms.rest.AnswerController;
@@ -59,6 +60,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(AssessmentController.class);
 		register(AssignmentController.class);
 		register(SurveyController.class);
+		register(CSVExportController.class);
 	}
 
 	@PostConstruct

@@ -7,6 +7,8 @@ import am.dproc.sms.models.Student;
 public interface StudentDAO {
 
 	public Integer addStudent(Student student);
+	
+	public int[] addStudents(List<Student> students);
 
 	public Student getStudent(Integer id);
 

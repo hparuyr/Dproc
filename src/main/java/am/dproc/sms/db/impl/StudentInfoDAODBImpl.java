@@ -1,9 +1,12 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -32,6 +35,26 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 				new Object[] { studentInfo.getPassportId(), studentInfo.getSocialCardId(), studentInfo.getBirthDate(),
 						studentInfo.getImageUrl(), currentTimeMillis, currentTimeMillis, studentInfo.getStudentId(), });
 	}
+	
+	@Override
+	public int[] addStudentInfos(List<StudentInfo> infos) {
+		Long currentTimeMillis = System.currentTimeMillis();
+		return jdbctemplate.batchUpdate(ADD_STUDENT_INFO,new BatchPreparedStatementSetter() {
+			public void setValues(PreparedStatement ps, int i) throws SQLException {
+				ps.setString(1, infos.get(i).getPassportId());
+				ps.setString(2, infos.get(i).getSocialCardId());
+				ps.setLong(3, infos.get(i).getBirthDate());
+				ps.setString(4, infos.get(i).getImageUrl());
+				ps.setInt(5, infos.get(i).getStudentId());
+				ps.setLong(6, currentTimeMillis);
+				ps.setLong(7, currentTimeMillis);
+			}
+			
+			public int getBatchSize() {
+				return infos.size();
+			}
+		});
+	}
 
 	@Override
 	public StudentInfo getStudentInfo(Integer studentId) {
@@ -39,14 +62,14 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	}
 
 	@Override
-	public Integer updateStudentInfoPassportId(Integer studentId, Integer passportId) {
+	public Integer updateStudentInfoPassportId(Integer studentId, String passportId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_PASSPORT_ID,
 				new Object[] { passportId, currentTimeMillis, studentId });
 	}
 
 	@Override
-	public Integer updateStudentInfoSocialCardId(Integer studentId, Integer socialCardId) {
+	public Integer updateStudentInfoSocialCardId(Integer studentId, String socialCardId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_SOCIAL_CARD_ID,
 				new Object[] { socialCardId, currentTimeMillis, studentId });
@@ -75,8 +98,8 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 		@Override
 		public StudentInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			StudentInfo studentInfo = new StudentInfo();
-			studentInfo.setPassportId(rs.getInt("passportId"));
-			studentInfo.setSocialCardId(rs.getInt("socialCardId"));
+			studentInfo.setPassportId(rs.getString("passportId"));
+			studentInfo.setSocialCardId(rs.getString("socialCardId"));
 			studentInfo.setBirthDate(rs.getLong("birthDate"));
 			;
 			studentInfo.setImageUrl(rs.getString("imageUrl"));

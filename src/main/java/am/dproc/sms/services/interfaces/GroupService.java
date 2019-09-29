@@ -9,6 +9,8 @@ public interface GroupService {
 	public Integer addGroup(Group group);
 
 	public Group getGroup(Integer id);
+	
+	public List<Integer> addGroups(List<Group> groups);
 
 	public List<Group> getSchoolGroups(Integer schoolId);
 

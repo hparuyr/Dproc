@@ -23,6 +23,7 @@ import am.dproc.sms.services.interfaces.TeacherService;
 @RestController
 @Path("/teacher")
 public class TeacherController {
+	
 	@Autowired
 	TeacherService teacher;
 

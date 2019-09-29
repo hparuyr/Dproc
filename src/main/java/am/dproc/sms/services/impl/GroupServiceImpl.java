@@ -29,6 +29,11 @@ public class GroupServiceImpl implements GroupService {
 		group.setListOfStudents(this.student.getGroupStudents(id));
 		return group;
 	}
+	
+	@Override
+	public List<Integer> addGroups(List<Group> groups) {
+		return group.addGroups(groups);
+	}
 
 	@Override
 	public List<Group> getSchoolGroups(Integer schoolId) {

@@ -34,6 +34,16 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId) {
 		return asiDao.getAssignmentsByTeacherId(teacherId);
 	}
+	
+	@Override
+	public String getAssignmentComment(Integer assignmentID) {
+		return asiDao.getAssignmentComment(assignmentID);
+	}
+	
+	@Override
+	public Assignment getAssignmentByLessonID(Integer lessonid, Integer teacherID) {
+		return asiDao.getAssignmentByLessonIDAndTeacherID(lessonid, teacherID);
+	}
 
 	@Override
 	public Integer deleteAssignment(Integer id) {

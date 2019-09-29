@@ -1,5 +1,7 @@
 package am.dproc.sms.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,11 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 	@Override
 	public Integer addStudentInfo(StudentInfo studentInfo) {
 		return this.studentInfo.addStudentInfo(studentInfo);
+	}
+	
+	@Override
+	public int[] addStudentInfos(List<StudentInfo> infos) {
+		return studentInfo.addStudentInfos(infos);
 	}
 
 	@Override

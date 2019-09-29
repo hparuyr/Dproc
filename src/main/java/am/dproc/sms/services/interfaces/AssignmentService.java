@@ -13,9 +13,13 @@ public interface AssignmentService {
 	public List<Assignment> getAllAssignments(String title);
 
 	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
+	
+	public Assignment getAssignmentByLessonID(Integer lessonid, Integer teacherID);
 
 	public Integer deleteAssignment(Integer id);
 
+	public String getAssignmentComment(Integer assignmentID);
+	
 	public Integer deleteAllAssignments();
 
 	public Integer addAssignment(Assignment asi);

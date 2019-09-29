@@ -3,12 +3,11 @@ package am.dproc.sms.models;
 public class Assessment {
 
 	private Integer id;
-	private String title;
 	private Integer score;
 	private Integer userId;
 	private Integer assignmentId;
-	private Integer creationDate;
-	private Integer changeDate;
+	private Long creationDate;
+	private Long changeDate;
 
 	public Integer getScore() {
 		return score;
@@ -24,14 +23,6 @@ public class Assessment {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public Integer getUserId() {
@@ -50,25 +41,25 @@ public class Assessment {
 		this.assignmentId = assignmentId;
 	}
 
-	public Integer getCreationDate() {
+	public Long getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(Integer creationDate) {
+	public void setCreationDate(Long creationDate) {
 		this.creationDate = creationDate;
 	}
 
-	public Integer getChangeDate() {
+	public Long getChangeDate() {
 		return changeDate;
 	}
 
-	public void setChangeDate(Integer changeDate) {
+	public void setChangeDate(Long changeDate) {
 		this.changeDate = changeDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Assessment [id=" + id + ", title=" + title + ", score=" + score + ", userId=" + userId
+		return "Assessment [id=" + id + "score=" + score + ", userId=" + userId
 				+ ", assignmentId=" + assignmentId + ", creationDate=" + creationDate + ", changeDate=" + changeDate
 				+ "]";
 	}
