@@ -9,12 +9,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class UserPrincipal implements UserDetails{
-	User user;
+	private User user;
 	
 	public UserPrincipal(User user) {
 		this.user = user;
 	}
 
+	public int getId() {
+		return user.getId();
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();

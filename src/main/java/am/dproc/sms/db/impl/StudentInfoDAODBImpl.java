@@ -1,24 +1,17 @@
 package am.dproc.sms.db.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.StudentInfoDAO;
-import am.dproc.sms.models.Group;
 import am.dproc.sms.models.StudentInfo;
 
 @Repository
@@ -65,9 +58,6 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 		});
 	}
 
-	
-	
-	
 	@Override
 	public StudentInfo getStudentInfo(Integer studentId) {
 		return jdbctemplate.queryForObject(GET_STUDENT_INFO_BY_STUDENT_ID, new StudentInfoMapper(), studentId);
@@ -113,9 +103,7 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 			studentInfo.setPassportId(rs.getString("PASSPORT_ID"));
 			studentInfo.setSocialCardId(rs.getString("SOCIAL_CARD_ID"));
 			studentInfo.setBirthDate(rs.getLong("BIRTH_DATE"));
-			;
 			studentInfo.setImageUrl(rs.getString("IMAGE_URL"));
-//			studentInfo.setCreationDate(rs.getLong("creation_date"));
 			studentInfo.setStudentId(rs.getInt("STUDENT_ID"));
 			return studentInfo;
 		}

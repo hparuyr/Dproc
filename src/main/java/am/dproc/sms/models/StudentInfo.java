@@ -5,7 +5,6 @@ public class StudentInfo {
 	private String socialCardId;
 	private Long birthDate;
 	private String imageUrl;
-//	private Long creationDate;
 	private Integer studentId;
 
 	public String getPassportId() {
@@ -31,14 +30,6 @@ public class StudentInfo {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
-
-//	public Long getCreationDate() {
-//		return creationDate;
-//	}
-
-//	public void setCreationDate(Long creationDate) {
-//		this.creationDate = creationDate;
-//	}
 
 	public Integer getStudentId() {
 		return studentId;

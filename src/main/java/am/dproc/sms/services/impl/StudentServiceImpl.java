@@ -7,8 +7,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
+import am.dproc.sms.helpers.RandomPassGenerator;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.StudentStatus;
+import am.dproc.sms.services.interfaces.EmailService;
 import am.dproc.sms.services.interfaces.StudentInfoService;
 import am.dproc.sms.services.interfaces.StudentService;
 
@@ -21,14 +23,31 @@ public class StudentServiceImpl implements StudentService {
 	StudentInfoService studentInfo;
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	EmailService emailService;
 
 	@Override
 	public Integer addStudent(Student student) {
-		student.setPassword(passwordEncoder.encode(student.getPassword())); ;
+		Student existingStudent = this.student.getStudentByEmail(student.getEmail());
+		if(existingStudent != null) {
+			return 0;
+		}
+		String randomPass = RandomPassGenerator.alphaNumericString(12);
+		student.setPassword(passwordEncoder.encode(randomPass));
 		student.setStatus(StudentStatus.PENDING.ordinal());
 		student.setGroupId(1);
-		return this.student.addStudent(student);
+		int id = this.student.addStudent(student);
+		if(id > 0) {
+			String msg = "Your temporary password: "+randomPass+"\nPlease login to complete your account information";
+			emailService.send(msg, "Temporary_Password", student.getEmail());
+//			emailService.send(msg, "Temporary_Password", new String[]{student.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
+//					"gorhakobiann@gmail.com","tigranuhi89@rambler.ru"});
+			return id;
+		}
+		return -1;
 	}
+	
+	
 	
 	@Override
 	public int[] addStudents(List<Student> students) {

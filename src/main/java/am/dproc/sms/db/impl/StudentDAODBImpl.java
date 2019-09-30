@@ -5,16 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -46,11 +44,24 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Integer addStudent(Student student) {
-//		KeyHolder
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(ADD_STUDENT,
-				new Object[] { student.getName(), student.getSurname(), student.getEmail(), student.getPassword(),
-						student.getStatus(), currentTimeMillis, currentTimeMillis, student.getGroupId() });
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		Long currentTimeMillis = System.currentTimeMillis();
+		jdbctemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, student.getName());
+				ps.setString(2, student.getSurname());
+				ps.setString(3, student.getEmail());
+				ps.setString(4, student.getPassword());
+				ps.setInt(5, student.getStatus());
+				ps.setLong(6, currentTimeMillis);
+				ps.setLong(7, currentTimeMillis);
+				ps.setInt(8, student.getGroupId());
+				return ps;
+			}
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
 	}
 
 	@Override
@@ -101,7 +112,11 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Student getStudentByEmail(String email) {
-		return jdbctemplate.queryForObject(GET_STUDENT_BY_EMAIL, new StudentMapper(), email);
+		try {
+			return jdbctemplate.queryForObject(GET_STUDENT_BY_EMAIL, new StudentMapper(), email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 	
 	@Override
@@ -164,13 +179,12 @@ public class StudentDAODBImpl implements StudentDAO {
 		@Override
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
-			student.setId(rs.getInt("id"));
-			student.setName(rs.getString("name"));
-			student.setSurname(rs.getString("surname"));
-			student.setEmail(rs.getString("email"));
-			student.setPassword(rs.getString("password"));
-			student.setStatus(rs.getInt("status"));
-//			student.setCreationDate(rs.getLong("creation_date"));
+			student.setId(rs.getInt("ID"));
+			student.setName(rs.getString("NAME"));
+			student.setSurname(rs.getString("SURNAME"));
+			student.setEmail(rs.getString("EMAIL"));
+			student.setPassword(rs.getString("PASSWORD"));
+			student.setStatus(rs.getInt("STATUS"));
 			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}

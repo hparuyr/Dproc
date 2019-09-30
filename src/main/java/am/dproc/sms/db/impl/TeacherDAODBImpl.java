@@ -96,7 +96,6 @@ public class TeacherDAODBImpl implements TeacherDAO {
 			teacher.setSurname(rs.getString("surname"));
 			teacher.setEmail(rs.getString("email"));
 			teacher.setPassword(rs.getString("password"));
-			teacher.setCreationDate(rs.getLong("creation_date"));
 			teacher.setSchoolId(rs.getInt("schoolId"));
 			return teacher;
 		}

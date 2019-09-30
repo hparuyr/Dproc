@@ -95,7 +95,6 @@ public class AdminDAODBImpl implements AdminDAO {
 			admin.setSurname(rs.getString("surname"));
 			admin.setEmail(rs.getString("email"));
 			admin.setPassword(rs.getString("password"));
-			admin.setCreationDate(rs.getLong("creation_date"));
 			admin.setSchoolId(rs.getInt("schoolId"));
 			return admin;
 		}
