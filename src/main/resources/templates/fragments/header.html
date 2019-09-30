@@ -15,25 +15,31 @@
 </div>
 </head>
 <body>
+
 	<div th:fragment="header">
-		<!-- this is header -->
+
+		<br>
+
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4">
 					<h2>
-						<span class="badge badge-primary">[[${username}]]</span>
+						<span class="badge badge-primary">Username</span>
 					</h2>
 				</div>
 				<div class="col-sm-7"></div>
 				<div class="col-sm-1">
 					<h2>
-						<a th:href="@{/logout}" type="button" class="btn btn-primary"><span class="fa fa-sign-out"></span></a>
-						<button onclick="window.location.href='/logout'"><span class="fa fa-sign-out"></span></button>
-						
+						<button class="btn btn-primary"
+							onclick="window.location.href='/logout'">
+							<span class="fa fa-sign-out"></span>
+						</button>
 					</h2>
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 </body>
 </html>

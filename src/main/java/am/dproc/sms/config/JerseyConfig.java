@@ -60,7 +60,6 @@ public class JerseyConfig extends ResourceConfig {
 		register(AssessmentController.class);
 		register(AssignmentController.class);
 		register(SurveyController.class);
-		register(CSVExportController.class);
 	}
 
 	@PostConstruct
@@ -74,7 +73,7 @@ public class JerseyConfig extends ResourceConfig {
 
 		BeanConfig swaggerConfigBean = new BeanConfig();
 		swaggerConfigBean.setBasePath("/api");
-		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
+		swaggerConfigBean.setResourcePackage("am.dproc.sms");
 		swaggerConfigBean.setPrettyPrint(true);
 		swaggerConfigBean.setScan(true);
 	}
