@@ -21,7 +21,7 @@ import am.dproc.sms.services.interfaces.EmailService;
 public class EmailServiceImpl implements EmailService{
 	@Autowired
 	JavaMailSender sender;
-	
+
 	@Override
 	public String send(String msg, String subject, String to) {
         try {
@@ -40,7 +40,7 @@ public class EmailServiceImpl implements EmailService{
 			return "Error in sending email: "+ex;
 		}
 	}
- 
+
     private void sendEmail(String msg, String subject,  String to) throws Exception{
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -48,8 +48,8 @@ public class EmailServiceImpl implements EmailService{
         helper.setSubject(subject);
         helper.setText(msg);
         sender.send(message);
-    }	
-    
+    }
+
     private void sendEmail(String msg, String subject,  String[] to) throws Exception{
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -57,9 +57,9 @@ public class EmailServiceImpl implements EmailService{
         helper.setSubject(subject);
         helper.setText(msg);
         sender.send(message);
-    }	
+    }
 
-    
+
     public String getJavaMailSender() {
         final String username = "dproc.com@gmail.com";
         final String password = "smsystem123";
@@ -100,5 +100,5 @@ public class EmailServiceImpl implements EmailService{
         }
         return "Email Sent!";
 	}
-    
+
 }

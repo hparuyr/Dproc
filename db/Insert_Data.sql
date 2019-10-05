@@ -184,38 +184,36 @@ INSERT INTO `mydb`.`ASSIGNMENT`(`START_DATE`, `END_DATE`, `TITLE`, `DESCRIPTION`
             (1472583699879, 1479583699879, 'ASSIGNMENT 11', 'DEDCRIPTION', UNIX_TIMESTAMP(NOW()), 1, 5),
             (1472583699879, 1479583699879, 'ASSIGNMENT 12', 'DEDCRIPTION', UNIX_TIMESTAMP(NOW()), 1, 3);
             
-INSERT INTO `mydb`.`ASSIGNMENT_COMPLETED`(`STUDENT_ID`, `ASSIGNMENT_ID`, `CONTENT`, CREATION_DATE) 
-      VALUES(6, 1, 'ASSIGNMENT 1', UNIX_TIMESTAMP(NOW())),
-            (6, 6, 'ASSIGNMENT 2', UNIX_TIMESTAMP(NOW())),
-            (6, 11, 'ASSIGNMENT 3', UNIX_TIMESTAMP(NOW())),
-            (7, 2, 'ASSIGNMENT 4', UNIX_TIMESTAMP(NOW())),
-			(7, 7, 'ASSIGNMENT 5', UNIX_TIMESTAMP(NOW())),
-            (7, 12, 'ASSIGNMENT 6', UNIX_TIMESTAMP(NOW())),
-            (8, 3, 'ASSIGNMENT 7', UNIX_TIMESTAMP(NOW())),
-            (8, 8, 'ASSIGNMENT 8', UNIX_TIMESTAMP(NOW())),
-            (8, 4, 'ASSIGNMENT 9', UNIX_TIMESTAMP(NOW())),
-            (9, 9, 'ASSIGNMENT 10', UNIX_TIMESTAMP(NOW())),
-            (9, 5, 'ASSIGNMENT 11', UNIX_TIMESTAMP(NOW())),
-            (9, 10, 'ASSIGNMENT 12', UNIX_TIMESTAMP(NOW()));
+-- INSERT INTO `mydb`.`ASSIGNMENT_COMPLETED`(`STUDENT_ID`, `ASSIGNMENT_ID`, `CONTENT`, CREATION_DATE) 
+--       VALUES(6, 1, 'ASSIGNMENT 1', UNIX_TIMESTAMP(NOW())),
+--             (6, 6, 'ASSIGNMENT 2', UNIX_TIMESTAMP(NOW())),
+--             (6, 11, 'ASSIGNMENT 3', UNIX_TIMESTAMP(NOW())),
+--             (7, 2, 'ASSIGNMENT 4', UNIX_TIMESTAMP(NOW())),
+-- 			(7, 7, 'ASSIGNMENT 5', UNIX_TIMESTAMP(NOW())),
+--             (7, 12, 'ASSIGNMENT 6', UNIX_TIMESTAMP(NOW())),
+--             (8, 3, 'ASSIGNMENT 7', UNIX_TIMESTAMP(NOW())),
+--             (8, 8, 'ASSIGNMENT 8', UNIX_TIMESTAMP(NOW())),
+--             (8, 4, 'ASSIGNMENT 9', UNIX_TIMESTAMP(NOW())),
+--             (9, 9, 'ASSIGNMENT 10', UNIX_TIMESTAMP(NOW())),
+--             (9, 5, 'ASSIGNMENT 11', UNIX_TIMESTAMP(NOW())),
+--             (9, 10, 'ASSIGNMENT 12', UNIX_TIMESTAMP(NOW()));
 
-INSERT INTO `mydb`.`ASSESSMENT`(`SCORE`, `CREATION_DATE`, `STUDENT_ID`, `ASSIGNMENT_ID`, `COMMENT`) 
-      VALUES(10, UNIX_TIMESTAMP(NOW()), 6, 5, 'Cmment 1'),
-			(8, UNIX_TIMESTAMP(NOW()), 7, 5, 'Cmment 2'),
-			(0, UNIX_TIMESTAMP(NOW()), 8, 5, 'Cmment 3'),
-			(7, UNIX_TIMESTAMP(NOW()), 9, 2, 'Cmment 4'),
+INSERT INTO `mydb`.`ASSESSMENT`(`SCORE`, `CREATION_DATE`, `STUDENT_ID`, `ASSIGNMENT_COMPLETED_ID`, `COMMENT`) 
+      VALUES(10, UNIX_TIMESTAMP(NOW()), 6, 29, 'Cmment 1'),
+			(8, UNIX_TIMESTAMP(NOW()), 7, 30, 'Cmment 2'),
+			(0, UNIX_TIMESTAMP(NOW()), 8, 31, 'Cmment 3'),
+			(7, UNIX_TIMESTAMP(NOW()), 9, 11, 'Cmment 4'),
 			(8, UNIX_TIMESTAMP(NOW()), 6, 1, 'Cmment 5'),
-			(9, UNIX_TIMESTAMP(NOW()), 7, 6, 'Cmment 6'),
-			(10, UNIX_TIMESTAMP(NOW()), 8, 5, 'Cmment 7'),
-			(4, UNIX_TIMESTAMP(NOW()), 9, 4, 'Cmment 8'),
-			(6, UNIX_TIMESTAMP(NOW()), 6, 2, 'Cmment 9'),
-			(5, UNIX_TIMESTAMP(NOW()), 7, 3, 'Cmment 10'),
-			(8, UNIX_TIMESTAMP(NOW()), 8, 4, 'Cmment 11'),
-			(9, UNIX_TIMESTAMP(NOW()), 9, 5, 'Cmment 12'),
-			(1, UNIX_TIMESTAMP(NOW()), 6, 6, 'Cmment 13'),
-			(2, UNIX_TIMESTAMP(NOW()), 7, 3, 'Cmment 14'),
-			(3, UNIX_TIMESTAMP(NOW()), 8, 2, 'Cmment 15'),
-			(5, UNIX_TIMESTAMP(NOW()), 9, 9, 'Cmment 16'),
-			(6, UNIX_TIMESTAMP(NOW()), 6, 3, 'Cmment 17');   
+			(9, UNIX_TIMESTAMP(NOW()), 7, 37, 'Cmment 6'),
+			(4, UNIX_TIMESTAMP(NOW()), 9, 25, 'Cmment 8'),
+			(6, UNIX_TIMESTAMP(NOW()), 6, 50, 'Cmment 9'),
+			(5, UNIX_TIMESTAMP(NOW()), 7, 16, 'Cmment 10'),
+			(8, UNIX_TIMESTAMP(NOW()), 8, 24, 'Cmment 11'),
+			(9, UNIX_TIMESTAMP(NOW()), 9, 32, 'Cmment 12'),
+			(1, UNIX_TIMESTAMP(NOW()), 6, 36, 'Cmment 13'),
+			(3, UNIX_TIMESTAMP(NOW()), 8, 10, 'Cmment 15'),
+			(5, UNIX_TIMESTAMP(NOW()), 9, 60, 'Cmment 16'),
+			(6, UNIX_TIMESTAMP(NOW()), 6, 15, 'Cmment 17');  
             
 INSERT INTO `mydb`.`SURVEY_RESULT` (`STUDENT_ID`, `EXT`, `EST`, `AGR`, `CSN`, `OPN`, `CREATION_DATE`) 
 	  VALUES (7, 5.0, 3.6, 4.3, 5.0, 1.4, UNIX_TIMESTAMP(NOW()));               
