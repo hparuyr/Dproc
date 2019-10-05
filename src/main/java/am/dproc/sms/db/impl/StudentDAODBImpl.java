@@ -88,6 +88,7 @@ public class StudentDAODBImpl implements StudentDAO {
 				return ps;
 			}
 		}, new PreparedStatementCallback<int[]>() {
+			@Override
 			public int[] doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 				ResultSet rs = ps.getGeneratedKeys();
 				int curId;

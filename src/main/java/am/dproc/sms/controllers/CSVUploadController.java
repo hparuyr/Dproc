@@ -122,7 +122,6 @@ public class CSVUploadController {
 			int schoolId = (int) ((Math.random() * 3) + 1);
 			group.setSchoolId(schoolId);
 
-
 			StudentInfo info = new StudentInfo();
 			info.setPassportId(line[4]);
 			info.setSocialCardId(line[5]);
@@ -153,7 +152,6 @@ public class CSVUploadController {
 			studentInfos.add(info);
 			curInd++;
 		}
-
 		List<Integer> groupIds = groupService.addGroups(groups);
 //		for (int i = 0; i < students.size(); i++) {
 //			students.get(i).setGroupId(groupIds.get(i));
@@ -170,7 +168,6 @@ public class CSVUploadController {
 			}
 			groupIndex++;
 		}
-
 		int[] studentsIds = studentService.addStudents(students);
 		System.out.println(Arrays.toString(studentsIds));
 
@@ -182,5 +179,4 @@ public class CSVUploadController {
 		reader.close();
 		return "csvupload";
 	}
-
 }

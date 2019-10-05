@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.UserPrincipal;
 import am.dproc.sms.services.interfaces.StudentService;
-import org.springframework.web.bind.annotation.RequestParam;
-import am.dproc.sms.models.Student;
 
 @Controller
 public class LoginController {

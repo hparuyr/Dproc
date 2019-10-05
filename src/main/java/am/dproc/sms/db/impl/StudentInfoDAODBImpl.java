@@ -39,6 +39,7 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	public int[] addStudentInfos(List<StudentInfo> infos) {
 		Long currentTimeMillis = System.currentTimeMillis();
 		return jdbctemplate.batchUpdate(ADD_STUDENT_INFO,new BatchPreparedStatementSetter() {
+			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				ps.setString(1, infos.get(i).getPassportId());
 				ps.setString(2, infos.get(i).getSocialCardId());
