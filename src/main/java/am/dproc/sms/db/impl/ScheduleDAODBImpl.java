@@ -18,16 +18,21 @@ public class ScheduleDAODBImpl implements ScheduleDAO {
 	@Autowired
 	JdbcTemplate template;
 
-	private static final String CREATE_SCHEDULE_RECORD = "insert into mydb.SCHEDULE_RECORD(GROUP_COURSE_ID, CLASSROOM_ID, LESSON_ID, START_DATE, END_DATE, CREATION_DATE) values (?, ?, ?, ?, ?, ?)";
-	private static final String GET_SCHEDULE_RECORD_BY_ID = "select * from mydb.SCHEDULE_RECORD where ID = ?";
-	private static final String GET_SCHEDULE_RECORD_FOR_TEACHER_IN_PERIOD = "select SCH.* from mydb.SCHEDULE_RECORD SCH join GROUP_COURSE GC on SCH.GROUP_COURSE_ID = GC.ID "
-			+ "where GC.TEACHER_ID = ? and ? <= SCH.END_DATE and SCH.START_DATE <= ? order by SCH.START_DATE, SCH.END_DATE";
-	private static final String GET_SCHEDULE_RECORD_FOR_GROUP_COURSE_IN_PERIOD = "select * from mydb.SCHEDULE_RECORD where GROUP_COURSE_ID = ? "
-			+ " and ? <= END_DATE and START_DATE <= ? order by START_DATE, END_DATE";
-	private static final String GET_SCHEDULE_RECORD_FOR_CLASSROOM_IN_PERIOD = "select * from mydb.SCHEDULE_RECORD where CLASSROOM_ID = ? "
-			+ " and ? <= END_DATE and START_DATE <= ? order by START_DATE, END_DATE";
-	private static final String UPDATE_SCHEDULE_RECORD = "update mydb.SCHEDULE_RECORD set GROUP_COURSE_ID = ?, CLASSROOM_ID = ?, LESSON_ID = ?, START_DATE = ?, END_DATE = ?, CHANGE_DATE = ? where ID = ?";
-	private static final String DELETE_SCHEDULE_RECORD = "delete from mydb.SCHEDULE_RECORD where ID = ?";
+	private static final String CREATE_SCHEDULE_RECORD = "INSERT INTO mydb.SCHEDULE_RECORD(GROUP_COURSE_ID, CLASSROOM_ID, LESSON_ID, START_DATE, END_DATE, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String GET_SCHEDULE_RECORD_BY_ID = "SELECT * FROM mydb.SCHEDULE_RECORD WHERE ID = ?";
+	private static final String GET_SCHEDULE_RECORD_FOR_TEACHER_IN_PERIOD = "SELECT SCH.* FROM mydb.SCHEDULE_RECORD SCH JOIN GROUP_COURSE GC ON SCH.GROUP_COURSE_ID = GC.ID "
+			+ "WHERE GC.TEACHER_ID = ? AND ? <= SCH.END_DATE AND SCH.START_DATE <= ? ORDER BY SCH.START_DATE, SCH.END_DATE";
+	private static final String GET_SCHEDULE_RECORD_FOR_STUDENT_IN_PERIOD = "SELECT SCH.* \r\n"+
+			                                                                "FROM STUDENT_GROUP SG \r\n"+
+			                                                                "   JOIN GROUP_COURSE GC ON SG.GROUP_ID = GC.GROUP_ID \r\n"+
+			                                                                "   JOIN SCHEDULE_RECORD SCH ON SCH.GROUP_COURSE_ID = GC.ID \r\n"+
+			                                                                "WHERE SG.STUDENT_ID = ? AND ? <= SCH.END_DATE AND SCH.START_DATE <= ? ORDER BY SCH.START_DATE, SCH.END_DATE";
+	private static final String GET_SCHEDULE_RECORD_FOR_GROUP_COURSE_IN_PERIOD = "SELECT * FROM mydb.SCHEDULE_RECORD WHERE GROUP_COURSE_ID = ? "
+			+ " AND ? <= END_DATE AND START_DATE <= ? ORDER BY START_DATE, END_DATE";
+	private static final String GET_SCHEDULE_RECORD_FOR_CLASSROOM_IN_PERIOD = "SELECT * FROM mydb.SCHEDULE_RECORD WHERE CLASSROOM_ID = ? "
+			+ " AND ? <= END_DATE AND START_DATE <= ? ORDER BY START_DATE, END_DATE";
+	private static final String UPDATE_SCHEDULE_RECORD = "UPDATE mydb.SCHEDULE_RECORD SET GROUP_COURSE_ID = ?, CLASSROOM_ID = ?, LESSON_ID = ?, START_DATE = ?, END_DATE = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String DELETE_SCHEDULE_RECORD = "DELETE FROM mydb.SCHEDULE_RECORD WHERE ID = ?";
 
 	@Override
 	public ScheduleRecord getScheduleRecordById(Integer id) {
@@ -37,6 +42,12 @@ public class ScheduleDAODBImpl implements ScheduleDAO {
 	@Override
 	public List<ScheduleRecord> getScheduleForTeacherInPeriod(Integer teacherId, Long startDate, Long endDate) {
 		return template.query(GET_SCHEDULE_RECORD_FOR_TEACHER_IN_PERIOD, new ScheduleMapper(), teacherId, startDate,
+				endDate);
+	}
+
+	@Override
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(Integer studentId, Long startDate, Long endDate) {
+		return template.query(GET_SCHEDULE_RECORD_FOR_STUDENT_IN_PERIOD, new ScheduleMapper(), studentId, startDate,
 				endDate);
 	}
 

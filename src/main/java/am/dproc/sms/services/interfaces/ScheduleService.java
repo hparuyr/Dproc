@@ -9,6 +9,8 @@ public interface ScheduleService {
 
 	public List<ScheduleRecord> getScheduleForTeacherInPeriod(Integer teacherId, Long startDate, Long endDate);
 
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(Integer studentId, Long startDate, Long endDate);
+
 	public List<ScheduleRecord> getScheduleForGroupCourseInPeriod(Integer groupCourseId, Long startDate, Long endDate);
 
 	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(Integer classRoomId, Long startDate, Long endDate);

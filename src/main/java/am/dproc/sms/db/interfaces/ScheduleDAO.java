@@ -18,4 +18,6 @@ public interface ScheduleDAO {
 
 	public Integer deleteScheduleRecord(Integer scheduleRecordId);
 
+	List<ScheduleRecord> getScheduleForStudentInPeriod(Integer studentId, Long startDate, Long endDate);
+
 }
