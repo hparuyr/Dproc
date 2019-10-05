@@ -17,6 +17,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentDAO student;
+	
 	@Autowired
 	StudentInfoService studentInfo;
 	@Autowired

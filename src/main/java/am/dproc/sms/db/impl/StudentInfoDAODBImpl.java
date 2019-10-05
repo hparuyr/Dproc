@@ -1,25 +1,16 @@
 package am.dproc.sms.db.impl;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import am.dproc.sms.db.interfaces.StudentInfoDAO;
-import am.dproc.sms.models.Group;
 import am.dproc.sms.models.StudentInfo;
 
 @Repository
@@ -48,7 +39,6 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	public int[] addStudentInfos(List<StudentInfo> infos) {
 		Long currentTimeMillis = System.currentTimeMillis();
 		return jdbctemplate.batchUpdate(ADD_STUDENT_INFO,new BatchPreparedStatementSetter() {
-			@Override
 			public void setValues(PreparedStatement ps, int i) throws SQLException {
 				ps.setString(1, infos.get(i).getPassportId());
 				ps.setString(2, infos.get(i).getSocialCardId());
@@ -59,15 +49,11 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 				ps.setLong(7, currentTimeMillis);
 			}
 
-			@Override
 			public int getBatchSize() {
 				return infos.size();
 			}
 		});
 	}
-
-
-
 
 	@Override
 	public StudentInfo getStudentInfo(Integer studentId) {

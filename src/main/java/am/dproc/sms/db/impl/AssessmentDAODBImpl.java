@@ -21,8 +21,6 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 	private static final String GET_ASSESSMENT_BY_ID = "SELECT * FROM mydb.ASSESSMENT WHERE ID = ?";
 	private static final String GET_ALL_ASSESSMENTS = "SELECT * FROM mydb.ASSESSMENT";
 	private static final String GET_ALL_ASSESSMENT_BY_TITLE = "SELECT * FROM mydb.ASSESSMENT WHERE TITLE = ?";
-	private static final String GET_ALL_ASSESSMENT_BY_USER_ID = "SELECT * FROM mydb.ASSESSMENT WHERE ASSIGNMENT_ID = ?";
-	private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE TEACHER_ID_GIVEN_ASI = ?";
 	private static final String GET_AVG_SCORE_BY_STUDENT_COURSE = "SELECT AVG(ASM.SCORE) as avgScore \r\n" +
 			                                                      "FROM ASSESSMENT ASM \r\n" +
                                                       			  "  JOIN ASSIGNMENT ASGN ON ASM.ASSIGNMENT_ID = ASGN.ID\r\n" +
@@ -30,6 +28,16 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 			                                                      "  JOIN COURSE C ON C.ID = L.COURSE_ID\r\n" +
 			                                                      "WHERE ASM.STUDENT_ID = ? AND C.ID = ?\r\n";
 	private static final String GET_AVG_SCORE_BY_STUDENT = "SELECT AVG(SCORE) as avgScore FROM ASSESSMENT WHERE STUDENT_ID = ?";
+	private static final String GET_ALL_ASSESSMENT_BY_STUDENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE STUDENT_ID = ?";
+	private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE ASSIGNMENT_ID = ?";
+	private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "SELECT \r\n" +
+			"IFNULL(\r\n" +
+			"    ( SELECT ID FROM mydb.ASSESSMENT\r\n" +
+			"        WHERE STUDENT_ID = ? AND ASSIGNMENT_ID = ?\r\n" +
+			"    ),\r\n" +
+			"    '0'\r\n" +
+			")\r\n" +
+			"";
 	private static final String DELETE_ASSESSMENT_BY_ID = "DELETE FROM mydb.ASSESSMENT WHERE ID = ?";
 	private static final String DELETE_ALL_ASSESSMENT = "DELETE FROM mydb.ASSESSMENT";
 	private static final String ADD_ASSESSMENT = "INSERT INTO mydb.ASSESSMENT (TITLE, SCORE, CREATION_DATE, CHANGE_DATE,USER_ID, ASSIGNMENT_ID,) VALUES (?, ?, ?, ?, ?, ?)";
@@ -51,12 +59,17 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
 	@Override
 	public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
-		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_USER_ID, new AssessmentMapper(), userId);
+		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_STUDENT_ID, new AssessmentMapper(), userId);
 	}
 
 	@Override
 	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
 		return jdbctemplate.query(GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID, new AssessmentMapper(), assignmentId);
+	}
+
+	@Override
+	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
+		return jdbctemplate.queryForObject(GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID, Integer.class, studentId, assignmentId);
 	}
 
 	@Override
@@ -81,8 +94,8 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
 	@Override
 	public Integer addAssessment(Assessment asses) {
-		return jdbctemplate.update(ADD_ASSESSMENT, new Object[] { asses.getId(), asses.getTitle(), asses.getScore(),
-				asses.getUserId(), asses.getAssignmentId() });
+		return jdbctemplate.update(ADD_ASSESSMENT,
+				new Object[] { asses.getId(), asses.getScore(), asses.getUserId(), asses.getAssignmentId() });
 	}
 
 	private static class AssessmentMapper implements RowMapper<Assessment> {
@@ -92,11 +105,10 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 			Assessment assessment = new Assessment();
 
 			assessment.setId(rs.getInt("ID"));
-			assessment.setTitle(rs.getString("TITLE"));
 			assessment.setScore(rs.getInt("SCORE"));
-			assessment.setCreationDate(rs.getInt("CREATION_DATE"));
-			assessment.setChangeDate(rs.getInt("CHANGE_DATE"));
-			assessment.setUserId(rs.getInt("USER_ID"));
+			assessment.setCreationDate(rs.getLong("CREATION_DATE"));
+			assessment.setChangeDate(rs.getLong("CHANGE_DATE"));
+			assessment.setUserId(rs.getInt("STUDENT_ID"));
 			assessment.setAssignmentId(rs.getInt("ASSIGNMENT_ID"));
 
 			return assessment;

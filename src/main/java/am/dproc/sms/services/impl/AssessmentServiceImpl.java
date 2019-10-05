@@ -39,6 +39,11 @@ public class AssessmentServiceImpl implements AssessmentService {
 	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
 		return asDao.getAssessmentsByAssignmentId(assignmentId);
 	}
+	
+	@Override
+	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
+		return asDao.getAssessmentByStudentIDAndAssignmentID(studentId, assignmentId);
+	}
 
 	@Override
 	public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {

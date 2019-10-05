@@ -8,6 +8,8 @@ public interface StudentDAO {
 
 	public Integer addStudent(Student student);
 
+	public int[] addStudents(List<Student> students);
+
 	public Student getStudent(Integer id);
 
 	public Student getStudentByEmail(String email);
@@ -32,5 +34,4 @@ public interface StudentDAO {
 
 	public Integer deleteStudent(Integer id);
 
-	public int[] addStudents(List<Student> students);
-}
+	}

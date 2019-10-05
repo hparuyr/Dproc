@@ -1,6 +1,8 @@
 package am.dproc.sms.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,10 +13,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.Topic;
@@ -45,32 +47,36 @@ public class TopicController {
 	@DELETE
 	@Path(value = "/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ResponseEntity<Integer> deleteTopic(@PathParam(value = "id") Integer id) {
+	public Response deleteTopic(@PathParam(value = "id") Integer id) {
 		if (topic.deleteTopic(id) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
+			return Response.status(Status.OK).build();
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		return Response.status(Status.BAD_REQUEST).build();
 	}
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ResponseEntity<Integer> addTopic(Topic topic) {
+	public Response addTopic(Topic topic) {
 		Integer id = this.topic.addTopic(topic);
 		if (id == 0) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).header("Message", "All fields must be filled!").body(0);
+			Map<String, String> message = new HashMap<String, String>();
+			message.put("Message", "All fields must be filled!");
+			return Response.status(Status.BAD_REQUEST).entity(message).build();
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).body(id);
+		return Response.status(Status.CREATED).entity(id).build();
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ResponseEntity<Integer> editTopic(Topic topic) {
-		if (this.topic.editTopic(topic) == 1) {
-			return ResponseEntity.status(HttpStatus.OK).body(1);
+	public Response editTopic(Topic topic) {
+		if (this.topic.editTopic(topic) > 0) {
+			return Response.status(Status.OK).build();
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 }

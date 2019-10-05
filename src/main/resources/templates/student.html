@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+
+	<div th:replace="fragments/header :: header"></div>
+
+	<br>
+
+	<div class="container">
+		<button class="btn btn-primary" type="button" data-toggle="collapse"
+			data-target="#personalInfo" aria-expanded="false"
+			aria-controls="collapseExample">Edit Personal Information.</button>
+		<div class="collapse" id="personalInfo">
+			<div class="card card-body">
+				<div id="accordion">
+					<form action="/" enctype="utf8">
+						<div class="form-group">
+							<input type="text" name="name" id="name"
+								class="form-control input-lg" placeholder="UserName"
+								autofocus="true" />
+						</div>
+						<div class="form-group">
+							<input type="text" name="surname" id="surname"
+								class="form-control input-lg" placeholder="Surname" />
+						</div>
+						<div class="form-group">
+							<input type="text" name="email" id="email"
+								class="form-control input-lg" placeholder="Email" />
+						</div>
+						<div class="form-group">
+							<input type="date" name="birthDate" id="birthDate"
+								class="form-control input-lg" placeholder="Birth Date" />
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-lg btn-outline-primary btn-block"
+								value="Edit" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="container">
+		<button class="btn btn-primary" type="button" data-toggle="collapse"
+			data-target="#assignment" aria-expanded="false"
+			aria-controls="collapseExample">Set Assignment.</button>
+		<div class="collapse" id="assignment">
+			<div class="card card-body">
+				<div id="accordion">
+					<form action="/" enctype="utf8">
+						<div class="form-group">
+							<input type="text" name="assignmentTitle" id="assignmentTitle"
+								class="form-control input-lg" placeholder="Assignment Title"
+								autofocus="true" />
+						</div>
+						<div class="form-group">
+							<textarea rows="10" type="text" name="description"
+								id="description" class="form-control input-lg"
+								placeholder="Description"></textarea>
+						</div>
+						<div class="form-group">
+							Start Date <input type="date" name="startDate" id="startDate"
+								class="form-control input-lg" placeholder="Start Date" />
+						</div>
+						<div class="form-group">
+							Deadline <input type="date" name="deadline" id="deadline"
+								class="form-control input-lg" placeholder="Deadline" />
+						</div>
+						<div class="form-group">
+							<input type="submit" class="btn btn-lg btn-outline-primary btn-block"
+								value="Add" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-5"></div>
+			<div class="col-sm-7">
+				<h2>Students</h2>
+			</div>
+		</div>
+		
+	</div>
+
+	<br>
+
+	<div class="container">
+		<button class="btn btn-primary" type="button" data-toggle="collapse"
+			data-target="#collapseExample" aria-expanded="false"
+			aria-controls="collapseExample">Set Homework.</button>
+		<div class="collapse" id="collapseExample">
+			<div class="card card-body">
+				<div id="accordion">
+					<div class="card">
+						<div class="card-header">
+							<a class="card-link" data-toggle="collapse" href="#collapseOne">
+								Edit Firstname.</a>
+						</div>
+						<div id="collapseOne" class="collapse" data-parent="#accordion">
+							<div class="card-body">Lorem ipsum dolor sit amet,
+								consectetur adipisicing elit, sed do eiusmod tempor incididunt
+								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+								commodo consequat.</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<a class="collapsed card-link" data-toggle="collapse"
+								href="#collapseTwo"> Collapsible Group Item #2 </a>
+						</div>
+						<div id="collapseTwo" class="collapse" data-parent="#accordion">
+							<div class="card-body">Lorem ipsum dolor sit amet,
+								consectetur adipisicing elit, sed do eiusmod tempor incididunt
+								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+								commodo consequat.</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							<a class="collapsed card-link" data-toggle="collapse"
+								href="#collapseThree"> Collapsible Group Item #3 </a>
+						</div>
+						<div id="collapseThree" class="collapse" data-parent="#accordion">
+							<div class="card-body">Lorem ipsum dolor sit amet,
+								consectetur adipisicing elit, sed do eiusmod tempor incididunt
+								ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+								nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+								commodo consequat.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br>
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+</body>
+</html>

@@ -25,6 +25,7 @@ import io.swagger.annotations.Api;
 @Path("/teacher")
 @Api(value = "TeacherController")
 public class TeacherController {
+	
 	@Autowired
 	TeacherService teacher;
 

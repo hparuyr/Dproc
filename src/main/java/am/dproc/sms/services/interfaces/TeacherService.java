@@ -13,7 +13,7 @@ public interface TeacherService {
 	public List<Teacher> getSchoolTeachers(Integer schoolId);
 
 	public List<Teacher> getTeachers();
-
+	
 	public Integer updateTeacher(Teacher teacher);
 
 	public Integer deleteTeacher(Integer id);

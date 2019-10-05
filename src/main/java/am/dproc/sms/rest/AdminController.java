@@ -25,6 +25,7 @@ import io.swagger.annotations.Api;
 @Path("/admin")
 @Api(value = "AdminController")
 public class AdminController {
+	
 	@Autowired
 	AdminService admin;
 

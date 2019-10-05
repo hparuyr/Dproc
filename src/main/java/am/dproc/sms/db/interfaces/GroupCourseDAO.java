@@ -17,6 +17,8 @@ public interface GroupCourseDAO {
 	public List<GroupCourse> getByCourseID(int courseId);
 
 	public List<GroupCourse> getAll();
+	
+	public List<GroupCourse> getByTeacherID(Integer id);
 
 	public int update(GroupCourse groupCourse);
 

@@ -18,7 +18,7 @@
 			<h1>Registration Form</h1>
 			<form action="/registration" th:object="${user}" method="POST" enctype="utf8">
 				<div class="form-group">
-					<input type="text" class="form-control" th:field="*{name}" placeholder="Name" />
+					<input type="text" class="form-control" th:field="*{name}" placeholder="Name"  autofocus="true"/>
 					<p th:each="error : ${#fields.errors('name')}" th:text="${error}">Validation error</p>
 				</div>
 				<div class="form-group">
@@ -29,23 +29,23 @@
 					<input type="text" class="form-control" th:field="*{email}" placeholder="Email" />
 					<p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
 				</div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<input type="text" class="form-control" th:field="*{studentInfo.passportId}" placeholder="Passport Id" /> -->
-<!-- 					<p th:each="error : ${#fields.errors('studentInfo.passportId')}" th:text="${error}">Validation error</p> -->
-<!-- 				</div> -->
-<!-- 				<div class="form-group"> -->
-<!-- 					<input type="text" class="form-control" th:field="*{studentInfo.socialCardId}" placeholder="Social Card Id" /> -->
-<!-- 					<p th:each="error : ${#fields.errors('studentInfo.socialCardId')}" th:text="${error}">Validation error</p> -->
-<!-- 				</div> -->
+				<div class="form-group">
+					<input type="text" class="form-control" th:field="*{studentInfo.passportId}" placeholder="Passport Id" />
+					<p th:each="error : ${#fields.errors('studentInfo.passportId')}" th:text="${error}">Validation error</p>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" th:field="*{studentInfo.socialCardId}" placeholder="Social Card Id" />
+					<p th:each="error : ${#fields.errors('studentInfo.socialCardId')}" th:text="${error}">Validation error</p>
+				</div>
 				<div class="form-group">
 <!-- 					<input type="text" class="form-control" th:field="*{studentInfo.birthDate}" placeholder="Birth Date" /> -->
-					<input type="date" class="form-control" name="bdate" placeholder="Birth Date" />
-<!-- 					<p th:each="error : ${#fields.errors('studentInfo.birthDate')}" th:text="${error}">Validation error</p> -->
+				    <input class="form-control" type="date" th:field="*{studentInfo.birthDate}" placeholder="Birth Date" />
+					<p th:each="error : ${#fields.errors('studentInfo.birthDate')}" th:text="${error}">Validation error</p>
 				</div>
-<!-- 				<div class="form-group"> -->
-<!-- 					<input type="text" class="form-control" th:field="*{studentInfo.imageUrl}" placeholder="Image" /> -->
-<!-- 					<p th:each="error : ${#fields.errors('studentInfo.imageUrl')}" th:text="${error}">Validation error</p> -->
-<!-- 				</div> -->
+				<div class="form-group">
+					<input type="text" class="form-control" th:field="*{studentInfo.imageUrl}" placeholder="Image" />
+					<p th:each="error : ${#fields.errors('studentInfo.imageUrl')}" th:text="${error}">Validation error</p>
+				</div>
 				<div class="form-group">
 					<div class="input-group">
 									<input type="password" id="password" class="form-control" th:field="*{password}" placeholder="Password" />
@@ -57,7 +57,7 @@
 					</div>
 					<p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
 				</div>
-                     <div class="row"> 
+                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit"/>
                         </div>

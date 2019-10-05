@@ -30,6 +30,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	public static final String GET_BY_GROUP_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static final String GET_BY_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static final String GET_ALL_SQL = "SELECT * FROM GROUP_COURSE";
+	public static final String GET_BY_TEACHER_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE TEACHER_ID = ?";
 	public static final String UPDATE_SQL = "UPDATE GROUP_COURSE SET GROUP_ID=?, COURSE_ID=?, TEACHER_ID=?, START_DATE=?, IS_FINISHED=?, CHANGE_DATE=? WHERE ID=?";
 	public static final String DELETE_BY_GROUP_SQL = "DELETE FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static final String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
@@ -68,13 +69,11 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 				new GroupCourseMapper());
 	}
 
-	// works
 	@Override
 	public List<GroupCourse> getByGroupID(int groupId) {
 		return template.query(GET_BY_GROUP_SQL, new Object[] { groupId }, new GroupCourseMapper());
 	}
 
-	// works
 	@Override
 	public List<GroupCourse> getByCourseID(int courseId) {
 		return template.query(GET_BY_COURSE_SQL, new Object[] { courseId }, new GroupCourseMapper());
@@ -86,13 +85,17 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	}
 
 	@Override
+	public List<GroupCourse> getByTeacherID(Integer id) {
+		return template.query(GET_BY_TEACHER_ID_SQL, new GroupCourseMapper(), id);
+	}
+
+	@Override
 	public int update(GroupCourse groupCourse) {
 		return template.update(UPDATE_SQL, groupCourse.getGroupId(), groupCourse.getCourseId(),
 				groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.isFinished(),
 				System.currentTimeMillis(), groupCourse.getId());
 	}
 
-	// works
 	@Override
 	public int deleteByGroupID(int groupId) {
 		return template.update(DELETE_BY_GROUP_SQL, groupId);

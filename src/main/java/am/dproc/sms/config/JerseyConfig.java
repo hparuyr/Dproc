@@ -6,6 +6,7 @@ import javax.ws.rs.ApplicationPath;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.context.annotation.Configuration;
 
+import am.dproc.sms.controllers.CSVExportController;
 import am.dproc.sms.rest.AdminController;
 import am.dproc.sms.rest.AdminInfoController;
 import am.dproc.sms.rest.AnswerController;
@@ -74,7 +75,7 @@ public class JerseyConfig extends ResourceConfig {
 
 		BeanConfig swaggerConfigBean = new BeanConfig();
 		swaggerConfigBean.setBasePath("/api");
-		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
+		swaggerConfigBean.setResourcePackage("am.dproc.sms");
 		swaggerConfigBean.setPrettyPrint(true);
 		swaggerConfigBean.setScan(true);
 	}

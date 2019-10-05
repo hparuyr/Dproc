@@ -63,7 +63,6 @@ public class AssessmentController {
 		return asService.getAverageScoreByStudentCourse(studentId, courseId);
 	}
 
-
 	@DELETE
 	@Path(value = "/{id}")
 	public Integer deleteAssessment(@PathParam(value = "id") Integer id) {
