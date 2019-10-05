@@ -5,11 +5,13 @@ import java.util.List;
 public class Course {
 
 	private Integer id;
+	private Integer schoolID;
 	private String name;
-	private String duration;
 	private String description;
-	private String location;
-	private Long creationDateMillis;
+	private String duration;
+	private String durationUnitType;
+	private Boolean finished;
+	private Long creationDate;
 	private List<Lesson> listOfLessons;
 
 	public Integer getId() {
@@ -20,20 +22,20 @@ public class Course {
 		this.id = id;
 	}
 
+	public Integer getSchoolID() {
+		return schoolID;
+	}
+
+	public void setSchoolID(Integer schoolID) {
+		this.schoolID = schoolID;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDuration() {
-		return duration;
-	}
-
-	public void setDuration(String duration) {
-		this.duration = duration;
 	}
 
 	public String getDescription() {
@@ -44,12 +46,36 @@ public class Course {
 		this.description = description;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getDuration() {
+		return duration;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public String getDurationUnitType() {
+		return durationUnitType;
+	}
+
+	public void setDurationUnitType(String durationUnitType) {
+		this.durationUnitType = durationUnitType;
+	}
+
+	public Boolean getFinished() {
+		return finished;
+	}
+
+	public void setFinished(Boolean finished) {
+		this.finished = finished;
+	}
+
+	public Long getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public List<Lesson> getListOfLessons() {
@@ -58,20 +84,6 @@ public class Course {
 
 	public void setListOfLessons(List<Lesson> listOfLessons) {
 		this.listOfLessons = listOfLessons;
-	}
-
-	@Override
-	public String toString() {
-		return "Course [" + "ID : " + id + "\n Name : " + name + " Duration : " + duration + " Description : "
-				+ description + " Location : " + location + "]";
-	}
-
-	public Long getCreationDate() {
-		return creationDateMillis;
-	}
-
-	public void setCreationDate(Long creationDateMillis) {
-		this.creationDateMillis = creationDateMillis;
 	}
 
 }

@@ -3,10 +3,10 @@ package am.dproc.sms.models;
 public class Topic {
 
 	private Integer id;
+	private Integer lessonID;
 	private String videoURL;
 	private String webPageURL;
-	private Long creationDateMillis;
-	private Integer lessonID;
+	private Long creationDate;
 
 	public Integer getId() {
 		return id;
@@ -14,6 +14,14 @@ public class Topic {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getLessonID() {
+		return lessonID;
+	}
+
+	public void setLessonID(Integer lessonID) {
+		this.lessonID = lessonID;
 	}
 
 	public String getVideoURL() {
@@ -32,25 +40,12 @@ public class Topic {
 		this.webPageURL = webPageURL;
 	}
 
-	public Integer getLessonID() {
-		return lessonID;
-	}
-
-	public void setLessonID(Integer lessonID) {
-		this.lessonID = lessonID;
-	}
-
-	@Override
-	public String toString() {
-		return "Url [" + "ID : " + id + " Video Url : " + videoURL + " Web Page Url : " + webPageURL + "]";
-	}
-
 	public Long getCreationDate() {
-		return creationDateMillis;
+		return creationDate;
 	}
 
-	public void setCreationDate(Long creationDateMillis) {
-		this.creationDateMillis = creationDateMillis;
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
 	}
 
 }

@@ -29,7 +29,7 @@ public class StudentDAODBImpl implements StudentDAO {
 	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.STUDENT WHERE ID = ?";
 	private static final String GET_STUDENTS = "SELECT * FROM mydb.STUDENT";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.STUDENT WHER ID = ?";
-	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT * FROM mydb.STUDENT WHERE GROUP_ID = ?";
+	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT * FROM mydb.USER WHERE GROUP_ID = ?";
 	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET NAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
 	private static final String UPDATE_STUDENT_SURNAME = "UPDATE mydb.STUDENT SET SURNAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
 	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.STUDENT SET EMAIL= ?, CHANGE_DATE = ?, WHERE ID = ?";

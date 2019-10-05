@@ -5,10 +5,10 @@ import java.util.List;
 public class Lesson {
 
 	private Integer id;
+	private Integer courseID;
 	private String name;
 	private String content;
-	private Long creationDateMillis;
-	private Integer courseID;
+	private Long creationDate;
 	private List<Topic> listOfTopics;
 
 	public Integer getId() {
@@ -17,6 +17,14 @@ public class Lesson {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public Integer getCourseID() {
+		return courseID;
+	}
+
+	public void setCourseID(Integer courseID) {
+		this.courseID = courseID;
 	}
 
 	public String getName() {
@@ -35,12 +43,12 @@ public class Lesson {
 		this.content = content;
 	}
 
-	public Integer getCourseID() {
-		return courseID;
+	public Long getCreationDate() {
+		return creationDate;
 	}
 
-	public void setCourseID(Integer courseID) {
-		this.courseID = courseID;
+	public void setCreationDate(Long creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public List<Topic> getListOfTopics() {
@@ -49,19 +57,6 @@ public class Lesson {
 
 	public void setListOfTopics(List<Topic> listOfTopics) {
 		this.listOfTopics = listOfTopics;
-	}
-
-	@Override
-	public String toString() {
-		return "Lesson [" + "ID : " + id + " Name : " + name + " Content : " + content + "]";
-	}
-
-	public Long getCreationDate() {
-		return creationDateMillis;
-	}
-
-	public void setCreationDate(Long creationDateMillis) {
-		this.creationDateMillis = creationDateMillis;
 	}
 
 }

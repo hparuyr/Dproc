@@ -121,7 +121,6 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 			groupCourse.setCourseId(rs.getInt("COURSE_ID"));
 			groupCourse.setTeacherId(rs.getInt("TEACHER_ID"));
 			groupCourse.setStartDate(rs.getLong("START_DATE"));
-			groupCourse.setIsFinished(rs.getBoolean("IS_FINISHED"));
 			return groupCourse;
 		}
 	}

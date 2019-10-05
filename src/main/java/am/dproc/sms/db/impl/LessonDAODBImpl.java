@@ -22,13 +22,49 @@ public class LessonDAODBImpl implements LessonDAO {
 	@Autowired
 	private JdbcTemplate jdbctemplate;
 
-	private static final String GET_LESSONS = "SELECT * FROM mydb.LESSON";
-	private static final String GET_LESSONS_BY_ID = "SELECT * FROM mydb.LESSON WHERE ID = ?";
-	private static final String GET_LESSONS_BY_COURSE_ID = "SELECT * FROM mydb.LESSON WHERE COURSE_ID = ?";
-	private static final String ADD_LESSON = "INSERT INTO mydb.LESSON (NAME, CONTENT, CREATION_DATE, CHANGE_DATE, COURSE_ID) VALUES(?, ?, ?, ?, ?)";
-	private static final String DELETE_LESSON_BY_ID = "DELETE FROM mydb.LESSON WHERE ID = ?";
-	private static final String EDIT_LESSON_NAME = "UPDATE mydb.LESSON SET NAME = ?, CHANGE_DATE = ? WHERE ID = ?";
-	private static final String EDIT_LESSON_CONTENT = "UPDATE mydb.LESSON SET CONTENT = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String ADD_LESSON = ""
+			+ "INSERT "
+			+ "INTO mydb.LESSON (SCHOOL_ID, NAME, CONTENT, CREATION_DATE, CHANGE_DATE) "
+			+ "VALUES(?, ?, ?, ?, ?)";
+	private static final String GET_LESSONS = ""
+			+ "SELECT SCHOOL_ID, NAME, CONTENT, CREATION_DATE, CHANGE_DATE "
+			+ "FROM mydb.LESSON";
+	private static final String GET_LESSONS_BY_ID = ""
+			+ "SELECT SCHOOL_ID, NAME, CONTENT, CREATION_DATE, CHANGE_DATE "
+			+ "FROM mydb.LESSON "
+			+ "WHERE ID = ?";
+	private static final String GET_LESSONS_BY_COURSE_ID = ""
+			+ "SELECT SCHOOL_ID, NAME, CONTENT, CREATION_DATE, CHANGE_DATE "
+			+ "FROM mydb.LESSON "
+			+ "WHERE COURSE_ID = ?";
+	private static final String EDIT_LESSON_NAME = ""
+			+ "UPDATE mydb.LESSON "
+			+ "SET NAME = ?, CHANGE_DATE = ? "
+			+ "WHERE ID = ?";
+	private static final String EDIT_LESSON_CONTENT = ""
+			+ "UPDATE mydb.LESSON "
+			+ "SET CONTENT = ?, CHANGE_DATE = ? "
+			+ "WHERE ID = ?";
+	private static final String DELETE_LESSON_BY_ID = ""
+			+ "DELETE "
+			+ "FROM mydb.LESSON "
+			+ "WHERE ID = ?";
+
+	@Override
+	public Integer addLesson(Lesson lesson, Integer courseID) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbctemplate.update(connection -> {
+			PreparedStatement ps = connection.prepareStatement(ADD_LESSON, Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, courseID);
+			ps.setString(2, lesson.getName());
+			ps.setString(3, lesson.getContent());
+			ps.setLong(4, System.currentTimeMillis());
+			ps.setLong(5, System.currentTimeMillis());
+			return ps;
+		}, keyHolder);
+
+		return (Integer) keyHolder.getKey().intValue();
+	}
 
 	@Override
 	public Lesson getLesson(Integer id) {
@@ -46,45 +82,31 @@ public class LessonDAODBImpl implements LessonDAO {
 	}
 
 	@Override
-	public Integer deleteLesson(Integer id) {
-		return jdbctemplate.update(DELETE_LESSON_BY_ID, id);
-	}
-
-	@Override
-	public Integer addLesson(Lesson lesson, Integer courseID) {
-		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbctemplate.update(connection -> {
-			PreparedStatement ps = connection.prepareStatement(ADD_LESSON, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, lesson.getName());
-			ps.setString(2, lesson.getContent());
-			ps.setLong(3, new java.util.Date().getTime());
-			ps.setLong(4, new java.util.Date().getTime());
-			ps.setInt(5, courseID);
-			return ps;
-		}, keyHolder);
-
-		return (Integer) keyHolder.getKey().intValue();
-	}
-
-	@Override
 	public Integer editLessonName(Integer id, String name) {
-		return jdbctemplate.update(EDIT_LESSON_NAME, new Object[] { name, new java.util.Date().getTime(), id });
+		return jdbctemplate.update(EDIT_LESSON_NAME, name, System.currentTimeMillis(), id);
 	}
 
 	@Override
 	public Integer editLessonContent(Integer id, String content) {
-		return jdbctemplate.update(EDIT_LESSON_CONTENT, new Object[] { content, new java.util.Date().getTime(), id });
+		return jdbctemplate.update(EDIT_LESSON_CONTENT, content, System.currentTimeMillis(), id);
+	}
+
+	@Override
+	public Integer deleteLesson(Integer id) {
+		return jdbctemplate.update(DELETE_LESSON_BY_ID, id);
 	}
 
 	private static class LessonMapper implements RowMapper<Lesson> {
 		@Override
 		public Lesson mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Lesson lesson = new Lesson();
-			lesson.setId(rs.getInt("id"));
-			lesson.setName(rs.getString("name"));
-			lesson.setContent(rs.getString("content"));
-			lesson.setCourseID(rs.getInt("course_id"));
-			lesson.setCreationDate(rs.getLong("creation_date"));
+
+			lesson.setId(rs.getInt("ID"));
+			lesson.setId(rs.getInt("SCHOOL_ID"));
+			lesson.setName(rs.getString("NAME"));
+			lesson.setContent(rs.getString("CONTENT"));
+			lesson.setCreationDate(rs.getLong("CREATION_DATE"));
+
 			return lesson;
 		}
 

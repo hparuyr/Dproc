@@ -11,9 +11,17 @@ import am.dproc.sms.services.interfaces.StudentCommentService;
 
 @Service
 public class StudentCommentServiceImpl implements StudentCommentService {
-	
+
 	@Autowired
 	StudentCommentDAO comment;
+
+	@Override
+	public Integer addComment(StudentComment comment) {
+		if (comment.getComment() == null || comment.getComment() == "") {
+			return 0;
+		}
+		return this.comment.addComment(comment);
+	}
 
 	@Override
 	public StudentComment getComment(Integer id) {
@@ -26,23 +34,21 @@ public class StudentCommentServiceImpl implements StudentCommentService {
 	}
 
 	@Override
+	public Integer editComment(StudentComment comment) {
+		boolean bool = false;
+
+		if (comment.getComment() != null) {
+			if (this.comment.editComment(comment.getId(), comment.getComment()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+		return bool == true ? 1 : 0;
+	}
+
+	@Override
 	public Integer deleteComment(Integer id) {
 		return comment.deleteComment(id);
 	}
-
-	@Override
-	public Integer addComment(StudentComment comment) {
-		if (comment.getComment() == null || comment.getComment() == "") {
-			return 0;
-		}
-		return this.comment.addComment(comment);
-	}
-
-	@Override
-	public Integer editComment(StudentComment comment) {
-		return this.comment.editComment(comment.getId(), comment.getComment());
-	}
-	
-	
 
 }

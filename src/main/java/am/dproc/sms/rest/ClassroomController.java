@@ -31,7 +31,20 @@ public class ClassroomController {
 
 	@Autowired
 	ClassroomService classroom;
-	
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response addCourse(Classroom classroom) {
+		Integer id = this.classroom.addClassroom(classroom);
+		if (id == 0) {
+			Map<String, String> message = new HashMap<String, String>();
+			message.put("Message", "All fields must be filled!");
+			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		}
+		return Response.status(Status.CREATED).entity(id).build();
+	}
+
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
@@ -48,8 +61,24 @@ public class ClassroomController {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/capacity")
-	public List<Classroom> getClassroomsByCapacity(@QueryParam(value = "min") Integer min, @QueryParam(value = "max") Integer max) {
+	public List<Classroom> getClassroomsByCapacity(@QueryParam(value = "min") Integer min,
+			@QueryParam(value = "max") Integer max) {
 		return classroom.getClassrooms(min, max);
+	}
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response editCourse(Classroom classroom) {
+		Integer status = this.classroom.editClassroom(classroom);
+		if (status == 1) {
+			return Response.status(Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Status.NO_CONTENT).entity(message).build();
 	}
 
 	@DELETE
@@ -60,31 +89,6 @@ public class ClassroomController {
 			return Response.status(Status.OK).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
-	}
-
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addCourse(Classroom classroom) {
-		Integer id = this.classroom.addClassroom(classroom);
-		if (id == 0) {
-			Map<String, String> message = new HashMap<String, String>();
-			message.put("Message", "All fields must be filled!");
-			return Response.status(Status.BAD_REQUEST).entity(message).build();
-		}
-		return Response.status(Status.CREATED).entity(id).build();
-	}
-
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editCourse(Classroom classroom) {
-		if (this.classroom.editClassroom(classroom) > 0) {
-			return Response.status(Status.OK).build();
-		}
-		Map<String, String> message = new HashMap<String, String>();
-		message.put("Message", "Nothing to update!");
-		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 }

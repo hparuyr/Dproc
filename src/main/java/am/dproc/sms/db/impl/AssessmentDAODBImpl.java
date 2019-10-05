@@ -28,7 +28,7 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 			"    ( SELECT ID FROM mydb.ASSESSMENT\r\n" + 
 			"        WHERE STUDENT_ID = ? AND ASSIGNMENT_ID = ?\r\n" + 
 			"    ),\r\n" + 
-			"    '0'\r\n" + 
+			"    'null'\r\n" + 
 			")\r\n" + 
 			"";
 	private static final String DELETE_ASSESSMENT_BY_ID = "DELETE FROM mydb.ASSESSMENT WHERE ID = ?";

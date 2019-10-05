@@ -5,6 +5,8 @@ import java.util.List;
 import am.dproc.sms.models.Lesson;
 
 public interface LessonDAO {
+	
+	public Integer addLesson(Lesson lesson, Integer courseID);
 
 	public Lesson getLesson(Integer id);
 
@@ -12,12 +14,10 @@ public interface LessonDAO {
 
 	public List<Lesson> getAllLessons();
 
-	public Integer deleteLesson(Integer id);
-
-	public Integer addLesson(Lesson lesson, Integer courseID);
-
 	public Integer editLessonName(Integer id, String name);
 
 	public Integer editLessonContent(Integer id, String content);
+
+	public Integer deleteLesson(Integer id);
 
 }

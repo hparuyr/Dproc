@@ -21,35 +21,34 @@ public class TopicDAODBImpl implements TopicDAO {
 
 	@Autowired
 	JdbcTemplate jdbctemplate;
-
-	private static final String DELETE_TOPICS_BY_ID = "DELETE FROM mydb.TOPIC WHERE ID = ?";
-	private static final String ADD_TOPIC = "INSERT INTO mydb.TOPIC (VIDEO_URL, WEB_PAGE_URL, LESSON_ID, CREATION_DATE, CHANGE_DATE) VALUES (?, ?, ?, ?, ?)";
-	private static final String GET_TOPICS = "SELECT * FROM mydb.TOPIC";
-	private static final String GET_TOPICS_BY_LESSON_ID = "SELECT * FROM mydb.TOPIC WHERE LESSON_ID = ?";
-	private static final String EDIT_TOPIC_VIDEO_URL = "UPDATE mydb.TOPIC SET VIDEO_URL = ?, CHANGE_DATE = ? WHERE ID = ?";
-	private static final String EDIT_TOPIC_WEB_PAGE_URL = "UPDATE mydb.TOPIC SET WEB_PAGE_URL = ?, CHANGE_DATE = ? WHERE ID = ?";
-	private static final String GET_TOPIC = "SELECT * FROM mydb.TOPIC WHERE ID = ?";
-
-	@Override
-	public Topic getTopic(Integer id) {
-		return jdbctemplate.queryForObject(GET_TOPIC, new TopicMapper(), id);
-	}
-
-	@Override
-	public List<Topic> getAllTopics() {
-		List<Topic> list = jdbctemplate.query(GET_TOPICS, new TopicMapper());
-		return list;
-	}
-
-	@Override
-	public List<Topic> getTopicsOfLesson(Integer lessonID) {
-		return jdbctemplate.query(GET_TOPICS_BY_LESSON_ID, new TopicMapper(), lessonID);
-	}
-
-	@Override
-	public Integer deleteTopic(Integer id) {
-		return jdbctemplate.update(DELETE_TOPICS_BY_ID, id);
-	}
+	
+	private static final String ADD_TOPIC = ""
+			+ "INSERT "
+			+ "INTO mydb.TOPIC (LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE, CHANGE_DATE) "
+			+ "VALUES (?, ?, ?, ?, ?)";
+	private static final String GET_TOPIC = ""
+			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "FROM mydb.TOPIC "
+			+ "WHERE ID = ?";
+	private static final String GET_TOPICS = ""
+			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "FROM mydb.TOPIC";
+	private static final String GET_TOPICS_BY_LESSON_ID = ""
+			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "FROM mydb.TOPIC "
+			+ "WHERE LESSON_ID = ?";
+	private static final String EDIT_TOPIC_VIDEO_URL = ""
+			+ "UPDATE mydb.TOPIC "
+			+ "SET VIDEO_URL = ?, CHANGE_DATE = ? "
+			+ "WHERE ID = ?";
+	private static final String EDIT_TOPIC_WEB_PAGE_URL = ""
+			+ "UPDATE mydb.TOPIC "
+			+ "SET WEB_PAGE_URL = ?, CHANGE_DATE = ? "
+			+ "WHERE ID = ?";
+	private static final String DELETE_TOPICS_BY_ID = ""
+			+ "DELETE "
+			+ "FROM mydb.TOPIC "
+			+ "WHERE ID = ?";
 
 	@Override
 	public Integer addTopic(Topic topic) {
@@ -60,34 +59,55 @@ public class TopicDAODBImpl implements TopicDAO {
 			ps.setString(1, topic.getVideoURL());
 			ps.setString(2, topic.getWebPageURL());
 			ps.setInt(3, topic.getLessonID());
-			ps.setLong(4, new java.util.Date().getTime());
-			ps.setLong(5, new java.util.Date().getTime());
+			ps.setLong(4, System.currentTimeMillis());
+			ps.setLong(5, System.currentTimeMillis());
 			return ps;
 		}, keyHolder);
 
 		return (Integer) keyHolder.getKey().intValue();
 	}
+	
+	@Override
+	public Topic getTopic(Integer id) {
+		return jdbctemplate.queryForObject(GET_TOPIC, new TopicMapper(), id);
+	}
+
+	@Override
+	public List<Topic> getAllTopics() {
+		return jdbctemplate.query(GET_TOPICS, new TopicMapper());
+	}
+
+	@Override
+	public List<Topic> getTopicsOfLesson(Integer lessonID) {
+		return jdbctemplate.query(GET_TOPICS_BY_LESSON_ID, new TopicMapper(), lessonID);
+	}
 
 	@Override
 	public Integer editTopicVideoURL(Integer id, String videoURL) {
-		return jdbctemplate.update(EDIT_TOPIC_VIDEO_URL, new Object[] { videoURL, new java.util.Date().getTime(), id });
+		return jdbctemplate.update(EDIT_TOPIC_VIDEO_URL, videoURL, System.currentTimeMillis(), id );
 	}
 
 	@Override
 	public Integer editTopicWebPageURL(Integer id, String webPageURL) {
-		return jdbctemplate.update(EDIT_TOPIC_WEB_PAGE_URL,
-				new Object[] { webPageURL, new java.util.Date().getTime(), id });
+		return jdbctemplate.update(EDIT_TOPIC_WEB_PAGE_URL, webPageURL, System.currentTimeMillis(), id );
+	}
+	
+	@Override
+	public Integer deleteTopic(Integer id) {
+		return jdbctemplate.update(DELETE_TOPICS_BY_ID, id);
 	}
 
 	private static class TopicMapper implements RowMapper<Topic> {
 		@Override
 		public Topic mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Topic topic = new Topic();
-			topic.setId(rs.getInt("id"));
-			topic.setWebPageURL(rs.getString("web_page_url"));
-			topic.setVideoURL(rs.getString("video_url"));
-			topic.setLessonID(rs.getInt("lesson_id"));
-			topic.setCreationDate(rs.getLong("creation_date"));
+			
+			topic.setId(rs.getInt("ID"));
+			topic.setLessonID(rs.getInt("LESSON_ID"));
+			topic.setWebPageURL(rs.getString("WEB_PAGE_URL"));
+			topic.setVideoURL(rs.getString("VIDEO_URL"));
+			topic.setCreationDate(rs.getLong("CREATION_DATE"));
+			
 			return topic;
 		}
 

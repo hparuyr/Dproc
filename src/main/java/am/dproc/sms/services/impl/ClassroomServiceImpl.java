@@ -16,6 +16,15 @@ public class ClassroomServiceImpl implements ClassroomService {
 	ClassroomDAO classroom;
 
 	@Override
+	public Integer addClassroom(Classroom classroom) {
+		if (classroom.getName() == null || classroom.getCapacity() == null || classroom.getSubject() == null
+				|| classroom.getType() == null) {
+			return 0;
+		}
+		return this.classroom.addClassroom(classroom);
+	}
+
+	@Override
 	public Classroom getClassroomByID(Integer id) {
 		return classroom.getClassroom(id);
 	}
@@ -31,35 +40,41 @@ public class ClassroomServiceImpl implements ClassroomService {
 	}
 
 	@Override
-	public Integer deleteClassRoom(Integer id) {
-		return classroom.deleteClassroom(id);
-	}
-
-	@Override
-	public Integer addClassroom(Classroom classroom) {
-		if (classroom.getNumber() == null || classroom.getCapacity() == null || classroom.getSubject() == null
-				|| classroom.getType() == null) {
-			return 0;
-		}
-		return this.classroom.addClassroom(classroom);
-	}
-
-	@Override
 	public Integer editClassroom(Classroom classroom) {
-		if (classroom.getNumber() != null) {
-			return this.classroom.editClassroomNumber(classroom.getId(), classroom.getNumber());
+
+		boolean bool = false;
+		
+		if (classroom.getName() != null) {
+			if (this.classroom.editClassroomName(classroom.getId(), classroom.getName()) == 0) {
+				return -1;
+			}
+			bool = true;
 		}
 		if (classroom.getCapacity() != null) {
-			return this.classroom.editClassroomCapacity(classroom.getId(), classroom.getCapacity());
+			if (this.classroom.editClassroomCapacity(classroom.getId(), classroom.getCapacity()) == 0) {
+				return -1;
+			}
+			bool = true;
 		}
 		if (classroom.getType() != null) {
-			return this.classroom.editClassroomType(classroom.getId(), classroom.getType());
+			if (this.classroom.editClassroomType(classroom.getId(), classroom.getType()) == 0) {
+				return -1;
+			}
+			bool = true;
 		}
 		if (classroom.getSubject() != null) {
-			return this.classroom.editClassroomSubject(classroom.getId(), classroom.getSubject());
+			if (this.classroom.editClassroomSubject(classroom.getId(), classroom.getSubject()) == 0) {
+				return -1;
+			}
+			bool = true;
 		}
 
-		return 0;
+		return bool == true ? 1 : 0;
+	}
+
+	@Override
+	public Integer deleteClassRoom(Integer id) {
+		return classroom.deleteClassroom(id);
 	}
 
 }

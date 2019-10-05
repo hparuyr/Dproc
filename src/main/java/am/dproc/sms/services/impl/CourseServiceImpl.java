@@ -20,6 +20,16 @@ public class CourseServiceImpl implements CourseService {
 	LessonService lesson;
 
 	@Override
+	public Integer addCourse(Course course) {
+		if (course.getSchoolID() == null || course.getName() == null || course.getDescription() == null
+				|| course.getDuration() == null || course.getDurationUnitType() == null
+				|| course.getFinished() == null) {
+			return 0;
+		}
+		return this.course.addCourse(course);
+	}
+
+	@Override
 	public Course getCourse(Integer id) {
 		Course course = this.course.getCourse(id);
 		course.setListOfLessons(lesson.getCourseLessons(id));
@@ -32,37 +42,49 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public Integer editCourse(Course course) {
+
+		boolean bool = false;
+
+		if (course.getName() != null) {
+			if (this.course.editCourseName(course.getId(), course.getName()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+		if (course.getDescription() != null) {
+			if (this.course.editCourseDescription(course.getId(), course.getDescription()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+		if (course.getDuration() != null) {
+			if (this.course.editCourseDuration(course.getId(), course.getDuration()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+		if (course.getDurationUnitType() != null) {
+			if (this.course.editCourseDurationUnitType(course.getId(), course.getDurationUnitType()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+		if (course.getFinished() != null) {
+			if (this.course.editCourseFinished(course.getId(), course.getFinished()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+
+		return bool == true ? 1 : 0;
+	}
+
+	@Override
 	public Integer deleteCourse(Integer id) {
 		if (getCourse(id).getListOfLessons().size() == 0) {
 			return course.deleteCourse(id);
 		}
-		return 0;
-	}
-
-	@Override
-	public Integer addCourse(Course course) {
-		if (course.getName() == null || course.getDuration() == null || course.getDescription() == null
-				|| course.getLocation() == null) {
-			return 0;
-		}
-		return this.course.addCourse(course);
-	}
-
-	@Override
-	public Integer editCourse(Course course) {
-		if (course.getName() != null) {
-			return this.course.editCourseName(course.getId(), course.getName());
-		}
-		if (course.getDuration() != null) {
-			return this.course.editCourseDuration(course.getId(), course.getDuration());
-		}
-		if (course.getDescription() != null) {
-			return this.course.editCourseDescription(course.getId(), course.getDescription());
-		}
-		if (course.getLocation() != null) {
-			return this.course.editCourseLocation(course.getId(), course.getLocation());
-		}
-
 		return 0;
 	}
 

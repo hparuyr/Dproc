@@ -15,7 +15,7 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("am.dproc.sms"))
+				.apis(RequestHandlerSelectors.basePackage("am.dproc.sms.controllers"))
 				.paths(PathSelectors.any()).build();
 	}
 }
