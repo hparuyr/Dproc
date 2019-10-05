@@ -36,27 +36,27 @@ import am.dproc.sms.services.interfaces.StudentService;
 
 @Controller
 public class CSVUploadController {
-	
+
 	@Autowired
 	SchoolService schoolService;
-	
+
 	@Autowired
 	GroupService groupService;
-	
+
 	@Autowired
 	StudentService studentService;
-	
+
 	@Autowired
 	StudentInfoService studentInfoService;
-	
+
 	@GetMapping("/upload")
 	public String uploadPage() {
 		return "csvupload";
 	}
-	
+
 	@PostMapping("/upload/school")
 	public String uploadSchool(@RequestParam("schools") MultipartFile file) throws IOException {
-		
+
 		InputStream is = file.getInputStream();
 		String[] line;
 		CSVReader reader = new CSVReader(new InputStreamReader(is, "UTF-8"));
@@ -67,7 +67,7 @@ public class CSVUploadController {
 			school.setAddress(line[1]);
 			schoolService.addSchool(school);
 		}
-		
+		reader.close();
 //		String line;
 //		BufferedReader breader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 //		while((line = breader.readLine()) != null) {
@@ -76,8 +76,8 @@ public class CSVUploadController {
 //			String row = String.format("name: %s   address: %s", credentials[0], credentials[1]);
 //			System.out.println(row);
 //		}
-//		
-//		
+//
+//
 //		ByteArrayOutputStream result = new ByteArrayOutputStream();
 //		byte[] buffer = new byte[1024];
 //		int length;
@@ -88,10 +88,10 @@ public class CSVUploadController {
 //		// StandardCharsets.UTF_8.name() > JDK 7
 //		String res = result.toString("UTF-8");
 //		 System.out.println(res);
-		
+
 		return "csvupload";
 	}
-	
+
 	@PostMapping("/upload/student")
 	public String uploadStudent(@RequestParam("students") MultipartFile file) throws IOException {
 		InputStream is = file.getInputStream();
@@ -101,8 +101,8 @@ public class CSVUploadController {
 		List<Group> groups = new ArrayList<>();
 		List<StudentInfo> studentInfos = new ArrayList<>();
 		Map<String, List<Integer>> groupMap= new LinkedHashMap<>();
-		
-		
+
+
 		int curInd = 0;
 		reader.readNext();
 		while((line = reader.readNext()) != null) {
@@ -114,19 +114,19 @@ public class CSVUploadController {
 			student.setEmail(line[2]);
 			int rand1 = (int) ((Math.random() * 1000000) + 1);
 			int rand2 = (int) ((Math.random() * 1000000) + 1);
-			String pass = "rand_"+String.valueOf(rand1)+String.valueOf(rand1)+"_pass"; 
+			String pass = "rand_"+String.valueOf(rand1)+String.valueOf(rand1)+"_pass";
 			student.setPassword(pass);
-			
+
 			Group group = new Group();
 			group.setName(line[3]);
 			int schoolId = (int) ((Math.random() * 3) + 1);
 			group.setSchoolId(schoolId);
-			
-			
+
+
 			StudentInfo info = new StudentInfo();
 			info.setPassportId(line[4]);
 			info.setSocialCardId(line[5]);
-			
+
 			DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
 			Date date;
 			try {
@@ -153,7 +153,7 @@ public class CSVUploadController {
 			studentInfos.add(info);
 			curInd++;
 		}
-		
+
 		List<Integer> groupIds = groupService.addGroups(groups);
 //		for (int i = 0; i < students.size(); i++) {
 //			students.get(i).setGroupId(groupIds.get(i));
@@ -170,7 +170,7 @@ public class CSVUploadController {
 			}
 			groupIndex++;
 		}
-		
+
 		int[] studentsIds = studentService.addStudents(students);
 		System.out.println(Arrays.toString(studentsIds));
 
@@ -179,8 +179,8 @@ public class CSVUploadController {
 		}
 		int[] studentInfoIds = studentInfoService.addStudentInfos(studentInfos);
 		System.out.println(Arrays.toString(studentInfoIds));
-		
+		reader.close();
 		return "csvupload";
 	}
-	
+
 }

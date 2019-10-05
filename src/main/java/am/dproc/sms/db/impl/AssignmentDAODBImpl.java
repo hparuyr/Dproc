@@ -24,6 +24,14 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 	private static final String GET_ALL_ASSIGNMENTS_BY_TITLE = "SELECT * FROM mydb.ASSIGNMENT WHERE TITLE = ?";
 	private static final String GET_ALL_ASSIGNMENTS_BY_TEACHER_ID = "SELECT * FROM mydb.ASSIGNMENT WHERE TEACHER_ID = ?";
 	private static final String GET_ASSIGNMENT_FEEDBACK = "SELECT FD.COMMENT FROM mydb.ASSIGNMENT ASGN JOIN mydb.ASSIGNMENT_FEEDBACK FD ON ASGN.ID = FD.ASSIGNMENT_ID and ASGN.ID = ? ";
+	private static final String GET_ASSIGNMENT_COMMENT = "SELECT \r\n" + 
+			"IFNULL(\r\n" + 
+			"    ( SELECT COMMENT FROM mydb.ASSIGNMENT_FEEDBACK \r\n" + 
+			"        WHERE ASSIGNMENT_ID = ?\r\n" + 
+			"    ),\r\n" + 
+			"    ''\r\n" + 
+			")";
+	private static final String GET_ASSIGNMENT = "SELECT * FROM mydb.ASSIGNMENT WHERE LESSON_ID = ? AND TEACHER_ID = ?";
 	private static final String DELETE_ASSIGNMENT_BY_ID = "DELETE FROM mydb.ASSIGNMENT WHERE ID = ?";
 	private static final String DELETE_ALL_ASSIGMENTS = "DELETE FROM mydb.ASSIGNMENT";
 	private static final String ADD_ASSIGNMENT = "INSERT INTO mydb.ASSIGNMENT (STARTED_DATE, DEADLINE, TITLE, DESCRIPTION, CREATION_DATE, TEACHER_ID) VALUES (?, ?, ?, ?, ?, ?)";
@@ -33,19 +41,16 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 
 	@Override
 	public Assignment getAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.queryForObject(GET_ASSIGNMENT_BY_ID, new AssignmentMapper(), id);
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSIGNMENTS, new AssignmentMapper());
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments(String title) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.query(GET_ALL_ASSIGNMENTS_BY_TITLE, new AssignmentMapper(), title);
 	}
 
@@ -63,22 +68,34 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 			return "";
 		}
 	}
+	
+	@Override
+	public String getAssignmentComment(Integer assignmentID) {
+		System.out.println("comment " + jdbctemplate.queryForObject(GET_ASSIGNMENT_COMMENT, String.class, assignmentID ));
+		String comment =  jdbctemplate.queryForObject(GET_ASSIGNMENT_COMMENT, String.class, assignmentID );
+		if (comment == null || comment == "") {
+			return null;
+		}
+		return comment;
+	}
+	
+	@Override
+	public Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID) {
+		return jdbctemplate.queryForObject(GET_ASSIGNMENT, new AssignmentMapper(), lessonID, teacherID );
+	}
 
 	@Override
 	public Integer deleteAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ASSIGNMENT_BY_ID, id);
 	}
 
 	@Override
 	public Integer deleteAllAssignments() {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(DELETE_ALL_ASSIGMENTS);
 	}
 
 	@Override
 	public Integer addAssignment(Assignment asi) {
-		// TODO Auto-generated method stub
 		return jdbctemplate.update(ADD_ASSIGNMENT, new Object[] { asi.getStartedDate(), asi.getDeadLine(),
 				asi.getTeacherIdGivenAsi(), asi.getTitle(), asi.getDescription(), System.currentTimeMillis() });
 	}

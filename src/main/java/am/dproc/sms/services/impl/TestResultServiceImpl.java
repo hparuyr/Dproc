@@ -10,7 +10,6 @@ import am.dproc.sms.services.interfaces.TestResultService;
 public class TestResultServiceImpl implements TestResultService {
 	@Autowired
 	TestResultDAO testResultDAO;
-	
 
 	@Override
 	public Integer createTestResult(Integer testId, Integer studentId, Double score) {
@@ -18,8 +17,8 @@ public class TestResultServiceImpl implements TestResultService {
 	}
 
 	@Override
-	public Double getLastTestResultForUser(Integer testId, Integer studentId) {
-		return testResultDAO.getLastTestResultForUser(testId, studentId);
+	public Double getLastTestResultForStudent(Integer testId, Integer studentId) {
+		return testResultDAO.getLastTestResultForStudent(testId, studentId);
 	}
 
 	@Override
@@ -28,13 +27,13 @@ public class TestResultServiceImpl implements TestResultService {
 	}
 
 	@Override
-	public Double getAverageTestResultForUser(Integer studentId) {
-		return testResultDAO.getAverageTestResultForUser(studentId);
+	public Double getAverageTestResultForStudent(Integer studentId) {
+		return testResultDAO.getAverageTestResultForStudent(studentId);
 	}
 
 	@Override
-	public Integer updateTestResultForUser(Integer testId, Integer studentId, Double score) {
-		return testResultDAO.updateTestResultForUser(testId, studentId, score);
+	public Integer updateTestResultForStudent(Integer testId, Integer studentId, Double score) {
+		return testResultDAO.updateTestResultForStudent(testId, studentId, score);
 	}
 
 	@Override
@@ -48,7 +47,12 @@ public class TestResultServiceImpl implements TestResultService {
 	}
 
 	@Override
-	public Integer deleteTestResultForUser(Integer testId, Integer studentId) {
-		return testResultDAO.deleteTestResultForUser(testId, studentId);
+	public Integer deleteTestResultForStudent(Integer testId, Integer studentId) {
+		return testResultDAO.deleteTestResultForStudent(testId, studentId);
+	}
+
+	@Override
+	public Double getAverageTestResultForStudentCourse(Integer studentId, Integer courseId) {
+		return testResultDAO.getAverageTestResultForStudentCourse(studentId, courseId);
 	}
 }

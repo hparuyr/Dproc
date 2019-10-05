@@ -4,18 +4,20 @@ public interface TestResultService {
 
 	Integer createTestResult(Integer testId, Integer studentId, Double score);
 
-	Double getLastTestResultForUser(Integer testId, Integer studentId);
+	Double getLastTestResultForStudent(Integer testId, Integer studentId);
 
 	Double getTestResultById(Integer id);
 
-	Double getAverageTestResultForUser(Integer studentId);
+	Double getAverageTestResultForStudent(Integer studentId);
 
-	Integer updateTestResultForUser(Integer testId, Integer studentId, Double score);
+	Integer updateTestResultForStudent(Integer testId, Integer studentId, Double score);
 
 	Integer updateTestResultById(Integer id, Double score);
 
 	Integer deleteTestResultById(Integer id);
 
-	Integer deleteTestResultForUser(Integer testId, Integer studentId);
+	Integer deleteTestResultForStudent(Integer testId, Integer studentId);
+
+	Double getAverageTestResultForStudentCourse(Integer studentId, Integer courseId);
 
 }

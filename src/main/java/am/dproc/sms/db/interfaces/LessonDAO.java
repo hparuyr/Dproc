@@ -12,10 +12,6 @@ public interface LessonDAO {
 
 	public List<Lesson> getAllLessons();
 
-	public Integer getLessonID(Long currentTimeMillis, String name);
-	
-	public Integer getLessonID(String name, Integer courseID);
-
 	public Integer deleteLesson(Integer id);
 
 	public Integer addLesson(Lesson lesson, Integer courseID);

@@ -1,62 +1,81 @@
 package am.dproc.sms.rest;
 
 import java.util.List;
-
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import am.dproc.sms.models.Assessment;
 import am.dproc.sms.services.interfaces.AssessmentService;
+import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(path = "/assessment")
+@Path(value = "/assessment")
+@Api(value = "AssessmentController")
 public class AssessmentController {
 
 	@Autowired
 	AssessmentService asService;
 
-	@GetMapping(value = "/{id}")
-	public Assessment getAssessment(Integer id) {
+	@GET
+	@Path(value = "/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Assessment getAssessment(@PathParam(value = "id") Integer id) {
 		return asService.getAssessment(id);
 	}
 
-	@GetMapping(value = "/{title}")
-	public Assessment getAssessmentByTitle(String title) {
+	@GET
+	@Path(value = "title/{title}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Assessment getAssessmentByTitle(@PathParam(value = "title") String title) {
 		return asService.getAssessmentByTitle(title);
 	}
 
-	@GetMapping(value = "/")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assessment> getAllAssessments() {
 		return asService.getAllAssessments();
 	}
 
-	@GetMapping(value = "/{userId}")
-	public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
+	@GET
+	@Path(value = "user/{userId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Assessment> getAllAssessmentsByUserId(@PathParam(value = "userId") Integer userId) {
 		return asService.getAllAssessmentsByUserId(userId);
 	}
 
-	@GetMapping(value = "/{assignmentId}")
-	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
+	@GET
+	@Path(value = "assignment/{assignmentId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Assessment> getAssessmentsByAssignmentId(@PathParam(value = "assignmentId") Integer assignmentId) {
 		return asService.getAssessmentsByAssignmentId(assignmentId);
 	}
 
-	@DeleteMapping(value = "/{id}")
-	public Integer deleteAssessment(Integer id) {
+	@GET
+	@Path(value = "avg/{studentId}/{courseId}")
+	public Double getAverageScoreByStudentCourse(@PathParam(value = "studentId") Integer studentId, @PathParam(value="courseId") Integer courseId) {
+		return asService.getAverageScoreByStudentCourse(studentId, courseId);
+	}
+
+	@DELETE
+	@Path(value = "/{id}")
+	public Integer deleteAssessment(@PathParam(value = "id") Integer id) {
 		return asService.deleteAssessment(id);
 	}
 
-	@DeleteMapping(value = "/")
+	@DELETE
 	public Integer deleteAllAssessments() {
 		return asService.deleteAllAssessments();
 	}
 
-	@PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON, produces = MediaType.APPLICATION_JSON)
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Integer addAssessment(Assessment asses) {
 		return asService.addAssessment(asses);
 	}

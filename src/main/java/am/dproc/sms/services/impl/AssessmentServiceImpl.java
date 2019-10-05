@@ -17,50 +17,56 @@ public class AssessmentServiceImpl implements AssessmentService {
 
 	@Override
 	public Assessment getAssessment(Integer id) {
-		// TODO Auto-generated method stub
 		return asDao.getAssessment(id);
 	}
 
 	@Override
 	public Assessment getAssessmentByTitle(String title) {
-		// TODO Auto-generated method stub
 		return asDao.getAssessmentByTitle(title);
 	}
 
 	@Override
 	public List<Assessment> getAllAssessments() {
-		// TODO Auto-generated method stub
 		return asDao.getAllAssessments();
 	}
 
 	@Override
 	public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
-		// TODO Auto-generated method stub
 		return asDao.getAllAssessmentsByUserId(userId);
 	}
 
 	@Override
 	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
-		// TODO Auto-generated method stub
 		return asDao.getAssessmentsByAssignmentId(assignmentId);
+	}
+	
+	@Override
+	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
+		return asDao.getAssessmentByStudentIDAndAssignmentID(studentId, assignmentId);
 	}
 
 	@Override
+	public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {
+		return asDao.getAverageScoreByStudentCourse(studentId, courseId);
+	}
+	@Override
 	public Integer deleteAssessment(Integer id) {
-		// TODO Auto-generated method stub
 		return asDao.deleteAssessment(id);
 	}
 
 	@Override
 	public Integer deleteAllAssessments() {
-		// TODO Auto-generated method stub
 		return asDao.deleteAllAssessments();
 	}
 
 	@Override
 	public Integer addAssessment(Assessment asses) {
-		// TODO Auto-generated method stub
 		return asDao.addAssessment(asses);
+	}
+
+	@Override
+	public Double getAverageScoreByStudent(Integer studentId) {
+		return asDao.getAverageScoreByStudent(studentId);
 	}
 
 }

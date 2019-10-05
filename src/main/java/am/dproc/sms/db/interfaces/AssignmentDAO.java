@@ -14,6 +14,10 @@ public interface AssignmentDAO {
 
 	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
 
+	public Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID);
+
+	public String getAssignmentComment(Integer assignmentID);
+
 	public Integer deleteAssignment(Integer id);
 
 	public Integer deleteAllAssignments();

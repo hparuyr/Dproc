@@ -30,7 +30,13 @@ public class CourseServiceImpl implements CourseService {
 	public List<Course> getCourses() {
 		return course.getCourses();
 	}
-	
+
+	@Override
+	public List<Course> getCoursesByGroupId(Integer groupId) {
+		return course.getCoursesByGroupId(groupId);
+	}
+
+
 	@Override
 	public Integer deleteCourse(Integer id) {
 		if (getCourse(id).getListOfLessons().size() == 0) {
@@ -41,7 +47,8 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Integer addCourse(Course course) {
-		if (course.getName() == null || course.getDuration() == null || course.getDescription() == null || course.getLocation() == null) {
+		if (course.getName() == null || course.getDuration() == null || course.getDescription() == null
+				|| course.getLocation() == null) {
 			return 0;
 		}
 		return this.course.addCourse(course);

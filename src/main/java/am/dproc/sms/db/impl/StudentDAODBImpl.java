@@ -71,24 +71,23 @@ public class StudentDAODBImpl implements StudentDAO {
 		return jdbctemplate.execute(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-				PreparedStatement ps = con.prepareStatement(ADD_STUDENT,Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
 				for (Student student : students) {
 					ps.setString(1, student.getName());
 					ps.setString(2, student.getSurname());
 					ps.setString(3, student.getEmail());
 					ps.setString(4, student.getPassword());
 					// add StudentStatus type to student object
-					ps.setInt(5,  StudentStatus.PENDING.ordinal());
+					ps.setInt(5, StudentStatus.PENDING.ordinal());
 					ps.setLong(6, currentTimeMillis);
 					ps.setLong(7, currentTimeMillis);
-					ps.setInt(8,  student.getGroupId());
+					ps.setInt(8, student.getGroupId());
 					ps.addBatch();
 				}
 				ps.executeBatch();
 				return ps;
 			}
 		}, new PreparedStatementCallback<int[]>() {
-			@Override
 			public int[] doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
 				ResultSet rs = ps.getGeneratedKeys();
 				int curId;
@@ -104,7 +103,7 @@ public class StudentDAODBImpl implements StudentDAO {
 			}
 		});
 	}
-	
+
 	@Override
 	public Student getStudent(Integer id) {
 		return jdbctemplate.queryForObject(GET_STUDENT_BY_ID, new StudentMapper(), id);
@@ -118,7 +117,7 @@ public class StudentDAODBImpl implements StudentDAO {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public List<Student> getStudents() {
 		return jdbctemplate.query(GET_STUDENTS, new StudentMapper());
@@ -188,6 +187,5 @@ public class StudentDAODBImpl implements StudentDAO {
 			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}
-
 	}
 }

@@ -18,15 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.GroupCourse;
 import am.dproc.sms.services.interfaces.GroupCourseService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path("/group-course")
+@Api(value = "GroupCourseController")
 public class GroupCourseController {
 
 	@Autowired
 	GroupCourseService groupCourseService;
 
-	// works
 	@Path("/assign")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -53,22 +54,26 @@ public class GroupCourseController {
 		return groupCourseService.getByGroupAndCourse(groupId, courseId);
 	}
 
-	// works
 	@Path("/courseId/{id}")
 	@GET
 	@Produces("application/json")
 	public List<GroupCourse> getByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.getByCourseID(courseId);
 	}
+	
+	@Path("/teacherId/{teacherId}")
+	@GET
+	@Produces("application/json")
+	public List<GroupCourse> getByTeacherId(@PathParam("id") int teacherId) {
+		return groupCourseService.getByTeacherID(teacherId);
+	}
 
-	// works
 	@GET
 	@Produces("application/json")
 	public List<GroupCourse> getAll() {
 		return groupCourseService.getAll();
 	}
 
-	// works
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	public int updateGroupId(GroupCourse groupCourse) {

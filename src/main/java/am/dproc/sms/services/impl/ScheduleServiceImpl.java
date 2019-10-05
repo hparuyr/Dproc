@@ -49,4 +49,9 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleDAO.deleteScheduleRecord(scheduleRecordId);
 	}
 
+	@Override
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(Integer studentId, Long startDate, Long endDate) {
+		return scheduleDAO.getScheduleForStudentInPeriod(studentId, startDate, endDate);
+	}
+
 }

@@ -17,43 +17,46 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 	@Override
 	public Assignment getAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return asiDao.getAssignment(id);
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments() {
-		// TODO Auto-generated method stub
 		return asiDao.getAllAssignments();
 	}
 
 	@Override
 	public List<Assignment> getAllAssignments(String title) {
-		// TODO Auto-generated method stub
 		return asiDao.getAllAssignments(title);
 	}
 
 	@Override
 	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId) {
-		// TODO Auto-generated method stub
 		return asiDao.getAssignmentsByTeacherId(teacherId);
+	}
+	
+	@Override
+	public String getAssignmentComment(Integer assignmentID) {
+		return asiDao.getAssignmentComment(assignmentID);
+	}
+	
+	@Override
+	public Assignment getAssignmentByLessonID(Integer lessonid, Integer teacherID) {
+		return asiDao.getAssignmentByLessonIDAndTeacherID(lessonid, teacherID);
 	}
 
 	@Override
 	public Integer deleteAssignment(Integer id) {
-		// TODO Auto-generated method stub
 		return asiDao.deleteAssignment(id);
 	}
 
 	@Override
 	public Integer deleteAllAssignments() {
-		// TODO Auto-generated method stub
 		return asiDao.deleteAllAssignments();
 	}
 
 	@Override
 	public Integer addAssignment(Assignment asi) {
-		// TODO Auto-generated method stub
 		return asiDao.addAssignment(asi);
 	}
 
@@ -66,7 +69,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public Integer addAssignmentFeedback(Integer teacherId, Integer assignmentId, String comment) {
 		return asiDao.addAssignmentFeedback(teacherId, assignmentId, comment);
 	}
-	
+
 	@Override
 	public Integer updateAssignmentFeedback(Integer id, String comment) {
 		return asiDao.updateAssignmentFeedback(id, comment);

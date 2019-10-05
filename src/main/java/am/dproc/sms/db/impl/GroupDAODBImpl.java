@@ -37,7 +37,7 @@ public class GroupDAODBImpl implements GroupDAO {
 		return jdbctemplate.update(ADD_GROUP,
 				new Object[] { group.getName(), group.getSchoolId(), currentTimeMillis, currentTimeMillis });
 	}
-	
+
 	@Override
 	public List<Integer> addGroups(List<Group> groups) {
 		Long currentTimeMillis = System.currentTimeMillis();

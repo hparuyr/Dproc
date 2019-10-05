@@ -10,8 +10,6 @@ public interface StudentCommentDAO {
 
 	public List<StudentComment> getCommentsOfTopic(Integer topicID);
 
-	public Integer getCommentID(Integer studentID, Long currentTimeMillis);
-
 	public Integer deleteComment(Integer id);
 
 	public Integer addComment(StudentComment comment);

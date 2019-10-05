@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.ScheduleRecord;
 import am.dproc.sms.services.interfaces.ScheduleService;
+import io.swagger.annotations.Api;
 
 @RestController
 @Path(value = "/schedule")
+@Api(value = "ScheduleController")
 public class ScheduleController {
 	@Autowired
 	ScheduleService scheduleService;
@@ -41,8 +43,16 @@ public class ScheduleController {
 	@Path(value = "teacher/{teacherId}/{start}/{end}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<ScheduleRecord> getScheduleForTeacherInPeriod(@PathParam(value = "teacherId") Integer teacherId,
-			@PathParam(value = "start") Long starDate, @PathParam(value = "end") Long endDate) {
-		return scheduleService.getScheduleForTeacherInPeriod(teacherId, starDate, endDate);
+			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForTeacherInPeriod(teacherId, startDate, endDate);
+	}
+
+	@GET
+	@Path(value = "student/{studentId}/{start}/{end}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(@PathParam(value = "studentId") Integer studentId,
+			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForStudentInPeriod(studentId, startDate, endDate);
 	}
 
 	@GET

@@ -1,9 +1,7 @@
 package am.dproc.sms.controllers;
 
 import java.time.LocalDateTime;
-
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.UserPrincipal;
 import am.dproc.sms.services.interfaces.StudentService;
+import org.springframework.web.bind.annotation.RequestParam;
+import am.dproc.sms.models.Student;
 
 @Controller
 public class LoginController {
@@ -51,6 +51,20 @@ public class LoginController {
 		return "/welcome";
 	}
 
+	@GetMapping("teacher")
+	public String teacher() {
+		logTime();
+		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>inside teacher");
+		return "/teacher";
+	}
+
+	@GetMapping("student")
+	public String student() {
+		logTime();
+		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>inside teacher");
+		return "/student";
+	}
+
 	@GetMapping(value = "registration")
 	public String registration(Model model) {
 		if(!model.containsAttribute("user")) {
@@ -58,6 +72,19 @@ public class LoginController {
 		}
 		return "/registration";
 	}
+
+//	@PostMapping(value = "registration")
+//	public String register(@ModelAttribute Student student) throws IllegalArgumentException, IllegalAccessException {
+//		Field[] fields = student.getClass().getDeclaredFields();
+//		for (int i = 0; i < fields.length; i++) {
+//			Field field = fields[i];
+//			String fieldName = field.getName();
+//			Object value = field.get(student);
+//			System.out.println("field: "+fieldName + " value: "+value );
+//		}
+//
+//		return "/registration";
+//	}
 
 	@PostMapping(value = "registration")
 	public String register(@ModelAttribute Student student, Model model) {
@@ -89,9 +116,9 @@ public class LoginController {
 	private void logTime() {
 		System.out.println(currentTime());;
 	}
-	
+
 	private String currentTime() {
 		return LocalDateTime.now().toString().replace("T", " ");
 	}
-	
+
 }
