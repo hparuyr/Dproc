@@ -79,7 +79,9 @@ public class TopicController {
 		if (topic.deleteTopic(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
-		return Response.status(Status.BAD_REQUEST).build();
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("Message", "First you must delete the comments of this topic!");
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 }

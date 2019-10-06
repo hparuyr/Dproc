@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.CourseDAO;
+import am.dproc.sms.enums.CourseDurationUnitType;
 import am.dproc.sms.models.Course;
 
 @Repository
@@ -24,14 +25,14 @@ public class CourseDAODBImpl implements CourseDAO {
 	
 	private static final String ADD_COURSE = ""
 			+ "INSERT "
-			+ "INTO mydb.COURSE (SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, FINISHED, CREATION_DATE, CHANGE_DATE) "
-			+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "INTO mydb.COURSE (SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, CREATION_DATE, CHANGE_DATE) "
+			+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_COURSE_BY_ID = ""
-			+ "SELECT SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, FINISHED, CREATION_DATE "
+			+ "SELECT ID, SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, CREATION_DATE "
 			+ "FROM mydb.COURSE "
 			+ "WHERE ID = ?";
 	private static final String GET_COURSES = ""
-			+ "SELECT SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, FINISHED, CREATION_DATE "
+			+ "SELECT ID, SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE, CREATION_DATE "
 			+ "FROM mydb.COURSE";
 	private static final String EDIT_COURSE_NAME = ""
 			+ "UPDATE mydb.COURSE "
@@ -49,10 +50,6 @@ public class CourseDAODBImpl implements CourseDAO {
 			+ "UPDATE mydb.COURSE "
 			+ "SET DURATION_UNIT_TYPE = ?, CHANGE_DATE = ? "
 			+ "WHERE ID = ?";
-	private static final String EDIT_COURSE_FINISHED = ""
-			+ "UPDATE mydb.COURSE "
-			+ "SET FINISHED = ?, CHANGE_DATE = ? "
-			+ "WHERE ID = ?";
 	private static final String DELETE_COURSE_BY_ID = ""
 			+ "DELETE "
 			+ "FROM mydb.COURSE "
@@ -67,11 +64,16 @@ public class CourseDAODBImpl implements CourseDAO {
 			ps.setInt(1, course.getSchoolID());
 			ps.setString(2, course.getName());
 			ps.setString(3, course.getDescription());
-			ps.setString(4, course.getDuration());
-			ps.setString(5, course.getDurationUnitType());
-			ps.setBoolean(6, course.getFinished());
+			ps.setInt(4, course.getDuration());
+			if (CourseDurationUnitType.DAYS.toString().toLowerCase().equals(course.getDurationUnitType().toLowerCase())) {
+				ps.setInt(5, CourseDurationUnitType.DAYS.index());
+			} else if (CourseDurationUnitType.WEEKS.toString().toLowerCase().equals(course.getDurationUnitType().toLowerCase())) {
+				ps.setInt(5, CourseDurationUnitType.WEEKS.index());
+			} else if (CourseDurationUnitType.MONTHS.toString().toLowerCase().equals(course.getDurationUnitType().toLowerCase())) {
+				ps.setInt(5, CourseDurationUnitType.MONTHS.index());
+			}
+			ps.setLong(6, System.currentTimeMillis());
 			ps.setLong(7, System.currentTimeMillis());
-			ps.setLong(8, System.currentTimeMillis());
 			return ps;
 		}, keyHolder);
 
@@ -99,18 +101,20 @@ public class CourseDAODBImpl implements CourseDAO {
 	}
 
 	@Override
-	public Integer editCourseDuration(Integer id, String duration) {
+	public Integer editCourseDuration(Integer id, Integer duration) {
 		return jdbctemplate.update(EDIT_COURSE_DURATION, duration, System.currentTimeMillis(), id );
 	}
 	
 	@Override
 	public Integer editCourseDurationUnitType(Integer id, String durationUnitType) {
-		return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, durationUnitType, System.currentTimeMillis(), id );
-	}
-	
-	@Override
-	public Integer editCourseFinished(Integer id, Boolean finished) {
-		return jdbctemplate.update(EDIT_COURSE_FINISHED, finished, System.currentTimeMillis(), id );
+		if (CourseDurationUnitType.DAYS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
+			return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.DAYS.index(), System.currentTimeMillis(), id );
+		} else if (CourseDurationUnitType.WEEKS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
+			return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.WEEKS.index(), System.currentTimeMillis(), id );
+		} else if (CourseDurationUnitType.MONTHS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
+			return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.MONTHS.index(), System.currentTimeMillis(), id );
+		}
+		return -1;
 	}
 	
 	@Override
@@ -124,12 +128,18 @@ public class CourseDAODBImpl implements CourseDAO {
 			
 			Course course = new Course();
 			course.setId(rs.getInt("ID"));
-			course.setId(rs.getInt("SCHOOL_ID"));
+			course.setSchoolID(rs.getInt("SCHOOL_ID"));
 			course.setName(rs.getString("NAME"));
 			course.setDescription(rs.getString("DESCRIPTION"));
-			course.setDuration(rs.getString("DURATION"));
+			course.setDuration(rs.getInt("DURATION"));
+			if (CourseDurationUnitType.DAYS.index() == rs.getInt("DURATION_UNIT_TYPE")) {
+				course.setDurationUnitType("Days");
+			} else if (CourseDurationUnitType.WEEKS.index() == rs.getInt("DURATION_UNIT_TYPE")) {
+				course.setDurationUnitType("Weeks");
+			} else if (CourseDurationUnitType.MONTHS.index() == rs.getInt("DURATION_UNIT_TYPE")) {
+				course.setDurationUnitType("Months");
+			}
 			course.setDurationUnitType(rs.getString("DURATION_UNIT_TYPE"));
-			course.setFinished(rs.getBoolean("FINISHED"));
 			course.setCreationDate(rs.getLong("CREATION_DATE"));
 			
 			return course;

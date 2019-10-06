@@ -7,10 +7,14 @@ import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.TopicDAO;
 import am.dproc.sms.models.Topic;
+import am.dproc.sms.services.interfaces.StudentCommentService;
 import am.dproc.sms.services.interfaces.TopicService;
 
 @Service
 public class TopicServiceImpl implements TopicService {
+	
+	@Autowired
+	StudentCommentService studentComment;
 
 	@Autowired
 	TopicDAO topic;
@@ -61,7 +65,10 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Integer deleteTopic(Integer id) {
-		return topic.deleteTopic(id);
+		if (studentComment.getCommentsOfTopic(id).size() == 0) {
+			return topic.deleteTopic(id);
+		}
+		return 0;
 	}
 
 }

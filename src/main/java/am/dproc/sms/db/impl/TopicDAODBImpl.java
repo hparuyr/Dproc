@@ -27,14 +27,14 @@ public class TopicDAODBImpl implements TopicDAO {
 			+ "INTO mydb.TOPIC (LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE, CHANGE_DATE) "
 			+ "VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_TOPIC = ""
-			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "SELECT ID, LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
 			+ "FROM mydb.TOPIC "
 			+ "WHERE ID = ?";
 	private static final String GET_TOPICS = ""
-			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "SELECT ID, LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
 			+ "FROM mydb.TOPIC";
 	private static final String GET_TOPICS_BY_LESSON_ID = ""
-			+ "SELECT LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
+			+ "SELECT ID, LESSON_ID, VIDEO_URL, WEB_PAGE_URL, CREATION_DATE "
 			+ "FROM mydb.TOPIC "
 			+ "WHERE LESSON_ID = ?";
 	private static final String EDIT_TOPIC_VIDEO_URL = ""
@@ -56,9 +56,9 @@ public class TopicDAODBImpl implements TopicDAO {
 
 		jdbctemplate.update(connection -> {
 			PreparedStatement ps = connection.prepareStatement(ADD_TOPIC, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, topic.getVideoURL());
-			ps.setString(2, topic.getWebPageURL());
-			ps.setInt(3, topic.getLessonID());
+			ps.setInt(1, topic.getLessonID());		
+			ps.setString(2, topic.getVideoURL());
+			ps.setString(3, topic.getWebPageURL());
 			ps.setLong(4, System.currentTimeMillis());
 			ps.setLong(5, System.currentTimeMillis());
 			return ps;

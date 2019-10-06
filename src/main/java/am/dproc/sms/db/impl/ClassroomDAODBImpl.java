@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.ClassroomDAO;
+import am.dproc.sms.enums.ClassroomType;
 import am.dproc.sms.models.Classroom;
 
 @Repository
@@ -22,43 +23,40 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_CLASSROOM = ""
-			+ "INSERT "
-			+ "INTO mydb.CLASSROOM (NUMBER, CAPACITY, TYPE, SUBJECT, CREATION_DATE, CHANGE_DATE, SCHOOL_ID) "
+	private static final String ADD_CLASSROOM = "" + "INSERT "
+			+ "INTO mydb.CLASSROOM (SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE, CHANGE_DATE) "
 			+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_CLASSROOM_BY_ID = ""
 			+ "SELECT ID, SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE "
 			+ "FROM mydb.CLASSROOM "
 			+ "WHERE ID = ?";
 	private static final String GET_CLASSROOMS = ""
-			+ "SELECT ID, SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE "
+			+ "SELECT ID, SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE " 
 			+ "FROM mydb.CLASSROOM";
 	private static final String GET_CLASSROOM_BY_CAPACITY = ""
-			+ "SELECT ID, SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE "
+			+ "SELECT ID, SCHOOL_ID, NAME, CAPACITY, TYPE, SUBJECT, CREATION_DATE " 
 			+ "FROM mydb.CLASSROOM "
-			+ "WHERE CAPACITY "
-			+ "BETWEEN ? AND ?";
-	private static final String EDIT_CLASSROOM_NAME = ""
-			+ "UPDATE mydb.CLASSROOM "
+			+ "WHERE CAPACITY " + "BETWEEN ? AND ?";
+	private static final String EDIT_CLASSROOM_NAME = "" 
+			+ "UPDATE mydb.CLASSROOM " 
 			+ "SET NAME = ?, CHANGE_DATE = ? "
 			+ "WHERE ID = ?";
-	private static final String EDIT_CLASSROOM_CAPACITY = ""
+	private static final String EDIT_CLASSROOM_CAPACITY = "" 
 			+ "UPDATE mydb.CLASSROOM "
-			+ "SET CAPACITY = ?, CHANGE_DATE = ? "
-			+ "WHERE ID = ?";
-	private static final String EDIT_CLASSROOM_TYPE = ""
-			+ "UPDATE mydb.CLASSROOM "
+			+ "SET CAPACITY = ?, CHANGE_DATE = ? " + "WHERE ID = ?";
+	private static final String EDIT_CLASSROOM_TYPE = "" 
+			+ "UPDATE mydb.CLASSROOM " 
 			+ "SET TYPE = ?, CHANGE_DATE = ? "
 			+ "WHERE ID = ?";
-	private static final String EDIT_CLASSROOM_SUBJECT = ""
+	private static final String EDIT_CLASSROOM_SUBJECT = "" 
 			+ "UPDATE mydb.CLASSROOM "
-			+ "SET SUBJECT = ?, CHANGE_DATE = ? "
+			+ "SET SUBJECT = ?, CHANGE_DATE = ? " 
 			+ "WHERE ID = ?";
-	private static final String DELETE_CLASSROOM_BY_ID = ""
-			+ "DELETE "
+	private static final String DELETE_CLASSROOM_BY_ID = "" 
+			+ "DELETE " 
 			+ "FROM mydb.CLASSROOM "
 			+ "WHERE ID = ?";
-	
+
 	@Override
 	public Integer addClassroom(Classroom classroom) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -68,7 +66,13 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			ps.setInt(1, classroom.getSchoolID());
 			ps.setString(2, classroom.getName());
 			ps.setInt(3, classroom.getCapacity());
-			ps.setString(4, classroom.getType());
+			if (ClassroomType.FOR_SEMINAR.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.FOR_SEMINAR.index());
+			} else if (ClassroomType.FOR_LECTURE.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.FOR_LECTURE.index());
+			} else if (ClassroomType.GENERAL_PORPOSE.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.GENERAL_PORPOSE.index());
+			}
 			ps.setString(5, classroom.getSubject());
 			ps.setLong(6, System.currentTimeMillis());
 			ps.setLong(7, System.currentTimeMillis());
@@ -95,22 +99,32 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 
 	@Override
 	public Integer editClassroomName(Integer id, String name) {
-		return jdbctemplate.update(EDIT_CLASSROOM_NAME, name, System.currentTimeMillis(), id );
+		return jdbctemplate.update(EDIT_CLASSROOM_NAME, name, System.currentTimeMillis(), id);
 	}
 
 	@Override
 	public Integer editClassroomCapacity(Integer id, Integer capacity) {
-		return jdbctemplate.update(EDIT_CLASSROOM_CAPACITY, capacity, System.currentTimeMillis(), id );
+		return jdbctemplate.update(EDIT_CLASSROOM_CAPACITY, capacity, System.currentTimeMillis(), id);
 	}
 
 	@Override
 	public Integer editClassroomType(Integer id, String type) {
-		return jdbctemplate.update(EDIT_CLASSROOM_TYPE, type, System.currentTimeMillis(), id );
+		if (ClassroomType.FOR_LECTURE.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.FOR_LECTURE.index(),
+					System.currentTimeMillis(), id);
+		} else if (ClassroomType.FOR_SEMINAR.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.FOR_SEMINAR.index(),
+					System.currentTimeMillis(), id);
+		} else if (ClassroomType.GENERAL_PORPOSE.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.GENERAL_PORPOSE.index(),
+					System.currentTimeMillis(), id);
+		}
+		return -1;
 	}
 
 	@Override
 	public Integer editClassroomSubject(Integer id, String subject) {
-		return jdbctemplate.update(EDIT_CLASSROOM_SUBJECT, subject, System.currentTimeMillis(), id );
+		return jdbctemplate.update(EDIT_CLASSROOM_SUBJECT, subject, System.currentTimeMillis(), id);
 	}
 
 	@Override
@@ -122,15 +136,21 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 		@Override
 		public Classroom mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Classroom classroom = new Classroom();
-			
+
 			classroom.setId(rs.getInt("ID"));
 			classroom.setSchoolID(rs.getInt("SCHOOL_ID"));
 			classroom.setName(rs.getString("NAME"));
 			classroom.setCapacity(rs.getInt("CAPACITY"));
-			classroom.setType(rs.getString("TYPE"));
+			if (ClassroomType.FOR_SEMINAR.index() == rs.getInt("TYPE")) {
+				classroom.setType("For Seminar");
+			} else if (ClassroomType.FOR_LECTURE.index() == rs.getInt("TYPE")) {
+				classroom.setType("For Lecture");
+			} else if (ClassroomType.GENERAL_PORPOSE.index() == rs.getInt("TYPE")) {
+				classroom.setType("General Porpose");
+			}
 			classroom.setSubject(rs.getString("SUBJECT"));
 			classroom.setCreationDate(rs.getLong("CREATION_DATE"));
-			
+
 			return classroom;
 		}
 
