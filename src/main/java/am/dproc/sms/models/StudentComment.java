@@ -3,10 +3,9 @@ package am.dproc.sms.models;
 public class StudentComment {
 
 	private Integer id;
-	private String comment;
-	private Long creationDateMillis;
 	private Integer topicID;
 	private Integer studentID;
+	private String comment;
 
 	public Integer getId() {
 		return id;
@@ -14,14 +13,6 @@ public class StudentComment {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 
 	public Integer getTopicID() {
@@ -40,11 +31,11 @@ public class StudentComment {
 		this.studentID = studentID;
 	}
 
-	public Long getCreationDateMillis() {
-		return creationDateMillis;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setCreationDateMillis(Long creationDateMillis) {
-		this.creationDateMillis = creationDateMillis;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

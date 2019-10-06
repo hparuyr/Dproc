@@ -54,11 +54,11 @@ public class AssignmentController {
 		return asiService.getAssignmentsByTeacherId(teacherId);
 	}
 
-	@GET
+	/*@GET
 	@Path(value = "/feedback/{id}")
 	public String getAssignmentFeedback(@PathParam(value = "id") Integer id) {
 		return asiService.getAssignmentFeedback(id);
-	}
+	}*/
 
 	@DELETE
 	@Path(value = "/{id}")
@@ -66,7 +66,7 @@ public class AssignmentController {
 		return asiService.deleteAssignment(id);
 	}
 
-	@DELETE
+	/*@DELETE
 	@Path(value = "/feedback/{id}")
 	public Integer deleteAssignmentFeedback(@PathParam(value = "id") Integer id) {
 		return asiService.deleteAssignmentFeedback(id);
@@ -84,7 +84,7 @@ public class AssignmentController {
 	public Integer updateAssignmentFeedback(@PathParam(value = "id") Integer id,
 			@PathParam(value = "comment") String comment) {
 		return asiService.updateAssignmentFeedback(id, comment);
-	}
+	}*/
 
 	@DELETE
 	public Integer deleteAllAssignments() {

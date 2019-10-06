@@ -31,29 +31,6 @@ public class TopicController {
 	@Autowired
 	TopicService topic;
 
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<Topic> getAllTopics() {
-		return topic.getAllTopics();
-	}
-
-	@GET
-	@Path(value = "/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Topic getTopic(@PathParam(value = "id") Integer id) {
-		return topic.getTopic(id);
-	}
-
-	@DELETE
-	@Path(value = "/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteTopic(@PathParam(value = "id") Integer id) {
-		if (topic.deleteTopic(id) == 1) {
-			return Response.status(Status.OK).build();
-		}
-		return Response.status(Status.BAD_REQUEST).build();
-	}
-
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -67,16 +44,42 @@ public class TopicController {
 		return Response.status(Status.CREATED).entity(id).build();
 	}
 
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<Topic> getAllTopics() {
+		return topic.getAllTopics();
+	}
+
+	@GET
+	@Path(value = "/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Topic getTopic(@PathParam(value = "id") Integer id) {
+		return topic.getTopic(id);
+	}
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editTopic(Topic topic) {
-		if (this.topic.editTopic(topic) > 0) {
+		Integer status = this.topic.editTopic(topic);
+		if (status == 1) {
 			return Response.status(Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
 		Map<String, String> message = new HashMap<String, String>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.BAD_REQUEST).entity(message).build();
+		return Response.status(Status.NO_CONTENT).entity(message).build();
+	}
+
+	@DELETE
+	@Path(value = "/{id}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response deleteTopic(@PathParam(value = "id") Integer id) {
+		if (topic.deleteTopic(id) == 1) {
+			return Response.status(Status.OK).build();
+		}
+		return Response.status(Status.BAD_REQUEST).build();
 	}
 
 }

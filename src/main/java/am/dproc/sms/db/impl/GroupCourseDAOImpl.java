@@ -23,15 +23,15 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	@Autowired
 	JdbcTemplate template;
 
-	public static final String CREATE_SQL = "INSERT INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, IS_FINISHED, CREATION_DATE, CHANGE_DATE)"
-			+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
+	public static final String CREATE_SQL = "INSERT INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE)"
+			+ " VALUES (?, ?, ?, ?, ?, ?)";
 	public static final String GET_BY_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE ID=?";
 	public static final String GET_BY_GROUP_AND_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=? AND COURSE_ID=?";
 	public static final String GET_BY_GROUP_SQL = "SELECT * FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static final String GET_BY_COURSE_SQL = "SELECT * FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static final String GET_ALL_SQL = "SELECT * FROM GROUP_COURSE";
 	public static final String GET_BY_TEACHER_ID_SQL = "SELECT * FROM GROUP_COURSE WHERE TEACHER_ID = ?";
-	public static final String UPDATE_SQL = "UPDATE GROUP_COURSE SET GROUP_ID=?, COURSE_ID=?, TEACHER_ID=?, START_DATE=?, IS_FINISHED=?, CHANGE_DATE=? WHERE ID=?";
+	public static final String UPDATE_SQL = "UPDATE GROUP_COURSE SET GROUP_ID=?, COURSE_ID=?, TEACHER_ID=?, START_DATE=?, FINISHED=?, CHANGE_DATE=? WHERE ID=?";
 	public static final String DELETE_BY_GROUP_SQL = "DELETE FROM GROUP_COURSE WHERE GROUP_ID=?";
 	public static final String DELETE_BY_COURSE_SQL = "DELETE FROM GROUP_COURSE WHERE COURSE_ID=?";
 	public static final String DELETE_ALL_SQL = "DELETE FROM GROUP_COURSE";
@@ -51,7 +51,6 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 				ps.setLong(4, groupCourse.getStartDate());
 				ps.setBoolean(5, groupCourse.isFinished());
 				ps.setLong(6, currentTimeStamp);
-				ps.setLong(7, currentTimeStamp);
 				return ps;
 			}
 		}, keyHolder);
@@ -110,7 +109,6 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 	public int deleteAll() {
 		return template.update(DELETE_ALL_SQL);
 	}
-
 	private static class GroupCourseMapper implements RowMapper<GroupCourse> {
 		@Override
 		public GroupCourse mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -120,7 +118,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 			groupCourse.setCourseId(rs.getInt("COURSE_ID"));
 			groupCourse.setTeacherId(rs.getInt("TEACHER_ID"));
 			groupCourse.setStartDate(rs.getLong("START_DATE"));
-			groupCourse.setIsFinished(rs.getBoolean("IS_FINISHED"));
+			groupCourse.setIsFinished(rs.getBoolean("FINISHED"));
 			return groupCourse;
 		}
 	}

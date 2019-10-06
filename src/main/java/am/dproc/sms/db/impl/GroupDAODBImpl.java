@@ -24,7 +24,7 @@ public class GroupDAODBImpl implements GroupDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_GROUP = "INSERT INTO mydb.GROUP (NAME, SCHOOL_ID,CREATION_DATE,CHANGE_DATE) VALUES (?, ?, ?, ?)";
+	private static final String ADD_GROUP = "INSERT INTO mydb.GROUP (NAME, SCHOOL_ID,CREATION_DATE) VALUES (?, ?, ?)";
 	private static final String GET_GROUP_BY_ID = "SELECT * FROM mydb.GROUP WHERE ID = ?";
 	private static final String GET_GROUPS = "SELECT * FROM mydb.GROUP";
 	private static final String GET_GROUPS_BY_SCHOOL_ID = "SELECT * FROM mydb.GROUP WHERE SCHOOL_ID = ?";
@@ -35,7 +35,7 @@ public class GroupDAODBImpl implements GroupDAO {
 	public Integer addGroup(Group group) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(ADD_GROUP,
-				new Object[] { group.getName(), group.getSchoolId(), currentTimeMillis, currentTimeMillis });
+				new Object[] { group.getName(), group.getSchoolId(), currentTimeMillis});
 	}
 
 	@Override
@@ -49,7 +49,6 @@ public class GroupDAODBImpl implements GroupDAO {
 					ps.setString(1, group.getName());
 					ps.setInt(2, group.getSchoolId());
 					ps.setLong(3, currentTimeMillis);
-					ps.setLong(4, currentTimeMillis);
 					ps.addBatch();
 				}
 				ps.executeBatch();
@@ -100,7 +99,6 @@ public class GroupDAODBImpl implements GroupDAO {
 			Group group = new Group();
 			group.setId(rs.getInt("ID"));
 			group.setName(rs.getString("NAME"));
-			group.setCreationDate(rs.getLong("CREATION_DATE"));
 			group.setSchoolId(rs.getInt("SCHOOL_ID"));
 			return group;
 		}

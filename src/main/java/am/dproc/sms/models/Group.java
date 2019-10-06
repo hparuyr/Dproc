@@ -5,7 +5,6 @@ import java.util.List;
 public class Group {
 	private Integer id;
 	private String name;
-	private Long creationDate;
 	private Integer schoolId;
 	private List<Student> listOfStudents;
 
@@ -31,14 +30,6 @@ public class Group {
 
 	public void setSchoolId(Integer schoolId) {
 		this.schoolId = schoolId;
-	}
-
-	public Long getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Long creationDate) {
-		this.creationDate = creationDate;
 	}
 
 	public List<Student> getListOfStudents() {

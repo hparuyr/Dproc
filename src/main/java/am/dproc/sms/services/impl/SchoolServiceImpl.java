@@ -48,12 +48,33 @@ public class SchoolServiceImpl implements SchoolService {
 
 	@Override
 	public Integer updateSchool(School school) {
+		boolean bool = false;
+
 		if (school.getName() != null) {
-			return this.school.updateSchoolName(school.getId(), school.getName());
-		} else if (school.getAddress() != null) {
-			return this.school.updateSchoolAddress(school.getId(), school.getAddress());
+			if (this.school.updateSchoolName(school.getId(), school.getName()) == 0) {
+				return -1;
+			}
+			bool = true;
 		}
-		return 0;
+
+		if (school.getAddress() != null) {
+			if (this.school.updateSchoolAddress(school.getId(), school.getAddress()) == 1)
+				return -1;
+			bool = true;
+		}
+
+		if (school.getPhoneNumber() != null) {
+			if (this.school.updateSchoolPhoneNumber(school.getId(), school.getPhoneNumber()) == 1)
+				return -1;
+			bool = true;
+		}
+
+		if (school.geteMail() != null) {
+			if (this.school.updateSchooleMail(school.getId(), school.geteMail()) == 1)
+				return -1;
+			bool = true;
+		}
+		return bool == true ? 1 : 0;
 	}
 
 	@Override

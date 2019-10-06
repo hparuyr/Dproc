@@ -6,10 +6,27 @@ public class School {
 	private Integer id;
 	private String name;
 	private String address;
-	private Long creationDate;
+	private String phoneNumber;
+	private String eMail;
 	private List<Group> listOfGroups;
 	private List<Admin> listOfAdmins;
 	private List<Teacher> listOfTeachers;
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String geteMail() {
+		return eMail;
+	}
+
+	public void seteMail(String eMail) {
+		this.eMail = eMail;
+	}
 
 	public Integer getId() {
 		return id;
@@ -33,14 +50,6 @@ public class School {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public Long getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(Long creationDate) {
-		this.creationDate = creationDate;
 	}
 
 	public List<Group> getListOfGroups() {

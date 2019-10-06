@@ -18,18 +18,20 @@ public class SchoolDAODBImpl implements SchoolDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_SCHOOL = "INSERT INTO mydb.SCHOOL (NAME, ADDRESS, CREATION_DATE, CHANGE_DATE) VALUES(?, ?, ?, ?)";
+	private static final String ADD_SCHOOL = "INSERT INTO mydb.SCHOOL (NAME, ADDRESS, PHONE_NUMBER, EMAIL, CREATION_DATE) VALUES(?, ?, ?, ?, ?)";
 	private static final String GET_SCHOOL_BY_ID = "SELECT * FROM mydb.SCHOOL WHERE ID = ?";
 	private static final String GET_SCHOOLS = "SELECT * FROM mydb.SCHOOL";
 	private static final String UPDATE_SCHOOL_NAME = "UPDATE mydb.SCHOOL SET NAME = ?, CHANGE_DATE = ? WHERE ID = ?";
 	private static final String UPDATE_SCHOOL_ADDRESS = "UPDATE mydb.SCHOOL SET ADDRESS = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_SCHOOL_PHONE_NUMBER = "UPDATE mydb.SCHOOL SET PHONE_NUMBER = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_SCHOOL_EMAIL = "UPDATE mydb.SCHOOL SET EMAIL = ?, CHANGE_DATE = ? WHERE ID = ?";
 	private static final String DELETE_SCHOOL_BY_ID = "DELETE FROM mydb.SCHOOL WHERE ID = ?";
 
 	@Override
 	public Integer addSchool(School school) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(ADD_SCHOOL,
-				new Object[] { school.getName(), school.getAddress(), currentTimeMillis, currentTimeMillis });
+				new Object[] { school.getName(), school.getAddress(), school.getPhoneNumber(), school.geteMail(), currentTimeMillis });
 	}
 
 	@Override
@@ -55,6 +57,18 @@ public class SchoolDAODBImpl implements SchoolDAO {
 	}
 
 	@Override
+	public Integer updateSchoolPhoneNumber(Integer id, String phoneNumber) {
+		Long currentTimeMillis = new java.util.Date().getTime();
+		return jdbctemplate.update(UPDATE_SCHOOL_ADDRESS, new Object[] { phoneNumber, currentTimeMillis, id });
+	}
+
+	@Override
+	public Integer updateSchooleMail(Integer id, String eMail) {
+		Long currentTimeMillis = new java.util.Date().getTime();
+		return jdbctemplate.update(UPDATE_SCHOOL_EMAIL, new Object[] { eMail, currentTimeMillis, id });
+	}
+
+	@Override
 	public Integer deleteSchool(Integer id) {
 		return jdbctemplate.update(DELETE_SCHOOL_BY_ID, id);
 	}
@@ -67,11 +81,9 @@ public class SchoolDAODBImpl implements SchoolDAO {
 			school.setId(rs.getInt("id"));
 			school.setName(rs.getString("name"));
 			school.setAddress(rs.getString("address"));
-			school.setCreationDate(rs.getLong("creation_date"));
+			school.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+			school.seteMail(rs.getString("EMAIL"));
 			return school;
-
 		}
-
 	}
-
 }

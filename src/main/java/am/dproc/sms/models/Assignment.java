@@ -3,14 +3,12 @@ package am.dproc.sms.models;
 public class Assignment {
 
 	private Integer id;
-	private Long startedDate;
-	// private String dateDue;
-	private Long deadLine;
-	private Integer teacherIdGivenAsi;
+	private Long startDate;
+	private Long endDate;
 	private String title;
 	private String description;
-	//private Integer creationDate;
-	//private Integer changeDate;
+	private Integer teacherId;
+	private Integer lessonId;
 
 	public Integer getId() {
 		return id;
@@ -20,12 +18,12 @@ public class Assignment {
 		this.id = id;
 	}
 
-	public Integer getTeacherIdGivenAsi() {
-		return teacherIdGivenAsi;
+	public Integer getTeacherId() {
+		return teacherId;
 	}
 
-	public void setTeacherIdGivenAsi(Integer teacherIdGivenAsi) {
-		this.teacherIdGivenAsi = teacherIdGivenAsi;
+	public void setTeacherId(Integer teacherId) {
+		this.teacherId = teacherId;
 	}
 
 	public String getTitle() {
@@ -44,38 +42,34 @@ public class Assignment {
 		this.description = description;
 	}
 
-	public Long getStartedDate() {
-		return startedDate;
+	public Long getStartDate() {
+		return startDate;
 	}
 
-	public void setStartedDate(Long startedDate) {
-		this.startedDate = startedDate;
+	public void setStartDate(Long startedDate) {
+		this.startDate = startedDate;
 	}
 
-	public Long getDeadLine() {
-		return deadLine;
+	public Long getEndDate() {
+		return endDate;
 	}
 
-	public void setDeadLine(Long deadLine) {
-		this.deadLine = deadLine;
+	public void setEndDate(Long deadLine) {
+		this.endDate = deadLine;
 	}
 
-	/*
-	 * public Integer getCreationDate() { return creationDate; }
-	 * 
-	 * public void setCreationDate(Integer creationDate) { this.creationDate =
-	 * creationDate; }
-	 * 
-	 * public Integer getChangeDate() { return changeDate; }
-	 * 
-	 * public void setChangeDate(Integer changeDate) { this.changeDate = changeDate;
-	 * }
-	 */
+	public Integer getLessonId() {
+		return lessonId;
+	}
+
+	public void setLessonId(Integer lessonId) {
+		this.lessonId = lessonId;
+	}
 
 	@Override
 	public String toString() {
-		return "Assignment [id=" + id + ", startedDate=" + startedDate + ", deadLine=" + deadLine
-				+ ", teacherIdGivenAsi=" + teacherIdGivenAsi + ", title=" + title + ", description=" + description + "]";
+		return "Assignment [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", teacherId=" + teacherId + ", title=" + title + ", description=" + description + "]";
 	}
 
 }

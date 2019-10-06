@@ -74,7 +74,7 @@ public class JerseyConfig extends ResourceConfig {
 
 		BeanConfig swaggerConfigBean = new BeanConfig();
 		swaggerConfigBean.setBasePath("/api");
-		swaggerConfigBean.setResourcePackage("am.dproc.sms");
+		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
 		swaggerConfigBean.setPrettyPrint(true);
 		swaggerConfigBean.setScan(true);
 	}

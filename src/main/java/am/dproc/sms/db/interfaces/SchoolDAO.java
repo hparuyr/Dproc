@@ -17,4 +17,8 @@ public interface SchoolDAO {
 
 	public Integer deleteSchool(Integer id);
 
+	Integer updateSchoolPhoneNumber(Integer id, String phoneNumber);
+
+	Integer updateSchooleMail(Integer id, String eMail);
+
 }

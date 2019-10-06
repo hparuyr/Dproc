@@ -32,29 +32,6 @@ public class StudentCommentController {
 	@Autowired
 	StudentCommentService comment;
 
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Path(value = "/{id}")
-	public StudentComment getComment(@PathParam(value = "id") Integer id) {
-		return comment.getComment(id);
-	}
-
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<StudentComment> getComments(@QueryParam(value = "topicID") Integer id) {
-		return comment.getCommentsOfTopic(id);
-	}
-
-	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
-	@Path(value = "/{id}")
-	public Response deleteComment(@PathParam(value = "id") Integer id) {
-		if (comment.deleteComment(id) == 1) {
-			return Response.status(Status.OK).build();
-		}
-		return Response.status(Status.BAD_REQUEST).build();
-	}
-
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -68,16 +45,42 @@ public class StudentCommentController {
 		return Response.status(Status.CREATED).entity(id).build();
 	}
 
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path(value = "/{id}")
+	public StudentComment getComment(@PathParam(value = "id") Integer id) {
+		return comment.getComment(id);
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<StudentComment> getComments(@QueryParam(value = "topicID") Integer id) {
+		return comment.getCommentsOfTopic(id);
+	}
+
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editComment(StudentComment comment) {
-		if (this.comment.editComment(comment) == 1) {
+		Integer status = this.comment.editComment(comment);
+		if (status == 1) {
 			return Response.status(Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
 		Map<String, String> message = new HashMap<String, String>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.BAD_REQUEST).entity(message).build();
+		return Response.status(Status.NO_CONTENT).entity(message).build();
+	}
+
+	@DELETE
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path(value = "/{id}")
+	public Response deleteComment(@PathParam(value = "id") Integer id) {
+		if (comment.deleteComment(id) == 1) {
+			return Response.status(Status.OK).build();
+		}
+		return Response.status(Status.BAD_REQUEST).build();
 	}
 
 }

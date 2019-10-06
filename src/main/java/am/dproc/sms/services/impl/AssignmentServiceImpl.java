@@ -34,12 +34,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId) {
 		return asiDao.getAssignmentsByTeacherId(teacherId);
 	}
-	
-	@Override
+
+	/*@Override
 	public String getAssignmentComment(Integer assignmentID) {
 		return asiDao.getAssignmentComment(assignmentID);
-	}
-	
+	}*/
+
 	@Override
 	public Assignment getAssignmentByLessonID(Integer lessonid, Integer teacherID) {
 		return asiDao.getAssignmentByLessonIDAndTeacherID(lessonid, teacherID);
@@ -60,7 +60,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		return asiDao.addAssignment(asi);
 	}
 
-	@Override
+	/*@Override
 	public String getAssignmentFeedback(Integer id) {
 		return asiDao.getAssignmentFeedback(id);
 	}
@@ -78,6 +78,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public Integer deleteAssignmentFeedback(Integer id) {
 		return asiDao.deleteAssignmentFeedback(id);
-	}
+	}*/
 
 }

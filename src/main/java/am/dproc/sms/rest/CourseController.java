@@ -31,6 +31,19 @@ public class CourseController {
 	@Autowired
 	CourseService course;
 
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response addCourse(Course course) {
+		Integer id = this.course.addCourse(course);
+		if (id == 0) {
+			Map<String, String> message = new HashMap<String, String>();
+			message.put("Message", "All fields must be filled!");
+			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		}
+		return Response.status(Status.CREATED).entity(id).build();
+	}
+
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
@@ -51,6 +64,21 @@ public class CourseController {
 		return course.getCoursesByGroupId(id);
 	}
 
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response editCourse(Course course) {
+		Integer status = this.course.editCourse(course);
+		if (status == 1) {
+			return Response.status(Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Status.NO_CONTENT).entity(message).build();
+	}
+
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
@@ -61,31 +89,6 @@ public class CourseController {
 		Map<String, String> message = new HashMap<String, String>();
 		message.put("Message", "First you must delete the lessons of this course!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
-	}
-
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addCourse(Course course) {
-		Integer id = this.course.addCourse(course);
-		if (id == 0) {
-			Map<String, String> message = new HashMap<String, String>();
-			message.put("Message", "All fields must be filled!");
-			return Response.status(Status.BAD_REQUEST).entity(message).build();
-		}
-		return Response.status(Status.CREATED).entity(id).build();
-	}
-
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editCourse(Course course) {
-		if (this.course.editCourse(course) > 0) {
-			return Response.status(Status.OK).build();
-		}
-		Map<String, String> errorMessage = new HashMap<String, String>();
-		errorMessage.put("Message", "Nothing to update!");
-		return Response.status(Status.BAD_REQUEST).entity(errorMessage).build();
 	}
 
 }

@@ -30,6 +30,19 @@ public class LessonController {
 
 	@Autowired
 	LessonService lesson;
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response addCourse(Lesson lesson) {
+		Integer id = this.lesson.addLesson(lesson);
+		if (id == 0) {
+			Map<String, String> message = new HashMap<String, String>();
+			message.put("Message", "All fields must be filled!");
+			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		}
+		return Response.status(Status.CREATED).entity(id).build();
+	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
@@ -44,6 +57,21 @@ public class LessonController {
 		return lesson.getAllLesson();
 	}
 
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response editLesson(Lesson lesson) {
+		Integer status = this.lesson.editLesson(lesson);
+		if (status == 1) {
+			return Response.status(Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<String, String>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Status.NO_CONTENT).entity(message).build();
+	}
+	
 	@DELETE
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
@@ -53,31 +81,6 @@ public class LessonController {
 		}
 		Map<String, String> message = new HashMap<String, String>();
 		message.put("Message", "First you must delete the topics of this lesson!");
-		return Response.status(Status.BAD_REQUEST).entity(message).build();
-	}
-
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addCourse(Lesson lesson) {
-		Integer id = this.lesson.addLesson(lesson);
-		if (id == 0) {
-			Map<String, String> message = new HashMap<String, String>();
-			message.put("Message", "All fields must be filled!");
-			return Response.status(Status.BAD_REQUEST).entity(message).build();
-		}
-		return Response.status(Status.CREATED).entity(id).build();
-	}
-
-	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editLesson(Lesson lesson) {
-		if (this.lesson.editLesson(lesson) > 0) {
-			return Response.status(Status.OK).build();
-		}
-		Map<String, String> message = new HashMap<String, String>();
-		message.put("Message", "Nothing to update!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 

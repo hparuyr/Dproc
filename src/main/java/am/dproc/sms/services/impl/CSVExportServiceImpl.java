@@ -41,7 +41,7 @@ public class CSVExportServiceImpl implements CSVExportService {
 
 	@Autowired
 	CourseService course;
-	
+
 	@Autowired
 	LessonService lesson;
 
@@ -103,8 +103,8 @@ public class CSVExportServiceImpl implements CSVExportService {
 					fileWriter.write(listOfLessons.get(k).getName());
 					fileWriter.write(DEFAULT_SEPARATOR);
 					fileWriter.write(assignment.getTitle());
-					fileWriter.write(DEFAULT_SEPARATOR);
-					fileWriter.write(this.assignment.getAssignmentComment(assignment.getId()));
+					//fileWriter.write(DEFAULT_SEPARATOR);
+					//fileWriter.write(this.assignment.getAssignmentComment(assignment.getId()));
 					fileWriter.write(DEFAULT_SEPARATOR);
 					fileWriter.write(assessment.getAssessmentByStudentIDAndAssignmentID(listOfStudents.get(j).getId(), listOfLessons.get(k).getId()).toString());
 					fileWriter.write(LINE_DEVIDER);

@@ -3,12 +3,10 @@ package am.dproc.sms.db.impl;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import am.dproc.sms.db.interfaces.AssessmentDAO;
 import am.dproc.sms.models.Assessment;
 
@@ -30,17 +28,10 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 	private static final String GET_AVG_SCORE_BY_STUDENT = "SELECT AVG(SCORE) as avgScore FROM ASSESSMENT WHERE STUDENT_ID = ?";
 	private static final String GET_ALL_ASSESSMENT_BY_STUDENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE STUDENT_ID = ?";
 	private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "SELECT * FROM mydb.ASSESSMENT WHERE ASSIGNMENT_ID = ?";
-	private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "SELECT \r\n" +
-			"IFNULL(\r\n" +
-			"    ( SELECT ID FROM mydb.ASSESSMENT\r\n" +
-			"        WHERE STUDENT_ID = ? AND ASSIGNMENT_ID = ?\r\n" +
-			"    ),\r\n" +
-			"    '0'\r\n" +
-			")\r\n" +
-			"";
+	private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "SELECT ID FROM mydb.ASSESSMENT WHERE STUDENT_ID = ? AND ASSIGNMENT_ID = ?";
 	private static final String DELETE_ASSESSMENT_BY_ID = "DELETE FROM mydb.ASSESSMENT WHERE ID = ?";
 	private static final String DELETE_ALL_ASSESSMENT = "DELETE FROM mydb.ASSESSMENT";
-	private static final String ADD_ASSESSMENT = "INSERT INTO mydb.ASSESSMENT (TITLE, SCORE, CREATION_DATE, CHANGE_DATE,USER_ID, ASSIGNMENT_ID,) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String ADD_ASSESSMENT = "INSERT INTO mydb.ASSESSMENT(SCORE, USER_ID, ASSIGNMENT_COMPLETED_ID, COMMENT, CREATION_DATE) VALUES (?, ?, ?, ?, ?)";
 
 	@Override
 	public Assessment getAssessment(Integer id) {
@@ -95,7 +86,7 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 	@Override
 	public Integer addAssessment(Assessment asses) {
 		return jdbctemplate.update(ADD_ASSESSMENT,
-				new Object[] { asses.getId(), asses.getScore(), asses.getUserId(), asses.getAssignmentId() });
+				new Object[] { asses.getScore(), asses.getUserId(), asses.getAssignmentCompletedId(), asses.getComment(), System.currentTimeMillis()});
 	}
 
 	private static class AssessmentMapper implements RowMapper<Assessment> {
@@ -106,10 +97,9 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
 			assessment.setId(rs.getInt("ID"));
 			assessment.setScore(rs.getInt("SCORE"));
-			assessment.setCreationDate(rs.getLong("CREATION_DATE"));
-			assessment.setChangeDate(rs.getLong("CHANGE_DATE"));
 			assessment.setUserId(rs.getInt("STUDENT_ID"));
-			assessment.setAssignmentId(rs.getInt("ASSIGNMENT_ID"));
+			assessment.setAssignmentCompletedId(rs.getInt("ASSIGNMENT_COMPLETED_ID"));
+			assessment.setComment(rs.getString("COMMENT"));
 
 			return assessment;
 		}

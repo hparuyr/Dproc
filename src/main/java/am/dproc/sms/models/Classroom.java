@@ -3,13 +3,11 @@ package am.dproc.sms.models;
 public class Classroom {
 
 	private Integer id;
-	private Integer number;
+	private Integer schoolID;
+	private String name;
 	private Integer capacity;
 	private String type;
 	private String subject;
-	private Long creationDateMillis;
-	private Integer schoolID;
-
 
 	public Integer getId() {
 		return id;
@@ -19,12 +17,20 @@ public class Classroom {
 		this.id = id;
 	}
 
-	public Integer getNumber() {
-		return number;
+	public Integer getSchoolID() {
+		return schoolID;
 	}
 
-	public void setNumber(Integer number) {
-		this.number = number;
+	public void setSchoolID(Integer schoolID) {
+		this.schoolID = schoolID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Integer getCapacity() {
@@ -50,21 +56,4 @@ public class Classroom {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-
-	public Long getCreationDate() {
-		return creationDateMillis;
-	}
-
-	public void setCreationDate(Long creationDateMillis) {
-		this.creationDateMillis = creationDateMillis;
-	}
-
-	public Integer getSchoolID() {
-		return schoolID;
-	}
-
-	public void setSchoolID(Integer schoolID) {
-		this.schoolID = schoolID;
-	}
-
 }

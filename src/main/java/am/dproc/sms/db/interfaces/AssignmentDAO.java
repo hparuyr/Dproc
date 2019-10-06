@@ -16,20 +16,20 @@ public interface AssignmentDAO {
 
 	public Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID);
 
-	public String getAssignmentComment(Integer assignmentID);
+	//public String getAssignmentComment(Integer assignmentID);
 
 	public Integer deleteAssignment(Integer id);
 
 	public Integer deleteAllAssignments();
 
-	public Integer addAssignment(Assignment asi);
+	public Integer addAssignment(Assignment assignment);
 
-	String getAssignmentFeedback(Integer id);
+	//String getAssignmentFeedback(Integer id);
 
-	Integer addAssignmentFeedback(Integer teacherId, Integer assignmentId, String comment);
+	//Integer addAssignmentFeedback(Integer teacherId, Integer assignmentId, String comment);
 
-	Integer updateAssignmentFeedback(Integer id, String comment);
+	//Integer updateAssignmentFeedback(Integer id, String comment);
 
-	Integer deleteAssignmentFeedback(Integer id);
+	//Integer deleteAssignmentFeedback(Integer id);
 
 }
