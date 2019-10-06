@@ -8,9 +8,8 @@ public class Course {
 	private Integer schoolID;
 	private String name;
 	private String description;
-	private String duration;
+	private Integer duration;
 	private String durationUnitType;
-	private Boolean finished;
 	private List<Lesson> listOfLessons;
 
 	public Integer getId() {
@@ -45,11 +44,11 @@ public class Course {
 		this.description = description;
 	}
 
-	public String getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(String duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 
@@ -59,14 +58,6 @@ public class Course {
 
 	public void setDurationUnitType(String durationUnitType) {
 		this.durationUnitType = durationUnitType;
-	}
-
-	public Boolean getFinished() {
-		return finished;
-	}
-
-	public void setFinished(Boolean finished) {
-		this.finished = finished;
 	}
 
 	public List<Lesson> getListOfLessons() {

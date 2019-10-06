@@ -20,10 +20,8 @@ public interface CourseDAO {
 
 	public Integer editCourseDescription(Integer id, String description);
 
-	public Integer editCourseDuration(Integer id, String duration);
+	public Integer editCourseDuration(Integer id, Integer duration);
 
 	public Integer editCourseDurationUnitType(Integer id, String durationUnitType);
-
-	public Integer editCourseFinished(Integer id, Boolean finished);
 
 }

@@ -27,14 +27,14 @@ public class LessonDAODBImpl implements LessonDAO {
 			+ "INTO mydb.LESSON (COURSE_ID, NAME, CONTENT, CREATION_DATE) "
 			+ "VALUES(?, ?, ?, ?, ?)";
 	private static final String GET_LESSONS = ""
-			+ "SELECT COURSE_ID, NAME, CONTENT "
+			+ "SELECT ID, COURSE_ID, NAME, CONTENT "
 			+ "FROM mydb.LESSON";
 	private static final String GET_LESSONS_BY_ID = ""
-			+ "SELECT COURSE_ID, NAME, CONTENT "
+			+ "SELECT ID, COURSE_ID, NAME, CONTENT "
 			+ "FROM mydb.LESSON "
 			+ "WHERE ID = ?";
 	private static final String GET_LESSONS_BY_COURSE_ID = ""
-			+ "SELECT COURSE_ID, NAME, CONTENT "
+			+ "SELECT ID, COURSE_ID, NAME, CONTENT "
 			+ "FROM mydb.LESSON "
 			+ "WHERE COURSE_ID = ?";
 	private static final String EDIT_LESSON_NAME = ""
@@ -101,7 +101,7 @@ public class LessonDAODBImpl implements LessonDAO {
 			Lesson lesson = new Lesson();
 
 			lesson.setId(rs.getInt("ID"));
-			lesson.setId(rs.getInt("COURSE_ID"));
+			lesson.setCourseID(rs.getInt("COURSE_ID"));
 			lesson.setName(rs.getString("NAME"));
 			lesson.setContent(rs.getString("CONTENT"));
 			return lesson;

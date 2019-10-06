@@ -27,11 +27,11 @@ public class StudentCommentDAODBImpl implements StudentCommentDAO {
 			+ "INTO mydb.STUDENT_COMMENT (TOPIC_ID, STUDENT_ID, COMMENT, CREATION_DATE) "
 			+ "VALUES(?, ?, ?, ?)";
 	private static final String GET_COMMENT_BY_ID = ""
-			+ "SELECT TOPIC_ID, STUDENT_ID, COMMENT "
+			+ "SELECT ID, TOPIC_ID, STUDENT_ID, COMMENT "
 			+ "FROM mydb.STUDENT_COMMENT "
 			+ "WHERE ID = ?";
 	private static final String GET_COMMENT_BY_TOPIC_ID = ""
-			+ "SELECT TOPIC_ID, STUDENT_ID, COMMENT "
+			+ "SELECT ID, TOPIC_ID, STUDENT_ID, COMMENT "
 			+ "FROM mydb.STUDENT_COMMENT "
 			+ "WHERE TOPIC_ID = ?";
 	private static final String EDIT_COMMENT = ""

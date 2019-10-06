@@ -4,7 +4,7 @@ INSERT INTO `mydb`.`SCHOOL` (`NAME`, `ADDRESS`, `PHONE_NUMBER`, `EMAIL`, `CREATI
 			 ('ISTC', '1/7 Alek Manukian St, Yerevan, Armenia', '(012) 21-97-00', '', UNIX_TIMESTAMP(NOW())),
 			 ('Basic IT Center', '18 Isahakyan St, Yerevan, Armenia', '(044) 65-99-88', 'basic@it-center.am', UNIX_TIMESTAMP(NOW()));
  
-INSERT INTO `mydb`.`USER` (`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`, `STATUS`, `TYPE`, `CREATION_DATE`) 
+INSERT INTO `mydb`.`USER` (`FIRSTNAME`, `LASTNAME`, `EMAIL`, `PASSWORD`, `STATUS`, `TYPE`, `CREATION_DATE`) 
       VALUES ('Paruyr', 'Hovakimyan', 'paruyrhovakimyan@gmail.com', 'paruyr.password',  1, 1, UNIX_TIMESTAMP(NOW())),
              ('Narine', 'Gexamyan', 'narinegexamyan@gmail.com', 'narine.password',  1, 1, UNIX_TIMESTAMP(NOW())),
              ('Ashot', 'Virabyan', 'ashotvirabyan@gmail.com', 'ashot.password',  1, 1, UNIX_TIMESTAMP(NOW())),
@@ -40,7 +40,7 @@ INSERT INTO `mydb`.`USER_INFO`(`USER_ID`, `PASSPORT_ID`, `SOCIAL_CARD_ID`, `BIRT
             (8, 'AA012348', '4568913254', 915134400000, '(043) 12-34-59', '8 Kievyan, Yerevan', 1, UNIX_TIMESTAMP(NOW())),
             (9, 'AA012349', '4568913255', 599601600000, '(043) 12-34-50', '9 Kievyan, Yerevan', 2, UNIX_TIMESTAMP(NOW()));
             
- INSERT INTO `mydb`.`ADMIN` (`FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PASSWORD`, `SCHOOL_ID`, `CREATION_DATE`) 
+ INSERT INTO `mydb`.`ADMIN` (`FIRSTNAME`, `LASTNAME`, `EMAIL`, `PASSWORD`, `SCHOOL_ID`, `CREATION_DATE`) 
       VALUES('Yeva', '', 'yeva@gmail.com', 'yeva.password',  1, UNIX_TIMESTAMP(NOW())),
             ('Zvart', 'Manukyan', 'zvart.manukyan@gmail.com', 'zvart.password', 1, UNIX_TIMESTAMP(NOW()));              
             

@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.ClassroomDAO;
+import am.dproc.sms.enums.ClassroomType;
 import am.dproc.sms.models.Classroom;
 
 @Repository
@@ -42,8 +43,7 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			+ "WHERE ID = ?";
 	private static final String EDIT_CLASSROOM_CAPACITY = ""
 			+ "UPDATE mydb.CLASSROOM "
-			+ "SET CAPACITY = ?, CHANGE_DATE = ? "
-			+ "WHERE ID = ?";
+			+ "SET CAPACITY = ?, CHANGE_DATE = ? " + "WHERE ID = ?";
 	private static final String EDIT_CLASSROOM_TYPE = ""
 			+ "UPDATE mydb.CLASSROOM "
 			+ "SET TYPE = ?, CHANGE_DATE = ? "
@@ -56,16 +56,24 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			+ "DELETE "
 			+ "FROM mydb.CLASSROOM "
 			+ "WHERE ID = ?";
+
+
 	@Override
 	public Integer addClassroom(Classroom classroom) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbctemplate.update(connection -> {
 			PreparedStatement ps = connection.prepareStatement(ADD_CLASSROOM, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, classroom.getName());
-			ps.setInt(2, classroom.getCapacity());
-			ps.setString(3, classroom.getType());
-			ps.setString(4, classroom.getSubject());
-			ps.setInt(5, classroom.getSchoolID());
+			ps.setInt(1, classroom.getSchoolID());
+			ps.setString(2, classroom.getName());
+			ps.setInt(3, classroom.getCapacity());
+			if (ClassroomType.FOR_SEMINAR.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.FOR_SEMINAR.index());
+			} else if (ClassroomType.FOR_LECTURE.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.FOR_LECTURE.index());
+			} else if (ClassroomType.GENERAL_PORPOSE.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
+				ps.setInt(4, ClassroomType.GENERAL_PORPOSE.index());
+			}
+			ps.setString(5, classroom.getSubject());
 			ps.setLong(6, System.currentTimeMillis());
 			return ps;
 		}, keyHolder);
@@ -100,7 +108,17 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 
 	@Override
 	public Integer editClassroomType(Integer id, String type) {
-		return jdbctemplate.update(EDIT_CLASSROOM_TYPE, type, System.currentTimeMillis(), id);
+		if (ClassroomType.FOR_LECTURE.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.FOR_LECTURE.index(),
+					System.currentTimeMillis(), id);
+		} else if (ClassroomType.FOR_SEMINAR.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.FOR_SEMINAR.index(),
+					System.currentTimeMillis(), id);
+		} else if (ClassroomType.GENERAL_PORPOSE.toString().toLowerCase().equals(type.toLowerCase())) {
+			return jdbctemplate.update(EDIT_CLASSROOM_TYPE, ClassroomType.GENERAL_PORPOSE.index(),
+					System.currentTimeMillis(), id);
+		}
+		return -1;
 	}
 
 	@Override
@@ -122,9 +140,14 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			classroom.setSchoolID(rs.getInt("SCHOOL_ID"));
 			classroom.setName(rs.getString("NAME"));
 			classroom.setCapacity(rs.getInt("CAPACITY"));
-			classroom.setType(rs.getString("TYPE"));
+			if (ClassroomType.FOR_SEMINAR.index() == rs.getInt("TYPE")) {
+				classroom.setType("For Seminar");
+			} else if (ClassroomType.FOR_LECTURE.index() == rs.getInt("TYPE")) {
+				classroom.setType("For Lecture");
+			} else if (ClassroomType.GENERAL_PORPOSE.index() == rs.getInt("TYPE")) {
+				classroom.setType("General Porpose");
+			}
 			classroom.setSubject(rs.getString("SUBJECT"));
-
 			return classroom;
 		}
 
