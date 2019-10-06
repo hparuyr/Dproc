@@ -6,25 +6,24 @@ import am.dproc.sms.models.Assessment;
 
 public interface AssessmentService {
 
-	public Assessment getAssessment(Integer id);
+    Integer addAssessment(Assessment assessment);
 
-	public Assessment getAssessmentByTitle(String title);
+    Assessment getAssessment(Integer id);
 
-	public List<Assessment> getAllAssessments();
+    List<Assessment> getAllAssessmentsByUserId(Integer userID);
 
-	public List<Assessment> getAllAssessmentsByUserId(Integer userId);
+    List<Assessment> getAssessmentsByAssignmentId(Integer assignmentID);
 
-	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId);
-	
-	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId);
+    Integer getAssessmentByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
 
-	public Integer deleteAssessment(Integer id);
+    Double getAverageScoreByStudentCourse(Integer studentID, Integer courseID);
 
-	public Integer deleteAllAssessments();
+    Double getAverageScoreByStudent(Integer studentID);
 
-	public Integer addAssessment(Assessment asi);
+    List<Assessment> getAllAssessments();
 
-	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
+    Integer deleteAssessment(Integer id);
 
-	public Double getAverageScoreByStudent(Integer studentId);
+    Integer deleteAllAssessments();
+
 }

@@ -14,34 +14,34 @@ import am.dproc.sms.services.interfaces.TopicService;
 public class LessonServiceImpl implements LessonService {
 
 	@Autowired
-	LessonDAO lesson;
+	LessonDAO lessonDAO;
 
 	@Autowired
-	TopicService topic;
+	TopicService topicService;
 
 	@Override
 	public Integer addLesson(Lesson lesson) {
 		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseID() == null) {
-			return 0;
+			return -1;
 		}
-		return this.lesson.addLesson(lesson, lesson.getCourseID());
+		return this.lessonDAO.addLesson(lesson, lesson.getCourseID());
 	}
 
 	@Override
 	public Lesson getLesson(Integer id) {
-		Lesson lesson = this.lesson.getLesson(id);
-		lesson.setListOfTopics(this.topic.getLessonTopics(id));
+		Lesson lesson = this.lessonDAO.getLesson(id);
+		lesson.setListOfTopics(this.topicService.getLessonTopics(id));
 		return lesson;
 	}
 
 	@Override
 	public List<Lesson> getCourseLessons(Integer courseID) {
-		return this.lesson.getLessonsOfCourse(courseID);
+		return this.lessonDAO.getLessonsOfCourse(courseID);
 	}
 
 	@Override
 	public List<Lesson> getAllLesson() {
-		return lesson.getAllLessons();
+		return lessonDAO.getAllLessons();
 	}
 
 	@Override
@@ -50,25 +50,25 @@ public class LessonServiceImpl implements LessonService {
 		boolean bool = false;
 
 		if (lesson.getName() != null) {
-			if (this.lesson.editLessonName(lesson.getId(), lesson.getName()) == 0) {
+			if (this.lessonDAO.editLessonName(lesson.getId(), lesson.getName()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 		if (lesson.getContent() != null) {
-			if (this.lesson.editLessonContent(lesson.getId(), lesson.getContent()) == 0) {
+			if (this.lessonDAO.editLessonContent(lesson.getId(), lesson.getContent()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 
-		return bool == true ? 1 : 0;
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteLesson(Integer id) {
 		if (getLesson(id).getListOfTopics().size() == 0) {
-			return lesson.deleteLesson(id);
+			return lessonDAO.deleteLesson(id);
 		}
 		return 0;
 	}

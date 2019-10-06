@@ -5,13 +5,14 @@ import java.util.List;
 import am.dproc.sms.models.Test;
 
 public interface TestService {
-	Test getTest(Integer id);
 
-	List<Test> getAllTests();
+    Test getTest(Integer id);
 
-	Integer createTest(Test test);
+    List<Test> getAllTests();
 
-	Integer updateTest(Test test);
+    Integer createTest(Test test);
 
-	Integer deleteTest(Integer id);
+    Integer updateTest(Test test);
+
+    Integer deleteTest(Integer id);
 }

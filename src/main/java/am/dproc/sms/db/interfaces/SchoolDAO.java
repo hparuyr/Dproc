@@ -5,20 +5,21 @@ import java.util.List;
 import am.dproc.sms.models.School;
 
 public interface SchoolDAO {
-	public Integer addSchool(School school);
 
-	public School getSchool(Integer id);
+	Integer addSchool(School school);
 
-	public List<School> getSchooles();
+	School getSchool(Integer id);
 
-	public Integer updateSchoolName(Integer id, String name);
+	List<School> getSchools();
 
-	public Integer updateSchoolAddress(Integer id, String addresss);
+	Integer updateSchoolName(Integer id, String name);
 
-	public Integer deleteSchool(Integer id);
+	Integer updateSchoolAddress(Integer id, String address);
+
+	Integer deleteSchool(Integer id);
 
 	Integer updateSchoolPhoneNumber(Integer id, String phoneNumber);
 
-	Integer updateSchooleMail(Integer id, String eMail);
+	Integer updateSchoolEMail(Integer id, String eMail);
 
 }

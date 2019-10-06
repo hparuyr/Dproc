@@ -6,22 +6,22 @@ import am.dproc.sms.models.Classroom;
 
 public interface ClassroomDAO {
 
-	public Integer addClassroom(Classroom classroom);
+	Integer addClassroom(Classroom classroom);
 
-	public Classroom getClassroom(Integer id);
+	Classroom getClassroom(Integer id);
 
-	public List<Classroom> getClassrooms();
+	List<Classroom> getClassrooms();
 
-	public List<Classroom> getClassroomsByCapacity(Integer min, Integer max);
+	List<Classroom> getClassroomsByCapacity(Integer min, Integer max);
 
-	public Integer editClassroomName(Integer id, String name);
+	Integer editClassroomName(Integer id, String name);
 
-	public Integer editClassroomCapacity(Integer id, Integer capacity);
+	Integer editClassroomCapacity(Integer id, Integer capacity);
 
-	public Integer editClassroomType(Integer id, String type);
+	Integer editClassroomType(Integer id, String type);
 
-	public Integer editClassroomSubject(Integer id, String subject);
+	Integer editClassroomSubject(Integer id, String subject);
 
-	public Integer deleteClassroom(Integer id);
+	Integer deleteClassroom(Integer id);
 
 }

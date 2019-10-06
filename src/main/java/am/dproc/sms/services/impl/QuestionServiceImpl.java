@@ -20,6 +20,14 @@ public class QuestionServiceImpl implements QuestionService {
 	AnswerService answerService;
 
 	@Override
+	public Integer createQuestion(Question question) {
+		if (question.getContent() == null || question.getTestId() == null) {
+			return -1;
+		}
+		return questionDAO.createQuestion(question);
+	}
+
+	@Override
 	public Question getQuestion(Integer id) {
 		Question question = questionDAO.getQuestion(id);
 		question.setAnswers(answerService.getAnswersForQuestion(id));
@@ -38,11 +46,6 @@ public class QuestionServiceImpl implements QuestionService {
 		List<Question> questions = questionDAO.getQuestionsForTest(testId);
 		questions.forEach(item -> item.setAnswers(answerService.getAnswersForQuestion(item.getId())));
 		return questions;
-	}
-
-	@Override
-	public Integer createQuestion(Question question) {
-		return questionDAO.createQuestion(question);
 	}
 
 	@Override

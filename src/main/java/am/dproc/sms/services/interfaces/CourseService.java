@@ -6,15 +6,15 @@ import am.dproc.sms.models.Course;
 
 public interface CourseService {
 
-	public Integer addCourse(Course course);
+	Integer addCourse(Course course);
 
-	public Course getCourse(Integer id);
+	Course getCourse(Integer id);
 
-	public List<Course> getCourses();
+	List<Course> getCourses();
 
 	List<Course> getCoursesByGroupId(Integer groupId);
 
-	public Integer editCourse(Course course);
+	Integer editCourse(Course course);
 
-	public Integer deleteCourse(Integer id);
+	Integer deleteCourse(Integer id);
 }

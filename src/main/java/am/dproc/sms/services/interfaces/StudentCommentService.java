@@ -6,14 +6,14 @@ import am.dproc.sms.models.StudentComment;
 
 public interface StudentCommentService {
 	
-	public Integer addComment(StudentComment Comment);
+	Integer addComment(StudentComment Comment);
 
-	public StudentComment getComment(Integer id);
+	StudentComment getComment(Integer id);
 
-	public List<StudentComment> getCommentsOfTopic(Integer topicID);
+	List<StudentComment> getCommentsOfTopic(Integer topicID);
 
-	public Integer editComment(StudentComment Comment);
+	Integer editComment(StudentComment Comment);
 
-	public Integer deleteComment(Integer id);
+	Integer deleteComment(Integer id);
 
 }

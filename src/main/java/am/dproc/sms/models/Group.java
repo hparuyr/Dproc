@@ -3,41 +3,42 @@ package am.dproc.sms.models;
 import java.util.List;
 
 public class Group {
-	private Integer id;
-	private String name;
-	private Integer schoolId;
-	private List<Student> listOfStudents;
 
-	public Integer getId() {
-		return id;
-	}
+    private Integer id;
+    private String name;
+    private Integer schoolId;
+    private List<Student> listOfStudents;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getSchoolId() {
-		return schoolId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSchoolId(Integer schoolId) {
-		this.schoolId = schoolId;
-	}
+    public Integer getSchoolId() {
+        return schoolId;
+    }
 
-	public List<Student> getListOfStudents() {
-		return listOfStudents;
-	}
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
+    }
 
-	public void setListOfStudents(List<Student> listOfStudents) {
-		this.listOfStudents = listOfStudents;
-	}
+    public List<Student> getListOfStudents() {
+        return listOfStudents;
+    }
+
+    public void setListOfStudents(List<Student> listOfStudents) {
+        this.listOfStudents = listOfStudents;
+    }
 
 }

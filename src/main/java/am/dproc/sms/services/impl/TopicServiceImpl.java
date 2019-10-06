@@ -14,32 +14,32 @@ import am.dproc.sms.services.interfaces.TopicService;
 public class TopicServiceImpl implements TopicService {
 	
 	@Autowired
-	StudentCommentService studentComment;
+	StudentCommentService studentCommentService;
 
 	@Autowired
-	TopicDAO topic;
+	TopicDAO topicDAO;
 
 	@Override
 	public Integer addTopic(Topic topic) {
 		if (topic.getVideoURL() == null || topic.getWebPageURL() == null || topic.getLessonID() == null) {
-			return 0;
+			return -1;
 		}
-		return this.topic.addTopic(topic);
+		return topicDAO.addTopic(topic);
 	}
 
 	@Override
 	public List<Topic> getLessonTopics(Integer lessonID) {
-		return topic.getTopicsOfLesson(lessonID);
+		return topicDAO.getTopicsOfLesson(lessonID);
 	}
 
 	@Override
 	public Topic getTopic(Integer id) {
-		return topic.getTopic(id);
+		return topicDAO.getTopic(id);
 	}
 
 	@Override
 	public List<Topic> getAllTopics() {
-		return topic.getAllTopics();
+		return topicDAO.getAllTopics();
 	}
 
 	@Override
@@ -48,25 +48,25 @@ public class TopicServiceImpl implements TopicService {
 		boolean bool = false;
 
 		if (topic.getVideoURL() != null) {
-			if (this.topic.editTopicVideoURL(topic.getId(), topic.getVideoURL()) == 0) {
+			if (this.topicDAO.editTopicVideoURL(topic.getId(), topic.getVideoURL()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 		if (topic.getWebPageURL() != null) {
-			if (this.topic.editTopicWebPageURL(topic.getId(), topic.getWebPageURL()) == 0) {
+			if (this.topicDAO.editTopicWebPageURL(topic.getId(), topic.getWebPageURL()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 
-		return bool == true ? 1 : 0;
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteTopic(Integer id) {
-		if (studentComment.getCommentsOfTopic(id).size() == 0) {
-			return topic.deleteTopic(id);
+		if (studentCommentService.getCommentsOfTopic(id).size() == 0) {
+			return topicDAO.deleteTopic(id);
 		}
 		return 0;
 	}

@@ -1,6 +1,8 @@
 package am.dproc.sms.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +23,7 @@ import am.dproc.sms.services.interfaces.GroupCourseService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/group-course")
+@Path("/groupService-courseService")
 @Api(value = "GroupCourseController")
 public class GroupCourseController {
 
@@ -32,44 +34,47 @@ public class GroupCourseController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response assignCourseToGroup(GroupCourse groupCourse) {
-		int id = groupCourseService.create(groupCourse);
-		if (id > 0) {
-			return Response.status(Response.Status.CREATED).entity(id).build();
-		} else {
-			return Response.status(Response.Status.BAD_REQUEST).entity("Record was not created").build();
+		Integer id = groupCourseService.create(groupCourse);
+		if (id == -1) {
+			Map<String, String> message = new HashMap<String, String>();
+			message.put("Message", "All fields must be filled!");
+			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+		} else if (id == 0) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
 		}
+		return Response.status(Response.Status.CREATED).entity(id).build();
 	}
 
 	@Path("/{id}")
 	@GET
-	@Produces("application/json")
+	@Produces({ MediaType.APPLICATION_JSON })
 	public GroupCourse getById(@PathParam("id") int id) {
 		return groupCourseService.getById(id);
 	}
 
 	@Path("/{gid}/{cid}")
 	@GET
-	@Produces("application/json")
+	@Produces({ MediaType.APPLICATION_JSON })
 	public GroupCourse getByGroupAndCourse(@PathParam("gid") int groupId,@PathParam("cid") int courseId) {
 		return groupCourseService.getByGroupAndCourse(groupId, courseId);
 	}
 
 	@Path("/courseId/{id}")
 	@GET
-	@Produces("application/json")
+	@Produces({ MediaType.APPLICATION_JSON })
 	public List<GroupCourse> getByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.getByCourseID(courseId);
 	}
 	
 	@Path("/teacherId/{teacherId}")
 	@GET
-	@Produces("application/json")
-	public List<GroupCourse> getByTeacherId(@PathParam("id") int teacherId) {
+	@Produces({ MediaType.APPLICATION_JSON })
+	public List<GroupCourse> getByTeacherId(@PathParam("teacherId") int teacherId) {
 		return groupCourseService.getByTeacherID(teacherId);
 	}
 
 	@GET
-	@Produces("application/json")
+	@Produces({ MediaType.APPLICATION_JSON })
 	public List<GroupCourse> getAll() {
 		return groupCourseService.getAll();
 	}
@@ -80,21 +85,18 @@ public class GroupCourseController {
 		return groupCourseService.update(groupCourse);
 	}
 	
-	// works
 	@Path("/groupId/{id}")
 	@DELETE
 	public int deleteByGroupId(@PathParam("id") int groupId) {
 		return groupCourseService.deleteByGroupID(groupId);
 	}
 
-	// works
 	@Path("/courseId/{id}")
 	@DELETE
 	public int deleteByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.deleteByCourseID(courseId);
 	}
 
-	// works
 	@DELETE
 	public int deleteAll() {
 		return groupCourseService.deleteAll();

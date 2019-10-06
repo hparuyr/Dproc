@@ -1,12 +1,16 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.TestDAO;
@@ -14,51 +18,76 @@ import am.dproc.sms.models.Test;
 
 @Repository
 public class TestDAODBImpl implements TestDAO {
-	@Autowired
-	JdbcTemplate template;
 
-	private static final String CREATE_TEST = "insert into mydb.TEST(TITLE, LESSON_ID, CREATION_DATE) values (?, ?, ?)";
-	private static final String GET_TEST_BY_ID = "select * from mydb.TEST where ID = ? ";
-	private static final String GET_ALL_TESTS = "select * from mydb.TEST";
-	private static final String UPDATE_TEST = "update mydb.TEST set TITLE = ?, LESSON_ID = ?, CHANGE_DATE = ? where ID = ?";
-	private static final String DELETE_TEST = "delete from mydb.TEST where ID = ?";
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-	@Override
-	public Integer createTest(Test test) {
-		return template.update(CREATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis());
-	}
+    private static final String CREATE_TEST = "" +
+            "INSERTT " +
+            "INTO mydb.TEST(LESSON_ID, TITLE, CREATION_DATE) " +
+            "VALUES (?, ?, ?)";
+    private static final String GET_TEST_BY_ID = "" +
+            "SELECT ID, TITLE, LESSON_ID " +
+            "FROM mydb.TEST " +
+            "WHERE ID = ? ";
+    private static final String GET_ALL_TESTS = "" +
+            "SELECT ID, TITLE, LESSON_ID " +
+            "FROM mydb.TEST";
+    private static final String UPDATE_TEST = "" +
+            "UPDATE mydb.TEST " +
+            "SET TITLE = ?, LESSON_ID = ?, CHANGE_DATE = ? " +
+            "WHERE ID = ?";
+    private static final String DELETE_TEST = "" +
+            "DELETE " +
+            "FROM mydb.TEST " +
+            "WHERE ID = ?";
 
-	@Override
-	public Test getTest(Integer id) {
-		Test test = template.queryForObject(GET_TEST_BY_ID, new TestMapper(), id);
-		return test;
-	}
+    @Override
+    public Integer createTest(Test test) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-	@Override
-	public List<Test> getAllTests() {
-		return template.query(GET_ALL_TESTS, new TestMapper());
-	}
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(CREATE_TEST, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, test.getLessonId());
+            ps.setString(2, test.getTitle());
+            ps.setLong(4, System.currentTimeMillis());
+            return ps;
+        }, keyHolder);
 
-	@Override
-	public Integer updateTest(Test test) {
-		return template.update(UPDATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis(),
-				test.getId());
-	}
+        return keyHolder.getKey().intValue();
+    }
 
-	@Override
-	public Integer deleteTest(Integer id) {
-		return template.update(DELETE_TEST, id);
-	}
+    @Override
+    public Test getTest(Integer id) {
+        return jdbcTemplate.queryForObject(GET_TEST_BY_ID, new TestMapper(), id);
+    }
 
-	private static class TestMapper implements RowMapper<Test> {
-		@Override
-		public Test mapRow(ResultSet rs, int rownumber) throws SQLException {
-			Test test = new Test();
-			test.setId(rs.getInt("ID"));
-			test.setTitle(rs.getString("TITLE"));
-			test.setLessonId(rs.getInt("LESSON_ID"));
+    @Override
+    public List<Test> getAllTests() {
+        return jdbcTemplate.query(GET_ALL_TESTS, new TestMapper());
+    }
 
-			return test;
-		}
-	}
+    @Override
+    public Integer updateTest(Test test) {
+        return jdbcTemplate.update(UPDATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis(),
+                test.getId());
+    }
+
+    @Override
+    public Integer deleteTest(Integer id) {
+        return jdbcTemplate.update(DELETE_TEST, id);
+    }
+
+    private static class TestMapper implements RowMapper<Test> {
+        @Override
+        public Test mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Test test = new Test();
+
+            test.setId(rs.getInt("ID"));
+            test.setLessonId(rs.getInt("LESSON_ID"));
+            test.setTitle(rs.getString("TITLE"));
+
+            return test;
+        }
+    }
 }

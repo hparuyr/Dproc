@@ -6,23 +6,21 @@ import am.dproc.sms.models.Assignment;
 
 public interface AssignmentDAO {
 
-	public Assignment getAssignment(Integer id);
+	Integer addAssignment(Assignment assignment);
 
-	public List<Assignment> getAllAssignments();
+	Assignment getAssignment(Integer id);
 
-	public List<Assignment> getAllAssignments(String title);
+	List<Assignment> getAllAssignments();
 
-	public List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
+	List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
 
-	public Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID);
+	Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID);
+
+	Integer deleteAssignment(Integer id);
+
+	Integer deleteAllAssignments();
 
 	//public String getAssignmentComment(Integer assignmentID);
-
-	public Integer deleteAssignment(Integer id);
-
-	public Integer deleteAllAssignments();
-
-	public Integer addAssignment(Assignment assignment);
 
 	//String getAssignmentFeedback(Integer id);
 

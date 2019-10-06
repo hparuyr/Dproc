@@ -1,50 +1,51 @@
 package am.dproc.sms.models;
 
 public class StudentInfo {
-	private String passportId;
-	private String socialCardId;
-	private Long birthDate;
-	private String imageUrl;
-	private Integer studentId;
 
-	public String getPassportId() {
-		return passportId;
-	}
+    private String passportId;
+    private String socialCardId;
+    private Long birthDate;
+    private String imageUrl;
+    private Integer studentId;
 
-	public void setPassportId(String passportId) {
-		this.passportId = passportId;
-	}
+    public String getPassportId() {
+        return passportId;
+    }
 
-	public String getSocialCardId() {
-		return socialCardId;
-	}
+    public void setPassportId(String passportId) {
+        this.passportId = passportId;
+    }
 
-	public void setSocialCardId(String socialCardId) {
-		this.socialCardId = socialCardId;
-	}
+    public String getSocialCardId() {
+        return socialCardId;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public void setSocialCardId(String socialCardId) {
+        this.socialCardId = socialCardId;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	public Integer getStudentId() {
-		return studentId;
-	}
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-	public void setStudentId(Integer studentId) {
-		this.studentId = studentId;
-	}
+    public Integer getStudentId() {
+        return studentId;
+    }
 
-	public Long getBirthDate() {
-		return birthDate;
-	}
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
+    }
 
-	public void setBirthDate(Long birthDate) {
-		this.birthDate = birthDate;
-	}
+    public Long getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Long birthDate) {
+        this.birthDate = birthDate;
+    }
 
 }

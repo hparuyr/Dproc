@@ -6,16 +6,16 @@ import am.dproc.sms.models.Answer;
 
 public interface AnswerService {
 
+	Integer createAnswer(Answer answer);
+
 	Answer getAnswer(Integer id);
+
+	List<Answer> getAnswersForQuestion(Integer questionId);
 
 	List<Answer> getAllAnswers();
 
-	int createAnswer(Answer answer);
+	Integer updateAnswer(Answer answer);
 
-	int updateAnswer(Answer answer);
-
-	int deleteAnswer(int id);
-
-	List<Answer> getAnswersForQuestion(Integer questionId);
+	Integer deleteAnswer(Integer id);
 
 }

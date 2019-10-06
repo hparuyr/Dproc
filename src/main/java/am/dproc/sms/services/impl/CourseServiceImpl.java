@@ -13,78 +13,78 @@ import am.dproc.sms.services.interfaces.LessonService;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-	@Autowired
-	CourseDAO course;
+    @Autowired
+    CourseDAO courseDAO;
 
-	@Autowired
-	LessonService lesson;
+    @Autowired
+    LessonService lessonService;
 
-	@Override
-	public Integer addCourse(Course course) {
-		if (course.getSchoolID() == null || course.getName() == null || course.getDescription() == null
-				|| course.getDuration() == null || course.getDurationUnitType() == null) {
-			return 0;
-		}
-		return this.course.addCourse(course);
-	}
+    @Override
+    public Integer addCourse(Course course) {
+        if (course.getSchoolID() == null || course.getName() == null || course.getDescription() == null
+                || course.getDuration() == null || course.getDurationUnitType() == null) {
+            return -1;
+        }
+        return this.courseDAO.addCourse(course);
+    }
 
-	@Override
-	public Course getCourse(Integer id) {
-		Course course = this.course.getCourse(id);
-		course.setListOfLessons(lesson.getCourseLessons(id));
-		return course;
-	}
+    @Override
+    public Course getCourse(Integer id) {
+        Course course = this.courseDAO.getCourse(id);
+        course.setListOfLessons(lessonService.getCourseLessons(id));
+        return course;
+    }
 
-	@Override
-	public List<Course> getCourses() {
-		return course.getCourses();
-	}
+    @Override
+    public List<Course> getCourses() {
+        return courseDAO.getCourses();
+    }
 
-	@Override
+    @Override
 
-	public List<Course> getCoursesByGroupId(Integer groupId) {
-		return course.getCoursesByGroupId(groupId);
-	}
-
-
-	@Override
-	public Integer deleteCourse(Integer id) {
-		if (getCourse(id).getListOfLessons().size() == 0) {
-			return course.deleteCourse(id);
-		}
-		return 0;
-	}
-
-	public Integer editCourse(Course course) {
+    public List<Course> getCoursesByGroupId(Integer groupId) {
+        return courseDAO.getCoursesByGroupId(groupId);
+    }
 
 
-		boolean bool = false;
+    @Override
+    public Integer deleteCourse(Integer id) {
+        if (getCourse(id).getListOfLessons().size() == 0) {
+            return courseDAO.deleteCourse(id);
+        }
+        return 0;
+    }
 
-		if (course.getName() != null) {
-			if (this.course.editCourseName(course.getId(), course.getName()) == 0) {
-				return -1;
-			}
-			bool = true;
-		}
-		if (course.getDescription() != null) {
-			if (this.course.editCourseDescription(course.getId(), course.getDescription()) == 0) {
-				return -1;
-			}
-			bool = true;
-		}
-		if (course.getDuration() != null) {
-			if (this.course.editCourseDuration(course.getId(), course.getDuration()) == 0) {
-				return -1;
-			}
-			bool = true;
-		}
-		if (course.getDurationUnitType() != null) {
-			if (this.course.editCourseDurationUnitType(course.getId(), course.getDurationUnitType()) == 0) {
-				return -1;
-			}
-			bool = true;
-		}
+    public Integer editCourse(Course course) {
 
-		return bool == true ? 1 : 0;
-	}
+
+        boolean bool = false;
+
+        if (course.getName() != null) {
+            if (this.courseDAO.editCourseName(course.getId(), course.getName()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (course.getDescription() != null) {
+            if (this.courseDAO.editCourseDescription(course.getId(), course.getDescription()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (course.getDuration() != null) {
+            if (this.courseDAO.editCourseDuration(course.getId(), course.getDuration()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (course.getDurationUnitType() != null) {
+            if (this.courseDAO.editCourseDurationUnitType(course.getId(), course.getDurationUnitType()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+
+        return bool ? 1 : 0;
+    }
 }

@@ -1,58 +1,59 @@
 package am.dproc.sms.models;
 
 public class TeacherInfo {
-	private Integer passportId;
-	private Integer socialCardId;
-	private Long birthDate;;
-	private String imageUrl;
-	private Long creationDate;
-	private Integer teacherId;
 
-	public Integer getPassportId() {
-		return passportId;
-	}
+    private Integer passportId;
+    private Integer socialCardId;
+    private Long birthDate;
+    private String imageUrl;
+    private Long creationDate;
+    private Integer teacherId;
 
-	public void setPassportId(Integer passportId) {
-		this.passportId = passportId;
-	}
+    public Integer getPassportId() {
+        return passportId;
+    }
 
-	public Integer getSocialCardId() {
-		return socialCardId;
-	}
+    public void setPassportId(Integer passportId) {
+        this.passportId = passportId;
+    }
 
-	public void setSocialCardId(Integer socialCardId) {
-		this.socialCardId = socialCardId;
-	}
+    public Integer getSocialCardId() {
+        return socialCardId;
+    }
 
-	public String getImageUrl() {
-		return imageUrl;
-	}
+    public void setSocialCardId(Integer socialCardId) {
+        this.socialCardId = socialCardId;
+    }
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-	public Long getCreationDate() {
-		return creationDate;
-	}
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
-	public void setCreationDate(Long creationDate) {
-		this.creationDate = creationDate;
-	}
+    public Long getCreationDate() {
+        return creationDate;
+    }
 
-	public Integer getTeacherId() {
-		return teacherId;
-	}
+    public void setCreationDate(Long creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public void setTeacherId(Integer teacherId) {
-		this.teacherId = teacherId;
-	}
+    public Integer getTeacherId() {
+        return teacherId;
+    }
 
-	public Long getBirthDate() {
-		return birthDate;
-	}
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
 
-	public void setBirthDate(Long birthDate) {
-		this.birthDate = birthDate;
-	}
+    public Long getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Long birthDate) {
+        this.birthDate = birthDate;
+    }
 }

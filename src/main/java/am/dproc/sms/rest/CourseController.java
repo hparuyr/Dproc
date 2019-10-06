@@ -24,22 +24,24 @@ import am.dproc.sms.services.interfaces.CourseService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path(value = "/course")
+@Path(value = "/courseService")
 @Api(value = "CourseController")
 public class CourseController {
 
 	@Autowired
-	CourseService course;
+	CourseService courseService;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addCourse(Course course) {
-		Integer id = this.course.addCourse(course);
-		if (id == 0) {
+		Integer id = this.courseService.addCourse(course);
+		if (id == -1) {
 			Map<String, String> message = new HashMap<String, String>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		} else if (id == 0) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
 		return Response.status(Status.CREATED).entity(id).build();
 	}
@@ -48,27 +50,27 @@ public class CourseController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Course getCourse(@PathParam(value = "id") Integer id) {
-		return course.getCourse(id);
+		return courseService.getCourse(id);
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Course> getCourses() {
-		return course.getCourses();
+		return courseService.getCourses();
 	}
 
 	@GET
-	@Path(value="/group/{id}")
+	@Path(value="/groupService/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Course> getCoursesByGroupId(@PathParam(value="id") Integer id) {
-		return course.getCoursesByGroupId(id);
+		return courseService.getCoursesByGroupId(id);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editCourse(Course course) {
-		Integer status = this.course.editCourse(course);
+		Integer status = this.courseService.editCourse(course);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
@@ -83,11 +85,11 @@ public class CourseController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response deleteCourse(@PathParam(value = "id") Integer id) {
-		if (course.deleteCourse(id) == 1) {
+		if (courseService.deleteCourse(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
 		Map<String, String> message = new HashMap<String, String>();
-		message.put("Message", "First you must delete the lessons of this course!");
+		message.put("Message", "First you must delete the lessons of this courseService!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 

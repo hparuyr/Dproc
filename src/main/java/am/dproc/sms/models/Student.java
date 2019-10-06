@@ -1,32 +1,33 @@
 package am.dproc.sms.models;
 
-public class Student extends User{
-	private Integer status;
-	private Integer groupId;
-	private StudentInfo studentInfo;
+public class Student extends User {
 
-	public Integer getStatus() {
-		return status;
-	}
+    private Integer status;
+    private Integer groupId;
+    private StudentInfo studentInfo;
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	public Integer getGroupId() {
-		return groupId;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
+    public Integer getGroupId() {
+        return groupId;
+    }
 
-	public StudentInfo getStudentInfo() {
-		return studentInfo;
-	}
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
-	public void setStudentInfo(StudentInfo studentInfo) {
-		this.studentInfo = studentInfo;
-	}
+    public StudentInfo getStudentInfo() {
+        return studentInfo;
+    }
+
+    public void setStudentInfo(StudentInfo studentInfo) {
+        this.studentInfo = studentInfo;
+    }
 
 }

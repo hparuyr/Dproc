@@ -2,71 +2,70 @@ package am.dproc.sms.services.impl;
 
 import java.util.List;
 
+import am.dproc.sms.db.interfaces.AssessmentDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import am.dproc.sms.db.impl.AssessmentDAODBImpl;
 import am.dproc.sms.models.Assessment;
 import am.dproc.sms.services.interfaces.AssessmentService;
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
 
-	@Autowired
-	AssessmentDAODBImpl asDao;
+    @Autowired
+    AssessmentDAO assessmentDAO;
 
-	@Override
-	public Assessment getAssessment(Integer id) {
-		return asDao.getAssessment(id);
-	}
+    @Override
+    public Integer addAssessment(Assessment assessment) {
+        if (assessment.getAssignmentCompletedId() == null || assessment.getComment() == null || assessment.getScore() == null || assessment.getUserId() == null) {
+            return -1;
+        }
+        return assessmentDAO.addAssessment(assessment);
+    }
 
-	@Override
-	public Assessment getAssessmentByTitle(String title) {
-		return asDao.getAssessmentByTitle(title);
-	}
+    @Override
+    public Assessment getAssessment(Integer id) {
+        return assessmentDAO.getAssessment(id);
+    }
 
-	@Override
-	public List<Assessment> getAllAssessments() {
-		return asDao.getAllAssessments();
-	}
+    @Override
+    public Double getAverageScoreByStudent(Integer studentId) {
+        return assessmentDAO.getAverageScoreByStudent(studentId);
+    }
 
-	@Override
-	public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
-		return asDao.getAllAssessmentsByUserId(userId);
-	}
+    @Override
+    public List<Assessment> getAllAssessmentsByUserId(Integer userId) {
+        return assessmentDAO.getAllAssessmentsByUserId(userId);
+    }
 
-	@Override
-	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
-		return asDao.getAssessmentsByAssignmentId(assignmentId);
-	}
-	
-	@Override
-	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
-		return asDao.getAssessmentByStudentIDAndAssignmentID(studentId, assignmentId);
-	}
+    @Override
+    public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId) {
+        return assessmentDAO.getAssessmentsByAssignmentId(assignmentId);
+    }
 
-	@Override
-	public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {
-		return asDao.getAverageScoreByStudentCourse(studentId, courseId);
-	}
-	@Override
-	public Integer deleteAssessment(Integer id) {
-		return asDao.deleteAssessment(id);
-	}
+    @Override
+    public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
+        return assessmentDAO.getAssessmentByStudentIDAndAssignmentID(studentId, assignmentId);
+    }
 
-	@Override
-	public Integer deleteAllAssessments() {
-		return asDao.deleteAllAssessments();
-	}
+    @Override
+    public Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId) {
+        return assessmentDAO.getAverageScoreByStudentCourse(studentId, courseId);
+    }
 
-	@Override
-	public Integer addAssessment(Assessment asses) {
-		return asDao.addAssessment(asses);
-	}
+    @Override
+    public List<Assessment> getAllAssessments() {
+        return assessmentDAO.getAllAssessments();
+    }
 
-	@Override
-	public Double getAverageScoreByStudent(Integer studentId) {
-		return asDao.getAverageScoreByStudent(studentId);
-	}
+    @Override
+    public Integer deleteAssessment(Integer id) {
+        return assessmentDAO.deleteAssessment(id);
+    }
+
+    @Override
+    public Integer deleteAllAssessments() {
+        return assessmentDAO.deleteAllAssessments();
+    }
 
 }

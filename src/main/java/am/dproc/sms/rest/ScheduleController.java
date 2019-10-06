@@ -23,6 +23,7 @@ import io.swagger.annotations.Api;
 @Path(value = "/schedule")
 @Api(value = "ScheduleController")
 public class ScheduleController {
+
 	@Autowired
 	ScheduleService scheduleService;
 

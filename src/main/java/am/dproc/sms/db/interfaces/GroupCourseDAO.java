@@ -5,26 +5,26 @@ import java.util.List;
 import am.dproc.sms.models.GroupCourse;
 
 public interface GroupCourseDAO {
-	
-	public int create(GroupCourse groupCourse);
 
-	public GroupCourse getById(int id);
+    Integer create(GroupCourse groupCourse);
 
-	public GroupCourse getByGroupAndCourse(int groupId, int courseId);
+    GroupCourse getById(Integer id);
 
-	public List<GroupCourse> getByGroupID(int groupId);
+    GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId);
 
-	public List<GroupCourse> getByCourseID(int courseId);
+    List<GroupCourse> getByGroupID(Integer groupId);
 
-	public List<GroupCourse> getAll();
-	
-	public List<GroupCourse> getByTeacherID(Integer id);
+    List<GroupCourse> getByCourseID(Integer courseId);
 
-	public int update(GroupCourse groupCourse);
+    List<GroupCourse> getAll();
 
-	public int deleteByGroupID(int groupId);
+    List<GroupCourse> getByTeacherID(Integer id);
 
-	public int deleteByCourseID(int courseId);
+    Integer update(GroupCourse groupCourse);
 
-	public int deleteAll();
+    Integer deleteByGroupID(Integer groupId);
+
+    Integer deleteByCourseID(Integer courseId);
+
+    Integer deleteAll();
 }

@@ -24,44 +24,46 @@ import am.dproc.sms.services.interfaces.TopicService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path(value = "/topic")
+@Path(value = "/topicService")
 @Api(value = "TopicController")
 public class TopicController {
 
 	@Autowired
-	TopicService topic;
+	TopicService topicService;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addTopic(Topic topic) {
-		Integer id = this.topic.addTopic(topic);
-		if (id == 0) {
+		Integer id = topicService.addTopic(topic);
+		if (id == -1) {
 			Map<String, String> message = new HashMap<String, String>();
 			message.put("Message", "All fields must be filled!");
-			return Response.status(Status.BAD_REQUEST).entity(message).build();
+			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
+		} else if (id == 0) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
 		}
-		return Response.status(Status.CREATED).entity(id).build();
+		return Response.status(Response.Status.CREATED).entity(id).build();
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Topic> getAllTopics() {
-		return topic.getAllTopics();
+		return topicService.getAllTopics();
 	}
 
 	@GET
 	@Path(value = "/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Topic getTopic(@PathParam(value = "id") Integer id) {
-		return topic.getTopic(id);
+		return topicService.getTopic(id);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editTopic(Topic topic) {
-		Integer status = this.topic.editTopic(topic);
+		Integer status = this.topicService.editTopic(topic);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
@@ -76,11 +78,11 @@ public class TopicController {
 	@Path(value = "/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteTopic(@PathParam(value = "id") Integer id) {
-		if (topic.deleteTopic(id) == 1) {
+		if (topicService.deleteTopic(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
 		Map<String, String> message = new HashMap<String, String>();
-		message.put("Message", "First you must delete the comments of this topic!");
+		message.put("Message", "First you must delete the comments of this topicService!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 

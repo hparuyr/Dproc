@@ -37,45 +37,45 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @ApplicationPath("/api")
 public class JerseyConfig extends ResourceConfig {
 
-	public JerseyConfig() {
-		register(SchoolController.class);
-		register(GroupController.class);
-		register(AdminController.class);
-		register(AdminInfoController.class);
-		register(TeacherController.class);
-		register(TeacherInfoController.class);
-		register(StudentController.class);
-		register(StudentInfoController.class);
-		register(GroupCourseController.class);
-		register(CourseController.class);
-		register(LessonController.class);
-		register(TopicController.class);
-		register(ClassroomController.class);
-		register(StudentCommentController.class);
-		register(AnswerController.class);
-		register(QuestionController.class);
-		register(TestController.class);
-		register(TestResultController.class);
-		register(ScheduleController.class);
-		register(AssessmentController.class);
-		register(AssignmentController.class);
-		register(SurveyController.class);
-		register(StudentReportController.class);
-	}
+    public JerseyConfig() {
+        register(SchoolController.class);
+        register(GroupController.class);
+        register(AdminController.class);
+        register(AdminInfoController.class);
+        register(TeacherController.class);
+        register(TeacherInfoController.class);
+        register(StudentController.class);
+        register(StudentInfoController.class);
+        register(GroupCourseController.class);
+        register(CourseController.class);
+        register(LessonController.class);
+        register(TopicController.class);
+        register(ClassroomController.class);
+        register(StudentCommentController.class);
+        register(AnswerController.class);
+        register(QuestionController.class);
+        register(TestController.class);
+        register(TestResultController.class);
+        register(ScheduleController.class);
+        register(AssessmentController.class);
+        register(AssignmentController.class);
+        register(SurveyController.class);
+        register(StudentReportController.class);
+    }
 
-	@PostConstruct
-	public void init() {
-		this.configureSwagger();
-	}
+    @PostConstruct
+    public void init() {
+        this.configureSwagger();
+    }
 
-	private void configureSwagger() {
-		this.register(ApiListingResource.class);
-		this.register(SwaggerSerializers.class);
+    private void configureSwagger() {
+        this.register(ApiListingResource.class);
+        this.register(SwaggerSerializers.class);
 
-		BeanConfig swaggerConfigBean = new BeanConfig();
-		swaggerConfigBean.setBasePath("/api");
-		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
-		swaggerConfigBean.setPrettyPrint(true);
-		swaggerConfigBean.setScan(true);
-	}
+        BeanConfig swaggerConfigBean = new BeanConfig();
+        swaggerConfigBean.setBasePath("/api");
+        swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
+        swaggerConfigBean.setPrettyPrint(true);
+        swaggerConfigBean.setScan(true);
+    }
 }

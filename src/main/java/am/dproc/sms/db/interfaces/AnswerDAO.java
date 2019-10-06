@@ -10,12 +10,12 @@ public interface AnswerDAO {
 
 	Answer getAnswer(Integer id);
 
+	List<Answer> getAnswersForQuestion(Integer questionID);
+
 	List<Answer> getAllAnswers();
 
 	Integer updateAnswer(Answer answer);
 
 	Integer deleteAnswer(Integer id);
-
-	List<Answer> getAnswersForQuestion(Integer questionId);
 
 }

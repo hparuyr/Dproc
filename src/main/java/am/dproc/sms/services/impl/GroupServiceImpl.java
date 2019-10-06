@@ -12,49 +12,53 @@ import am.dproc.sms.services.interfaces.StudentService;
 
 @Service
 public class GroupServiceImpl implements GroupService {
-	@Autowired
-	GroupDAO group;
 
-	@Autowired
-	StudentService student;
+    @Autowired
+    GroupDAO groupDAO;
 
-	@Override
-	public Integer addGroup(Group group) {
-		return this.group.addGroup(group);
-	}
+    @Autowired
+    StudentService studentService;
 
-	@Override
-	public List<Integer> addGroups(List<Group> groups) {
-		return group.addGroups(groups);
-	}
+    @Override
+    public Integer addGroup(Group group) {
+        if (group.getSchoolId() == null || group.getName() == null) {
+            return -1;
+        }
+        return this.groupDAO.addGroup(group);
+    }
 
-	@Override
-	public Group getGroup(Integer id) {
-		Group group = this.group.getGroup(id);
-		group.setListOfStudents(this.student.getGroupStudents(id));
-		return group;
-	}
+    @Override
+    public List<Integer> addGroups(List<Group> groups) {
+        return groupDAO.addGroups(groups);
+    }
 
-	@Override
-	public List<Group> getSchoolGroups(Integer schoolId) {
-		return this.group.getGroupsBySchoolId(schoolId);
-	}
+    @Override
+    public Group getGroup(Integer id) {
+        Group group = this.groupDAO.getGroup(id);
+        group.setListOfStudents(this.studentService.getGroupStudents(id));
+        return group;
+    }
 
-	@Override
-	public List<Group> getGroups() {
-		return group.getGroups();
-	}
+    @Override
+    public List<Group> getSchoolGroups(Integer schoolId) {
+        return this.groupDAO.getGroupsBySchoolId(schoolId);
+    }
 
-	@Override
-	public Integer updateGroup(Group group) {
-		if (group.getName() != null) {
-			return this.group.updateGroupName(group.getId(), group.getName());
-		}
-		return 0;
-	}
+    @Override
+    public List<Group> getGroups() {
+        return groupDAO.getGroups();
+    }
 
-	@Override
-	public Integer deleteGroup(Integer id) {
-		return this.group.deleteGroup(id);
-	}
+    @Override
+    public Integer updateGroup(Group group) {
+        if (group.getName() != null) {
+            return this.groupDAO.updateGroupName(group.getId(), group.getName());
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteGroup(Integer id) {
+        return this.groupDAO.deleteGroup(id);
+    }
 }

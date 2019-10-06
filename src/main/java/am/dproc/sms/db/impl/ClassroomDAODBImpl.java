@@ -23,7 +23,8 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_CLASSROOM = "" + "INSERT "
+	private static final String ADD_CLASSROOM = ""
+			+ "INSERT "
 			+ "INTO mydb.CLASSROOM (NAME, CAPACITY, TYPE, SUBJECT, SCHOOL_ID, CREATION_DATE) "
 			+ "VALUES(?, ?, ?, ?, ?, ?)";
 	private static final String GET_CLASSROOM_BY_ID = ""
@@ -43,7 +44,8 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			+ "WHERE ID = ?";
 	private static final String EDIT_CLASSROOM_CAPACITY = ""
 			+ "UPDATE mydb.CLASSROOM "
-			+ "SET CAPACITY = ?, CHANGE_DATE = ? " + "WHERE ID = ?";
+			+ "SET CAPACITY = ?, CHANGE_DATE = ? "
+			+ "WHERE ID = ?";
 	private static final String EDIT_CLASSROOM_TYPE = ""
 			+ "UPDATE mydb.CLASSROOM "
 			+ "SET TYPE = ?, CHANGE_DATE = ? "
@@ -78,7 +80,7 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			return ps;
 		}, keyHolder);
 
-		return (Integer) keyHolder.getKey().intValue();
+		return keyHolder.getKey().intValue();
 	}
 
 	@Override

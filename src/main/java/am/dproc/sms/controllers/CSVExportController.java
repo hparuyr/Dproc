@@ -16,18 +16,19 @@ import io.swagger.annotations.Api;
 @Api(value = "CSVExportController")
 public class CSVExportController {
 
-	@Autowired
-	CSVExportService csv;
+    @Autowired
+    CSVExportService csv;
 
-	@RequestMapping(value="/export", method = RequestMethod.GET, produces = "text/csv")
-	public FileSystemResource greeting(@RequestParam(value = "teacherId") Integer teacherId) {
-		try {
-			return new FileSystemResource(csv.getCSVFile(teacherId));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    @RequestMapping(value = "/export", method = RequestMethod.GET, produces = "text/csv")
+    public FileSystemResource greeting(@RequestParam(value = "teacherId") Integer teacherId) {
 
-		return null;
-	}
+        try {
+            return new FileSystemResource(csv.getCSVFile(teacherId));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
 }

@@ -6,26 +6,26 @@ import am.dproc.sms.models.GroupCourse;
 
 public interface GroupCourseService {
 
-	public int create(GroupCourse groupCourse);
+    Integer create(GroupCourse groupCourse);
 
-	public GroupCourse getById(int id);
+    GroupCourse getById(Integer id);
 
-	public GroupCourse getByGroupAndCourse(int groupId, int courseId);
+    GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId);
 
-	public List<GroupCourse> getByGroupID(int groupId);
+    List<GroupCourse> getByGroupID(Integer groupId);
 
-	public List<GroupCourse> getByCourseID(int courseId);
+    List<GroupCourse> getByCourseID(Integer courseId);
 
-	public List<GroupCourse> getAll();
-	
-	public List<GroupCourse> getByTeacherID(Integer id);
+    List<GroupCourse> getAll();
 
-	public int update(GroupCourse groupCourse);
+    List<GroupCourse> getByTeacherID(Integer id);
 
-	public int deleteByGroupID(int groupId);
+    Integer update(GroupCourse groupCourse);
 
-	public int deleteByCourseID(int courseId);
+    Integer deleteByGroupID(Integer groupId);
 
-	public int deleteAll();
+    Integer deleteByCourseID(Integer courseId);
+
+    Integer deleteAll();
 
 }

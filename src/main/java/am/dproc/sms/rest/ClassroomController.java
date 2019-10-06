@@ -25,22 +25,24 @@ import am.dproc.sms.services.interfaces.ClassroomService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path(value = "/classroom")
+@Path(value = "/classroomService")
 @Api(value = "ClassroomController")
 public class ClassroomController {
 
 	@Autowired
-	ClassroomService classroom;
+	ClassroomService classroomService;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addCourse(Classroom classroom) {
-		Integer id = this.classroom.addClassroom(classroom);
-		if (id == 0) {
+		Integer id = this.classroomService.addClassroom(classroom);
+		if (id == -1) {
 			Map<String, String> message = new HashMap<String, String>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		} else if (id == 0) {
+			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
 		return Response.status(Status.CREATED).entity(id).build();
 	}
@@ -49,13 +51,13 @@ public class ClassroomController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Classroom getClassroom(@PathParam(value = "id") Integer id) {
-		return classroom.getClassroomByID(id);
+		return classroomService.getClassroomByID(id);
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Classroom> getAllClassrooms() {
-		return classroom.getAllClassrooms();
+		return classroomService.getAllClassrooms();
 	}
 
 	@GET
@@ -63,14 +65,14 @@ public class ClassroomController {
 	@Path(value = "/capacity")
 	public List<Classroom> getClassroomsByCapacity(@QueryParam(value = "min") Integer min,
 			@QueryParam(value = "max") Integer max) {
-		return classroom.getClassrooms(min, max);
+		return classroomService.getClassrooms(min, max);
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response editCourse(Classroom classroom) {
-		Integer status = this.classroom.editClassroom(classroom);
+		Integer status = this.classroomService.editClassroom(classroom);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
@@ -85,7 +87,7 @@ public class ClassroomController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response deleteCourse(@PathParam(value = "id") Integer id) {
-		if (classroom.deleteClassRoom(id) == 1) {
+		if (classroomService.deleteClassRoom(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
 		return Response.status(Status.NOT_FOUND).build();
