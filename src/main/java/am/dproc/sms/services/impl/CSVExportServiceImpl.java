@@ -86,9 +86,9 @@ public class CSVExportServiceImpl implements CSVExportService {
 			List<Student> listOfStudents = student.getGroupStudents(listOfGroupCourse.get(i).getGroupId());
 			System.out.println(Arrays.toString(listOfStudents.toArray()));
 			for (int j = 0; j < listOfStudents.size(); j++) {
-				fileWriter.write(listOfStudents.get(j).getName());
+				fileWriter.write(listOfStudents.get(j).getFirstname());
 				fileWriter.write(DEFAULT_SEPARATOR);
-				fileWriter.write(listOfStudents.get(j).getSurname());
+				fileWriter.write(listOfStudents.get(j).getLastname());
 				fileWriter.write(DEFAULT_SEPARATOR);
 				fileWriter.write(listOfStudents.get(j).getEmail());
 				fileWriter.write(DEFAULT_SEPARATOR);

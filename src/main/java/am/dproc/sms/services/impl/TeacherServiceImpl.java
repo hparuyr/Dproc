@@ -42,10 +42,10 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Override
 	public Integer updateTeacher(Teacher teacher) {
-		if (teacher.getName() != null) {
-			return this.teacher.updateTeacherName(teacher.getId(), teacher.getName());
-		} else if (teacher.getSurname() != null) {
-			return this.teacher.updateTeacherSurname(teacher.getId(), teacher.getSurname());
+		if (teacher.getFirstname() != null) {
+			return this.teacher.updateTeacherName(teacher.getId(), teacher.getFirstname());
+		} else if (teacher.getLastname() != null) {
+			return this.teacher.updateTeacherSurname(teacher.getId(), teacher.getLastname());
 		} else if (teacher.getEmail() != null) {
 			return this.teacher.updateTeacherEmail(teacher.getId(), teacher.getEmail());
 		} else if (teacher.getPassword() != null) {

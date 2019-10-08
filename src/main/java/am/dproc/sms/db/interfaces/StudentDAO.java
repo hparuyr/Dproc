@@ -16,8 +16,6 @@ public interface StudentDAO {
 
 	public List<Student> getStudents();
 
-	public List<Student> getStudentsByGroupId(Integer groupId);
-
 	public String getStudentStatus(Integer id);
 
 	public Integer updateStudentName(Integer id, String name);

@@ -109,8 +109,8 @@ public class CSVUploadController {
 			Arrays.toString(line);
 			System.out.println(line[0] + " " + line[1]);
 			Student student = new Student();
-			student.setName(line[0]);
-			student.setSurname(line[1]);
+			student.setFistname(line[0]);
+			student.setLastname(line[1]);
 			student.setEmail(line[2]);
 			int rand1 = (int) ((Math.random() * 1000000) + 1);
 			int rand2 = (int) ((Math.random() * 1000000) + 1);
@@ -164,7 +164,8 @@ public class CSVUploadController {
 			List<Integer> studentIndices = curEntry.getValue();
 			for(int i = 0; i < studentIndices.size(); i++) {
 				int studentIndex = studentIndices.get(i);
-				students.get(studentIndex).setGroupId(groupIds.get(groupIndex));
+				//todo
+//				students.get(studentIndex).setGroupId(groupIds.get(groupIndex));
 			}
 			groupIndex++;
 		}

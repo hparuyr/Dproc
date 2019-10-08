@@ -35,11 +35,11 @@ public class StudentServiceImpl implements StudentService {
 		String randomPass = RandomPassGenerator.alphaNumericString(12);
 		student.setPassword(passwordEncoder.encode(randomPass));
 		student.setStatus(StudentStatus.PENDING.ordinal());
-		student.setGroupId(1);
+//		student.setGroupId(1);
 		int id = this.student.addStudent(student);
 		if(id > 0) {
 			String msg = "Your temporary password: "+randomPass+"\nPlease login to complete your account information";
-			emailService.send(msg, "Temporary_Password", student.getEmail());
+//			emailService.send(msg, "Temporary_Password", student.getEmail());
 //			emailService.send(msg, "Temporary_Password", new String[]{student.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
 //					"gorhakobiann@gmail.com","tigranuhi89@rambler.ru"});
 			return id;
@@ -70,30 +70,26 @@ public class StudentServiceImpl implements StudentService {
 	}
 	
 	@Override
-	public List<Student> getGroupStudents(Integer groupId) {
-		return this.student.getStudentsByGroupId(groupId);
-	}
-
-	@Override
 	public List<Student> getStudents() {
 		return student.getStudents();
 	}
 
 	@Override
 	public Integer updateStudent(Student student) {
-		if (student.getName() != null) {
-			return this.student.updateStudentName(student.getId(), student.getName());
-		} else if (student.getSurname() != null) {
-			return this.student.updateStudentSurname(student.getId(), student.getSurname());
+		if (student.getFirstname() != null) {
+			return this.student.updateStudentName(student.getId(), student.getFirstname());
+		} else if (student.getLastname() != null) {
+			return this.student.updateStudentSurname(student.getId(), student.getLastname());
 		} else if (student.getEmail() != null) {
 			return this.student.updateStudentEmail(student.getId(), student.getEmail());
 		} else if (student.getPassword() != null) {
 			return this.student.updateStudentPassword(student.getId(), student.getPassword());
 		} else if (student.getStatus() != null) {
 			return this.student.updateStudentStatus(student.getId(), student.getStatus());
-		} else if (student.getGroupId() != null) {
-			return this.student.updateStudentGroupId(student.getId(), student.getGroupId());
-		}
+		} 
+//		else if (student.getGroupId() != null) {
+//			return this.student.updateStudentGroupId(student.getId(), student.getGroupId());
+//		}
 		return 0;
 	}
 

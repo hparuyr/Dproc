@@ -32,7 +32,7 @@ public class AdminDAODBImpl implements AdminDAO {
 	@Override
 	public Integer addAdmin(Admin admin) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(ADD_ADMIN, new Object[] { admin.getName(), admin.getSurname(), admin.getEmail(),
+		return jdbctemplate.update(ADD_ADMIN, new Object[] { admin.getFirstname(), admin.getLastname(), admin.getEmail(),
 				admin.getPassword(), currentTimeMillis, currentTimeMillis, admin.getSchoolId(), });
 	}
 
@@ -91,8 +91,8 @@ public class AdminDAODBImpl implements AdminDAO {
 		public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Admin admin = new Admin();
 			admin.setId(rs.getInt("id"));
-			admin.setName(rs.getString("name"));
-			admin.setSurname(rs.getString("surname"));
+			admin.setFistname(rs.getString("name"));
+			admin.setLastname(rs.getString("surname"));
 			admin.setEmail(rs.getString("email"));
 			admin.setPassword(rs.getString("password"));
 			admin.setSchoolId(rs.getInt("schoolId"));

@@ -2,6 +2,7 @@ package am.dproc.sms.rest;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -32,11 +33,16 @@ public class StudentController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ResponseEntity<Integer> addStudent(Student student) {
-		if (this.student.addStudent(student) == 1) {
-			return ResponseEntity.status(HttpStatus.CREATED).body(1);
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+	public Response addStudent(Student student) {
+		int id = this.student.addStudent(student);
+		if (id > 0) {
+			return Response.status(Response.Status.CREATED).entity(id).build();
+		} 
+		else if(id == 0) {
+			return Response.status(Response.Status.CONFLICT).entity("User with your email already exists").build();
+		}
+		else {
+			return Response.status(Response.Status.BAD_REQUEST).entity("").build();
 		}
 	}
 

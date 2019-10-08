@@ -28,36 +28,32 @@ public class StudentDAODBImpl implements StudentDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_STUDENT = "INSERT INTO mydb.STUDENT (NAME, SURNAME, EMAIL, PASSWORD, STATUS, CREATION_DATE,CHANGE_DATE, GROUP_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.STUDENT WHERE ID = ?";
-	private static final String GET_STUDENT_BY_EMAIL = "SELECT * FROM mydb.STUDENT WHERE EMAIL = ?";
-	private static final String GET_STUDENTS = "SELECT * FROM mydb.STUDENT";
-	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.STUDENT WHER ID = ?";
-	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT * FROM mydb.USER WHERE GROUP_ID = ?";
-	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET NAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_STUDENT_SURNAME = "UPDATE mydb.STUDENT SET SURNAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.STUDENT SET EMAIL= ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_STUDENT_PASSWORD = "UPDATE mydb.STUDENT SET PASSWORD = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_STUDENT_STATUS = "UPDATE mydb.USER SET STATUS = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_STUDENT_GROUP_ID = "UPDATE mydb.STUDENT SET GROUP_ID = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String DELETE_STUDENT_BY_ID = "DELETE FROM mydb.STUDENT WHERE ID = ?";
+	private static final String ADD_STUDENT = "INSERT INTO mydb.USER (FIRSTNAME, LASTNAME, EMAIL, PASSWORD, STATUS, TYPE, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.USER WHERE ID = ?";
+	private static final String GET_STUDENT_BY_EMAIL = "SELECT * FROM mydb.USER WHERE EMAIL = ? AND TYPE = 1";
+	private static final String GET_STUDENTS = "SELECT * FROM mydb.USER WHERE TYPE = 1";
+	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.USER WHERE ID = ?";
+	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET FIRSTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_LASTNAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.USER SET EMAIL= ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_PASSWORD = "UPDATE mydb.USER SET PASSWORD = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_STATUS = "UPDATE mydb.USER SET STATUS = ? WHERE ID = ?";
+	private static final String DELETE_STUDENT_BY_ID = "DELETE FROM mydb.USER WHERE ID = ?";
 
 	@Override
 	public Integer addStudent(Student student) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		Long currentTimeMillis = System.currentTimeMillis();
 		jdbctemplate.update(new PreparedStatementCreator() {
 			@Override
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
-				ps.setString(1, student.getName());
-				ps.setString(2, student.getSurname());
+				ps.setString(1, student.getFirstname());
+				ps.setString(2, student.getLastname());
 				ps.setString(3, student.getEmail());
 				ps.setString(4, student.getPassword());
 				ps.setInt(5, student.getStatus());
-				ps.setLong(6, currentTimeMillis);
-				ps.setLong(7, currentTimeMillis);
-				ps.setInt(8, student.getGroupId());
+				ps.setLong(6, 1);
+				ps.setLong(7, System.currentTimeMillis());
 				return ps;
 			}
 		}, keyHolder);
@@ -73,15 +69,14 @@ public class StudentDAODBImpl implements StudentDAO {
 			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
 				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
 				for (Student student : students) {
-					ps.setString(1, student.getName());
-					ps.setString(2, student.getSurname());
+					ps.setString(1, student.getFirstname());
+					ps.setString(2, student.getLastname());
 					ps.setString(3, student.getEmail());
 					ps.setString(4, student.getPassword());
 					// add StudentStatus type to student object
 					ps.setInt(5, StudentStatus.PENDING.ordinal());
 					ps.setLong(6, currentTimeMillis);
 					ps.setLong(7, currentTimeMillis);
-					ps.setInt(8, student.getGroupId());
 					ps.addBatch();
 				}
 				ps.executeBatch();
@@ -125,25 +120,20 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
-	public List<Student> getStudentsByGroupId(Integer groupId) {
-		return jdbctemplate.query(GET_STUDENTS_BY_GROUP_ID, new StudentMapper(), groupId);
-	}
-
-	@Override
 	public String getStudentStatus(Integer id) {
 		return jdbctemplate.queryForObject(GET_STUDENT_STATUS_BY_ID, String.class, id);
 	}
 
 	@Override
-	public Integer updateStudentName(Integer id, String name) {
+	public Integer updateStudentFirstname(Integer id, String name) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { name, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { name, id });
 	}
 
 	@Override
-	public Integer updateStudentSurname(Integer id, String surname) {
+	public Integer updateStudentLastname(Integer id, String surname) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_SURNAME, new Object[] { surname, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_STUDENT_LASTNAME, new Object[] { surname, id });
 	}
 
 	@Override
@@ -180,12 +170,11 @@ public class StudentDAODBImpl implements StudentDAO {
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
 			student.setId(rs.getInt("ID"));
-			student.setName(rs.getString("NAME"));
-			student.setSurname(rs.getString("SURNAME"));
+			student.setFistname(rs.getString("FIRSTNAME"));
+			student.setLastname(rs.getString("LASTNAME"));
 			student.setEmail(rs.getString("EMAIL"));
 			student.setPassword(rs.getString("PASSWORD"));
 			student.setStatus(rs.getInt("STATUS"));
-			student.setGroupId(rs.getInt("GROUP_ID"));
 			return student;
 		}
 	}

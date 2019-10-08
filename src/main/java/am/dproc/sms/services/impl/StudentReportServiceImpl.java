@@ -134,7 +134,7 @@ public class StudentReportServiceImpl implements StudentReportService {
 	}
 
 	private void addPersonalData(Document doc, Student student) {
-		Paragraph title = new Paragraph(String.format("%s %s", student.getName(), student.getSurname())).setBold()
+		Paragraph title = new Paragraph(String.format("%s %s", student.getFirstname(), student.getLastname())).setBold()
 				.setTextAlignment(TextAlignment.CENTER);
 		doc.add(title);
 

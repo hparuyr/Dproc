@@ -33,7 +33,7 @@ public class TeacherDAODBImpl implements TeacherDAO {
 	public Integer addTeacher(Teacher teacher) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(ADD_TEACHER,
-				new Object[] { teacher.getName(), teacher.getSurname(), teacher.getEmail(), teacher.getPassword(),
+				new Object[] { teacher.getFirstname(), teacher.getLastname(), teacher.getEmail(), teacher.getPassword(),
 						currentTimeMillis, currentTimeMillis, teacher.getSchoolId(), });
 	}
 
@@ -92,8 +92,8 @@ public class TeacherDAODBImpl implements TeacherDAO {
 		public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Teacher teacher = new Teacher();
 			teacher.setId(rs.getInt("id"));
-			teacher.setName(rs.getString("name"));
-			teacher.setSurname(rs.getString("surname"));
+			teacher.setFistname(rs.getString("name"));
+			teacher.setLastname(rs.getString("surname"));
 			teacher.setEmail(rs.getString("email"));
 			teacher.setPassword(rs.getString("password"));
 			teacher.setSchoolId(rs.getInt("schoolId"));
