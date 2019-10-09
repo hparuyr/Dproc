@@ -18,9 +18,9 @@ public interface StudentDAO {
 
 	public String getStudentStatus(Integer id);
 
-	public Integer updateStudentName(Integer id, String name);
+	public Integer updateStudentFirstname(Integer id, String firstname);
 
-	public Integer updateStudentSurname(Integer id, String surname);
+	public Integer updateStudentLastname(Integer id, String lastname);
 
 	public Integer updateStudentEmail(Integer id, String email);
 

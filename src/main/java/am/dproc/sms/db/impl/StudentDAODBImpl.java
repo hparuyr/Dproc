@@ -125,39 +125,29 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
-	public Integer updateStudentFirstname(Integer id, String name) {
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { name, id });
+	public Integer updateStudentFirstname(Integer id, String firstname) {
+		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { firstname, id });
 	}
 
 	@Override
-	public Integer updateStudentLastname(Integer id, String surname) {
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_LASTNAME, new Object[] { surname, id });
+	public Integer updateStudentLastname(Integer id, String lastanme) {
+		return jdbctemplate.update(UPDATE_STUDENT_LASTNAME, new Object[] { lastanme, id });
 	}
 
 	@Override
 	public Integer updateStudentEmail(Integer id, String email) {
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_EMAIL, new Object[] { email, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_STUDENT_EMAIL, new Object[] { email, id });
 	}
 
 	@Override
 	public Integer updateStudentPassword(Integer id, String password) {
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_PASSWORD, new Object[] { password, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_STUDENT_PASSWORD, new Object[] { password, id });
 	}
 
 	@Override
 	public Integer updateStudentStatus(Integer id, int status) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_STATUS, new Object[] { status, currentTimeMillis, id });
-	}
-
-	@Override
-	public Integer updateStudentGroupId(Integer id, Integer groupId) {
-		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_GROUP_ID, new Object[] { groupId, currentTimeMillis, id });
 	}
 
 	@Override
@@ -170,7 +160,7 @@ public class StudentDAODBImpl implements StudentDAO {
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
 			student.setId(rs.getInt("ID"));
-			student.setFistname(rs.getString("FIRSTNAME"));
+			student.setFirstname(rs.getString("FIRSTNAME"));
 			student.setLastname(rs.getString("LASTNAME"));
 			student.setEmail(rs.getString("EMAIL"));
 			student.setPassword(rs.getString("PASSWORD"));
