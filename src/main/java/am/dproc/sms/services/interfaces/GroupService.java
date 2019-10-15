@@ -14,6 +14,8 @@ public interface GroupService {
 
 	public List<Group> getSchoolGroups(Integer schoolId);
 
+	public List<Group> getGroupsByStudentId(Integer studentId);
+
 	public List<Group> getGroups();
 
 	public Integer updateGroup(Group group);

@@ -109,7 +109,7 @@ public class CSVUploadController {
 			Arrays.toString(line);
 			System.out.println(line[0] + " " + line[1]);
 			Student student = new Student();
-			student.setFistname(line[0]);
+			student.setFirstname(line[0]);
 			student.setLastname(line[1]);
 			student.setEmail(line[2]);
 			int rand1 = (int) ((Math.random() * 1000000) + 1);
@@ -173,7 +173,7 @@ public class CSVUploadController {
 		System.out.println(Arrays.toString(studentsIds));
 
 		for (int i = 0; i < studentInfos.size(); i++) {
-			studentInfos.get(i).setStudentId(studentsIds[i]);
+			studentInfos.get(i).setUserId(studentsIds[i]);
 		}
 		int[] studentInfoIds = studentInfoService.addStudentInfos(studentInfos);
 		System.out.println(Arrays.toString(studentInfoIds));

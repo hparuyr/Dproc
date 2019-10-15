@@ -24,7 +24,7 @@ public class AuthenticationServiceImpl {
 		String randomPass = RandomPassGenerator.alphaNumericString(12);
 		student.setPassword(passwordEncoder.encode(randomPass));
 		student.setStatus(StudentStatus.PENDING.ordinal());
-		student.setGroupId(1);
+//		student.setGroupId(1);
 		int id = this.student.addStudent(student);
 		if(id > 0) {
 			String msg = "Your temporary password: "+randomPass+"\nPlease login to complete your account information";

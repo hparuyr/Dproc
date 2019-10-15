@@ -20,6 +20,7 @@ import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.models.Student;
+import am.dproc.sms.models.StudentInfo;
 import am.dproc.sms.models.StudentStatus;
 
 @Repository
@@ -29,10 +30,14 @@ public class StudentDAODBImpl implements StudentDAO {
 	JdbcTemplate jdbctemplate;
 
 	private static final String ADD_STUDENT = "INSERT INTO mydb.USER (FIRSTNAME, LASTNAME, EMAIL, PASSWORD, STATUS, TYPE, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.USER WHERE ID = ?";
+	private static final String GET_STUDENT_BY_ID = "SELECT * FROM mydb.USER LEFT JOIN `USER_INFO` on `USER`.`ID` = `USER_INFO`.`USER_ID` WHERE ID = ?";
 	private static final String GET_STUDENT_BY_EMAIL = "SELECT * FROM mydb.USER WHERE EMAIL = ? AND TYPE = 1";
-	private static final String GET_STUDENTS = "SELECT * FROM mydb.USER WHERE TYPE = 1";
+	private static final String GET_STUDENTS = "SELECT * FROM mydb.USER LEFT JOIN `USER_INFO` on `USER`.`ID` = `USER_INFO`.`USER_ID` WHERE TYPE = 1";
+	private static final String GET_STUDENTS_BY_GROUP_ID = "SELECT `USER`.`ID`, `USER`.`FIRSTNAME`, `USER`.`LASTNAME`, `USER`.`LASTNAME`, `USER`.`EMAIL`, `USER`.`PASSWORD`, "
+														+ "`USER`.`STATUS`, `USER`.`TYPE` FROM `STUDENT_GROUP` join `USER` on"
+														+ " `STUDENT_GROUP`.`STUDENT_ID`= `USER`.`ID`  WHERE `GROUP_ID`= ?";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.USER WHERE ID = ?";
+	private static final String UPDATE_STUDENT = "UPDATE mydb.STUDNET SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET FIRSTNAME = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_LASTNAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.USER SET EMAIL= ? WHERE ID = ?";
@@ -102,7 +107,11 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Student getStudent(Integer id) {
-		return jdbctemplate.queryForObject(GET_STUDENT_BY_ID, new StudentMapper(), id);
+		try {
+			return jdbctemplate.queryForObject(GET_STUDENT_BY_ID, new StudentMapper(), id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -120,10 +129,21 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 
 	@Override
+	public List<Student> getStudentsByGroupId(Integer groupId) {
+		return jdbctemplate.query(GET_STUDENTS_BY_GROUP_ID, new StudentMapper(), groupId);
+	}
+
+	@Override
 	public String getStudentStatus(Integer id) {
 		return jdbctemplate.queryForObject(GET_STUDENT_STATUS_BY_ID, String.class, id);
 	}
 
+	@Override
+	public Integer updateStudent(Student student) {
+		return jdbctemplate.update(UPDATE_STUDENT, new Object[] { student.getFirstname(), student.getLastname(), student.getEmail(), 
+				student.getPassword(), student.getStatus(), student.getId() });
+	}
+	
 	@Override
 	public Integer updateStudentFirstname(Integer id, String firstname) {
 		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { firstname, id });
@@ -165,6 +185,24 @@ public class StudentDAODBImpl implements StudentDAO {
 			student.setEmail(rs.getString("EMAIL"));
 			student.setPassword(rs.getString("PASSWORD"));
 			student.setStatus(rs.getInt("STATUS"));
+			Integer userId;
+			try{
+				userId = rs.getInt("USER_ID");
+			} catch (SQLException e) {
+				userId = null;
+			}
+			
+			if(userId != null) {
+				StudentInfo studentInfo = new StudentInfo();
+				studentInfo.setPassportId(rs.getString("PASSPORT_ID"));
+				studentInfo.setSocialCardId(rs.getString("SOCIAL_CARD_ID"));
+				studentInfo.setBirthDate(rs.getLong("BIRTH_DATE"));
+				studentInfo.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+				studentInfo.setAddress(rs.getString("ADDRESS"));
+				studentInfo.setImageUrl(rs.getString("IMAGE_URL"));
+				studentInfo.setGender(rs.getInt("GENDER"));
+				student.setStudentInfo(studentInfo);
+			}
 			return student;
 		}
 	}

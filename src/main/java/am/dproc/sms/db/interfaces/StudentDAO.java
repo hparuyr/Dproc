@@ -16,7 +16,11 @@ public interface StudentDAO {
 
 	public List<Student> getStudents();
 
+	public List<Student> getStudentsByGroupId(Integer groupId);
+
 	public String getStudentStatus(Integer id);
+
+	public Integer updateStudent(Student student);
 
 	public Integer updateStudentFirstname(Integer id, String firstname);
 
@@ -28,8 +32,5 @@ public interface StudentDAO {
 
 	public Integer updateStudentStatus(Integer id, int status);
 
-	public Integer updateStudentGroupId(Integer id, Integer groupId);
-
 	public Integer deleteStudent(Integer id);
-
-	}
+}

@@ -18,5 +18,13 @@ public class Student extends User{
 
 	public void setStudentInfo(StudentInfo studentInfo) {
 		this.studentInfo = studentInfo;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		String student = super.toString();
+		return student + "Student [status=" + status + ", studentInfo=" + studentInfo + "]";
+	}
+	
+	
 }

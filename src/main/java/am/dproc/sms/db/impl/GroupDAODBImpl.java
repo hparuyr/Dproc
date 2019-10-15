@@ -26,6 +26,8 @@ public class GroupDAODBImpl implements GroupDAO {
 
 	private static final String ADD_GROUP = "INSERT INTO mydb.GROUP (NAME, SCHOOL_ID,CREATION_DATE) VALUES (?, ?, ?)";
 	private static final String GET_GROUP_BY_ID = "SELECT * FROM mydb.GROUP WHERE ID = ?";
+	private static final String GET_GROUPS_BY_STUDENT_ID = "SELECT `GROUP`.`ID`, `GROUP`.`SCHOOL_ID`, `GROUP`.`NAME` FROM mydb.`STUDENT_GROUP`"
+														+ " join mydb.`GROUP` on `STUDENT_GROUP`.`GROUP_ID`= `GROUP`.`ID`  WHERE `STUDENT_ID`=?;";
 	private static final String GET_GROUPS = "SELECT * FROM mydb.GROUP";
 	private static final String GET_GROUPS_BY_SCHOOL_ID = "SELECT * FROM mydb.GROUP WHERE SCHOOL_ID = ?";
 	private static final String UPDATE_GROUP_NAME = "UPDATE mydb.GROUP SET NAME = ?, CHANGE_DATE = ? WHERE ID = ?";
@@ -82,6 +84,11 @@ public class GroupDAODBImpl implements GroupDAO {
 		return jdbctemplate.query(GET_GROUPS_BY_SCHOOL_ID, new GroupMapper(), schoolId);
 	}
 
+	@Override
+	public List<Group> getGroupsByStudentId(Integer studentId) {
+		return jdbctemplate.query(GET_GROUPS_BY_STUDENT_ID, new GroupMapper(), studentId);
+	}
+	
 	@Override
 	public Integer updateGroupName(Integer id, String name) {
 		Long currentTimeMillis = new java.util.Date().getTime();

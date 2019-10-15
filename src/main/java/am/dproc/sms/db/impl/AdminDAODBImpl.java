@@ -91,7 +91,7 @@ public class AdminDAODBImpl implements AdminDAO {
 		public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Admin admin = new Admin();
 			admin.setId(rs.getInt("id"));
-			admin.setFistname(rs.getString("name"));
+			admin.setFirstname(rs.getString("name"));
 			admin.setLastname(rs.getString("surname"));
 			admin.setEmail(rs.getString("email"));
 			admin.setPassword(rs.getString("password"));

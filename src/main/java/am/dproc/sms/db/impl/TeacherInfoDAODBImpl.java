@@ -17,8 +17,9 @@ public class TeacherInfoDAODBImpl implements TeacherInfoDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_TEACHER_INFO = "INSERT INTO mydb.ADMIN_INFO (PASSPORT_ID, SOCIAL_CARD_ID, BIRTH_DATE, IMAGE_URL, CREATION_DATE,CHANGE_DATE, ADMIN_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_TEACHER_INFO_BY_TEACHER_ID = "SELECT * FROM mydb.ADMIN_INFO WHERE ADMIN_ID = ?";
+	private static final String ADD_TEACHER_INFO = "INSERT INTO mydb.USER_INFO (USER_ID, PASSPORT_ID, SOCIAL_CARD_ID, BIRTH_DATE, PHONE_NUMBER, ADDRESS, IMAGE_URL,"
+												+ "GENDER, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_TEACHER_INFO_BY_TEACHER_ID = "SELECT * FROM mydb.USER_INFO WHERE ADMIN_ID = ?";
 	private static final String UPDATE_TEACHER_INFO_PASSPORT_ID = "UPDATE mydb.ADMIN_INFO SET PASSPORT_ID = ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
 	private static final String UPDATE_TEACHER_INFO_SOCIAL_CARD_ID = "UPDATE mydb.ADMIN_INFO SET SOCIAL_ID = ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
 	private static final String UPDATE_TEACHER_INFO_BIRTH_DATE = "UPDATE mydb.ADMIN_INFO SET BIRTH_DATE= ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
@@ -29,8 +30,8 @@ public class TeacherInfoDAODBImpl implements TeacherInfoDAO {
 	public Integer addTeacherInfo(TeacherInfo teacherInfo) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(ADD_TEACHER_INFO,
-				new Object[] { teacherInfo.getPassportId(), teacherInfo.getSocialCardId(), teacherInfo.getBirthDate(),
-						teacherInfo.getImageUrl(), currentTimeMillis, currentTimeMillis, teacherInfo.getTeacherId(), });
+				new Object[] { teacherInfo.getUserId(), teacherInfo.getPassportId(), teacherInfo.getSocialCardId(), teacherInfo.getBirthDate(), teacherInfo.getPhoneNumber(),
+						teacherInfo.getAddress(), teacherInfo.getImageUrl(), teacherInfo.getGender(), currentTimeMillis });
 	}
 
 	@Override
@@ -75,12 +76,14 @@ public class TeacherInfoDAODBImpl implements TeacherInfoDAO {
 		@Override
 		public TeacherInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			TeacherInfo teacherInfo = new TeacherInfo();
-			teacherInfo.setPassportId(rs.getInt("passportId"));
-			teacherInfo.setSocialCardId(rs.getInt("socialId"));
-			teacherInfo.setBirthDate(rs.getLong("birthDate"));
-			teacherInfo.setImageUrl(rs.getString("imageUrl"));
-			teacherInfo.setCreationDate(rs.getLong("creation_date"));
-			teacherInfo.setTeacherId(rs.getInt("teacherId"));
+			teacherInfo.setUserId(rs.getInt("USER_ID"));
+			teacherInfo.setPassportId(rs.getString("PASSPORT_ID"));
+			teacherInfo.setSocialCardId(rs.getString("SOCIAL_CARD_ID"));
+			teacherInfo.setBirthDate(rs.getLong("BIRTH_DATE"));
+			teacherInfo.setPhoneNumber(rs.getString("PHONE_NUMBER"));
+			teacherInfo.setAddress(rs.getString("ADDRESS"));
+			teacherInfo.setImageUrl(rs.getString("IMAGE_URL"));
+			teacherInfo.setGender(rs.getInt("GENDER"));
 			return teacherInfo;
 		}
 
