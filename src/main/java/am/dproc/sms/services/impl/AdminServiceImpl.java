@@ -43,10 +43,10 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Integer updateAdmin(Admin admin) {
-		if (admin.getName() != null) {
-			return this.admin.updateAdminName(admin.getId(), admin.getName());
-		} else if (admin.getSurname() != null) {
-			return this.admin.updateAdminSurname(admin.getId(), admin.getSurname());
+		if (admin.getFirstname() != null) {
+			return this.admin.updateAdminName(admin.getId(), admin.getFirstname());
+		} else if (admin.getLastname() != null) {
+			return this.admin.updateAdminSurname(admin.getId(), admin.getLastname());
 		} else if (admin.getEmail() != null) {
 			return this.admin.updateAdminEmail(admin.getId(), admin.getEmail());
 		} else if (admin.getPassword() != null) {

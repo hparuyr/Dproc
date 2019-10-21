@@ -16,7 +16,9 @@ public interface GroupDAO {
 
     List<Group> getGroupsBySchoolId(Integer schoolId);
 
-    Integer updateGroupName(Integer id, String name);
+	List<Group> getGroupsByStudentId(Integer studentId);
+
+	Integer updateGroupName(Integer id, String name);
 
     Integer deleteGroup(Integer id);
 }

@@ -89,53 +89,53 @@ public class CSVUploadController {
 //		String res = result.toString("UTF-8");
 //		 System.out.println(res);
 
-        return "csvupload";
-    }
+		return "csvupload";
+	}
 
-    @PostMapping("/upload/student")
-    public String uploadStudent(@RequestParam("students") MultipartFile file) throws IOException {
-        InputStream is = file.getInputStream();
-        String[] line;
-        CSVReader reader = new CSVReader(new InputStreamReader(is, "UTF-8"));
-        List<Student> students = new ArrayList<>();
-        List<Group> groups = new ArrayList<>();
-        List<StudentInfo> studentInfos = new ArrayList<>();
-        Map<String, List<Integer>> groupMap = new LinkedHashMap<>();
+	@PostMapping("/upload/student")
+	public String uploadStudent(@RequestParam("students") MultipartFile file) throws IOException {
+		InputStream is = file.getInputStream();
+		String[] line;
+		CSVReader reader = new CSVReader(new InputStreamReader(is, "UTF-8"));
+		List<Student> students = new ArrayList<>();
+		List<Group> groups = new ArrayList<>();
+		List<StudentInfo> studentInfos = new ArrayList<>();
+		Map<String, List<Integer>> groupMap= new LinkedHashMap<>();
 
 
-        int curInd = 0;
-        reader.readNext();
-        while ((line = reader.readNext()) != null) {
-            Arrays.toString(line);
-            System.out.println(line[0] + " " + line[1]);
-            Student student = new Student();
-            student.setName(line[0]);
-            student.setSurname(line[1]);
-            student.setEmail(line[2]);
-            int rand1 = (int) ((Math.random() * 1000000) + 1);
-            int rand2 = (int) ((Math.random() * 1000000) + 1);
-            String pass = "rand_" + String.valueOf(rand1) + String.valueOf(rand1) + "_pass";
-            student.setPassword(pass);
+		int curInd = 0;
+		reader.readNext();
+		while((line = reader.readNext()) != null) {
+			Arrays.toString(line);
+			System.out.println(line[0] + " " + line[1]);
+			Student student = new Student();
+			student.setFirstname(line[0]);
+			student.setLastname(line[1]);
+			student.setEmail(line[2]);
+			int rand1 = (int) ((Math.random() * 1000000) + 1);
+			int rand2 = (int) ((Math.random() * 1000000) + 1);
+			String pass = "rand_"+String.valueOf(rand1)+String.valueOf(rand1)+"_pass";
+			student.setPassword(pass);
 
-            Group group = new Group();
-            group.setName(line[3]);
-            int schoolId = (int) ((Math.random() * 3) + 1);
-            group.setSchoolId(schoolId);
+			Group group = new Group();
+			group.setName(line[3]);
+			int schoolId = (int) ((Math.random() * 3) + 1);
+			group.setSchoolId(schoolId);
 
-            StudentInfo info = new StudentInfo();
-            info.setPassportId(line[4]);
-            info.setSocialCardId(line[5]);
+			StudentInfo info = new StudentInfo();
+			info.setPassportId(line[4]);
+			info.setSocialCardId(line[5]);
 
-            DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
-            Date date;
-            try {
-                date = formatter.parse(line[6]);
-                long birthDate = date.getTime();
-                info.setBirthDate(birthDate);
-            } catch (ParseException e) {
-                System.out.println("Can't parse this: " + line[6]);
-                e.printStackTrace();
-            }
+			DateFormat formatter = new SimpleDateFormat("mm/dd/yyyy");
+			Date date;
+			try {
+				date = formatter.parse(line[6]);
+				long birthDate = date.getTime();
+				info.setBirthDate(birthDate);
+			} catch (ParseException e) {
+				System.out.println("Can't parse this: "+line[6]);
+				e.printStackTrace();
+			}
 //			long birthDate = date.getTime();
 //			info.setBirthDate(birthDate);
             info.setImageUrl(line[7]);
@@ -156,27 +156,28 @@ public class CSVUploadController {
 //		for (int i = 0; i < students.size(); i++) {
 //			students.get(i).setGroupId(groupIds.get(i));
 //		}
-        Set<Entry<String, List<Integer>>> entrySet = groupMap.entrySet();
-        Iterator<Entry<String, List<Integer>>> mapIterator = entrySet.iterator();
-        int groupIndex = 0;
-        while (mapIterator.hasNext()) {
-            Map.Entry<String, List<Integer>> curEntry = mapIterator.next();
-            List<Integer> studentIndices = curEntry.getValue();
-            for (int i = 0; i < studentIndices.size(); i++) {
-                int studentIndex = studentIndices.get(i);
-                students.get(studentIndex).setGroupId(groupIds.get(groupIndex));
-            }
-            groupIndex++;
-        }
-        int[] studentsIds = studentService.addStudents(students);
-        System.out.println(Arrays.toString(studentsIds));
 
-        for (int i = 0; i < studentInfos.size(); i++) {
-            studentInfos.get(i).setStudentId(studentsIds[i]);
-        }
-        int[] studentInfoIds = studentInfoService.addStudentInfos(studentInfos);
-        System.out.println(Arrays.toString(studentInfoIds));
-        reader.close();
-        return "csvupload";
-    }
+		Set<Entry<String, List<Integer>>> entrySet =  groupMap.entrySet();
+		Iterator<Entry<String,List<Integer>>> mapIterator = entrySet.iterator();
+		int groupIndex = 0;
+		while(mapIterator.hasNext()) {
+			Map.Entry<String, List<Integer>> curEntry = mapIterator.next();
+			List<Integer> studentIndices = curEntry.getValue();
+            for (int studentIndex : studentIndices) {
+                //todo
+//				students.get(studentIndex).setGroupId(groupIds.get(groupIndex));
+            }
+			groupIndex++;
+		}
+		int[] studentsIds = studentService.addStudents(students);
+		System.out.println(Arrays.toString(studentsIds));
+
+		for (int i = 0; i < studentInfos.size(); i++) {
+			studentInfos.get(i).setUserId(studentsIds[i]);
+		}
+		int[] studentInfoIds = studentInfoService.addStudentInfos(studentInfos);
+		System.out.println(Arrays.toString(studentInfoIds));
+		reader.close();
+		return "csvupload";
+	}
 }

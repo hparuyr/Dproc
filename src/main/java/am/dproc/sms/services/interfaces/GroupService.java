@@ -16,6 +16,8 @@ public interface GroupService {
 
 	List<Group> getGroups();
 
+	List<Group> getGroupsByStudentId(Integer studentId);
+
 	Integer updateGroup(Group group);
 
 	Integer deleteGroup(Integer id);

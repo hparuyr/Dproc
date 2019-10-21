@@ -8,7 +8,7 @@ public interface TeacherService {
 
 	public Integer addTeacher(Teacher teacher);
 
-	public Teacher gerTeacher(Integer id);
+	public Teacher getTeacher(Integer id);
 
 	public List<Teacher> getSchoolTeachers(Integer schoolId);
 

@@ -1,6 +1,8 @@
 package am.dproc.sms.rest;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -27,16 +29,23 @@ import io.swagger.annotations.Api;
 @Api(value = "StudentController")
 public class StudentController {
 	@Autowired
-	StudentService student;
+	StudentService studentService;
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ResponseEntity<Integer> addStudent(Student student) {
-		if (this.student.addStudent(student) == 1) {
-			return ResponseEntity.status(HttpStatus.CREATED).body(1);
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
+	public Response addStudent(Student student) {
+		int id = this.studentService.addStudent(student);
+		if (id > 0) {
+			return Response.status(Response.Status.CREATED).entity(id).build();
+		} 
+		else if(id == 0) {
+			Map<String,String> message = new HashMap<>();
+			message.put("message","User with your email already exists");
+			return Response.status(Response.Status.CONFLICT).entity(message).build();
+		}
+		else {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity("").build();
 		}
 	}
 
@@ -45,7 +54,7 @@ public class StudentController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addStudents(List<Student> student) {
-		int[] ids = this.student.addStudents(student);
+		int[] ids = this.studentService.addStudents(student);
 		if (ids.length > 0) {
 			return Response.status(Response.Status.CREATED).entity(ids).build();
 		} else {
@@ -56,21 +65,28 @@ public class StudentController {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
-	public Student getStudent(@PathParam(value = "id") Integer id) {
-		return student.getStudent(id);
+	public Response getStudent(@PathParam(value = "id") Integer id) {
+		Student student = studentService.getStudent(id);
+		if(student != null) {
+			return Response.status(Response.Status.OK).entity(student).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("message", String.format("Student with id %s not found", id));
+		return Response.status(Response.Status.NOT_FOUND).entity(message).build();
+
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Student> getStudent() {
-		return student.getStudents();
+		return studentService.getStudents();
 	}
 
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateStudent(Student student) {
-		if (this.student.updateStudent(student) == 1) {
+		if (studentService.updateStudent(student) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);
@@ -81,7 +97,7 @@ public class StudentController {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteStudent(@PathParam(value = "id") Integer id) {
-		if (student.deleteStudent(id) == 1) {
+		if (studentService.deleteStudent(id) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(0);

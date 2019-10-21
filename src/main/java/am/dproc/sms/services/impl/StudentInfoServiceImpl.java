@@ -33,15 +33,15 @@ public class StudentInfoServiceImpl implements StudentInfoService {
 	@Override
 	public Integer updateStudentInfo(StudentInfo studentInfo) {
 		if (studentInfo.getPassportId() != null) {
-			return this.studentInfo.updateStudentInfoPassportId(studentInfo.getStudentId(),
+			return this.studentInfo.updateStudentInfoPassportId(studentInfo.getUserId(),
 					studentInfo.getPassportId());
 		} else if (studentInfo.getSocialCardId() != null) {
-			return this.studentInfo.updateStudentInfoSocialCardId(studentInfo.getStudentId(),
+			return this.studentInfo.updateStudentInfoSocialCardId(studentInfo.getUserId(),
 					studentInfo.getSocialCardId());
 		} else if (studentInfo.getBirthDate() != null) {
-			return this.studentInfo.updateStudentInfoBirthDate(studentInfo.getStudentId(), studentInfo.getBirthDate());
+			return this.studentInfo.updateStudentInfoBirthDate(studentInfo.getUserId(), studentInfo.getBirthDate());
 		} else if (studentInfo.getImageUrl() != null) {
-			return this.studentInfo.updateStudentInfoImageUrl(studentInfo.getStudentId(), studentInfo.getImageUrl());
+			return this.studentInfo.updateStudentInfoImageUrl(studentInfo.getUserId(), studentInfo.getImageUrl());
 		}
 		return 0;
 	}
