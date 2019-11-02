@@ -54,7 +54,12 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	public List<GroupCourse> getByTeacherID(Integer id) {
 		return groupCourseDAO.getByTeacherID(id);
 	}
-	
+
+	@Override
+	public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID) {
+		return groupCourseDAO.getByTeacherIDAndSchoolId(teacherID, schoolID);
+	}
+
 	@Override
 	public Integer update(GroupCourse groupCourse) {
 		return groupCourseDAO.update(groupCourse);

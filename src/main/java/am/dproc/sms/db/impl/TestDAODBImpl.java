@@ -22,8 +22,8 @@ public class TestDAODBImpl implements TestDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String CREATE_TEST = "" +
-            "INSERTT " +
+    private static final String ADD_TEST = "" +
+            "INSERT " +
             "INTO mydb.TEST(LESSON_ID, TITLE, CREATION_DATE) " +
             "VALUES (?, ?, ?)";
     private static final String GET_TEST_BY_ID = "" +
@@ -43,14 +43,14 @@ public class TestDAODBImpl implements TestDAO {
             "WHERE ID = ?";
 
     @Override
-    public Integer createTest(Test test) {
+    public Integer addTest(Test test) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_TEST, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(ADD_TEST, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, test.getLessonId());
             ps.setString(2, test.getTitle());
-            ps.setLong(4, System.currentTimeMillis());
+            ps.setLong(3, System.currentTimeMillis());
             return ps;
         }, keyHolder);
 

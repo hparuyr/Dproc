@@ -25,20 +25,20 @@ import am.dproc.sms.services.interfaces.SchoolService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/schoolService")
+@Path("/school")
 @Api(value = "SchoolController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class SchoolController {
 
 	@Autowired
 	SchoolService schoolService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addSchool(School school) {
 		Integer id = schoolService.addSchool(school);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -48,21 +48,17 @@ public class SchoolController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public School getSchool(@PathParam(value = "id") Integer id) {
 		return schoolService.getSchool(id);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<School> getSchools() {
 		return schoolService.getSchools();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateSchool(School school) {
 		if (this.schoolService.updateSchool(school) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -72,7 +68,6 @@ public class SchoolController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteSchool(@PathParam(value = "id") Integer id) {
 		if (schoolService.deleteSchool(id) == 1) {

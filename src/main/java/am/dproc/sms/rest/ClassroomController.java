@@ -25,20 +25,20 @@ import am.dproc.sms.services.interfaces.ClassroomService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path(value = "/classroomService")
+@Path(value = "/classroom")
 @Api(value = "ClassroomController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class ClassroomController {
 
 	@Autowired
 	ClassroomService classroomService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addCourse(Classroom classroom) {
 		Integer id = this.classroomService.addClassroom(classroom);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -48,20 +48,17 @@ public class ClassroomController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Classroom getClassroom(@PathParam(value = "id") Integer id) {
 		return classroomService.getClassroomByID(id);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Classroom> getAllClassrooms() {
 		return classroomService.getAllClassrooms();
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/capacity")
 	public List<Classroom> getClassroomsByCapacity(@QueryParam(value = "min") Integer min,
 			@QueryParam(value = "max") Integer max) {
@@ -69,22 +66,19 @@ public class ClassroomController {
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editCourse(Classroom classroom) {
-		Integer status = this.classroomService.editClassroom(classroom);
+	public Response updateCourse(Classroom classroom) {
+		Integer status = this.classroomService.updateClassroom(classroom);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
+		Map<String, String> message = new HashMap<>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.NO_CONTENT).entity(message).build();
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response deleteCourse(@PathParam(value = "id") Integer id) {
 		if (classroomService.deleteClassRoom(id) == 1) {

@@ -14,13 +14,13 @@ public interface ClassroomDAO {
 
 	List<Classroom> getClassroomsByCapacity(Integer min, Integer max);
 
-	Integer editClassroomName(Integer id, String name);
+	Integer updateClassroomName(Integer id, String name);
 
-	Integer editClassroomCapacity(Integer id, Integer capacity);
+	Integer updateClassroomCapacity(Integer id, Integer capacity);
 
-	Integer editClassroomType(Integer id, String type);
+	Integer updateClassroomType(Integer id, String type);
 
-	Integer editClassroomSubject(Integer id, String subject);
+	Integer updateClassroomSubject(Integer id, String subject);
 
 	Integer deleteClassroom(Integer id);
 

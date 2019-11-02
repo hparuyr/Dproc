@@ -23,17 +23,18 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/test")
 @Api(value = "TestController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class TestController {
 
 	@Autowired
 	TestService testService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createTest(Test test) {
-		Integer id = testService.createTest(test);
+	public Response addTest(Test test) {
+		Integer id = testService.addTest(test);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -44,20 +45,17 @@ public class TestController {
 
 	@GET
 	@Path(value = "/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Test getTest(@PathParam(value = "id") Integer id) {
 		return testService.getTest(id);
 	}
 
 	@GET
 	@Path(value = "/all")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Test> getAllTests() {
 		return testService.getAllTests();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Integer updateTest(Test test) {
 		return testService.updateTest(test);
 	}

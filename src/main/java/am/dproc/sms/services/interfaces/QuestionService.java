@@ -6,7 +6,7 @@ import am.dproc.sms.models.Question;
 
 public interface QuestionService {
 
-    Integer createQuestion(Question question);
+    Integer addQuestion(Question question);
 
     Question getQuestion(Integer id);
 

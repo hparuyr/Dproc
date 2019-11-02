@@ -19,7 +19,7 @@ public class ScheduleDAODBImpl implements ScheduleDAO {
     @Autowired
     JdbcTemplate template;
 
-    private static final String CREATE_SCHEDULE_RECORD = "INSERT INTO mydb.SCHEDULE_RECORD(GROUP_COURSE_ID, CLASSROOM_ID, LESSON_ID, START_DATE, END_DATE, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String ADD_SCHEDULE_RECORD = "INSERT INTO mydb.SCHEDULE_RECORD(GROUP_COURSE_ID, CLASSROOM_ID, LESSON_ID, START_DATE, END_DATE, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String GET_SCHEDULE_RECORD_BY_ID = "SELECT * FROM mydb.SCHEDULE_RECORD WHERE ID = ?";
     private static final String GET_SCHEDULE_RECORD_FOR_TEACHER_IN_PERIOD = "SELECT SCH.* FROM mydb.SCHEDULE_RECORD SCH JOIN GROUP_COURSE GC ON SCH.GROUP_COURSE_ID = GC.ID "
             + "WHERE GC.TEACHER_ID = ? AND ? <= SCH.END_DATE AND SCH.START_DATE <= ? ORDER BY SCH.START_DATE, SCH.END_DATE";
@@ -34,6 +34,13 @@ public class ScheduleDAODBImpl implements ScheduleDAO {
             + " AND ? <= END_DATE AND START_DATE <= ? ORDER BY START_DATE, END_DATE";
     private static final String UPDATE_SCHEDULE_RECORD = "UPDATE mydb.SCHEDULE_RECORD SET GROUP_COURSE_ID = ?, CLASSROOM_ID = ?, LESSON_ID = ?, START_DATE = ?, END_DATE = ?, CHANGE_DATE = ? WHERE ID = ?";
     private static final String DELETE_SCHEDULE_RECORD = "DELETE FROM mydb.SCHEDULE_RECORD WHERE ID = ?";
+
+    @Override
+    public Integer addScheduleRecord(ScheduleRecord scheduleRecord) {
+        return template.update(ADD_SCHEDULE_RECORD, scheduleRecord.getGroupCourseId(),
+                scheduleRecord.getClassroomId(), scheduleRecord.getLessonId(), scheduleRecord.getStartDate().getTime(),
+                scheduleRecord.getEndDate().getTime(), System.currentTimeMillis());
+    }
 
     @Override
     public ScheduleRecord getScheduleRecordById(Integer id) {
@@ -62,13 +69,6 @@ public class ScheduleDAODBImpl implements ScheduleDAO {
     public List<ScheduleRecord> getScheduleForClassRoomInPeriod(Integer classRoomId, Long startDate, Long endDate) {
         return template.query(GET_SCHEDULE_RECORD_FOR_CLASSROOM_IN_PERIOD, new ScheduleMapper(), classRoomId, startDate,
                 endDate);
-    }
-
-    @Override
-    public Integer createScheduleRecord(ScheduleRecord scheduleRecord) {
-        return template.update(CREATE_SCHEDULE_RECORD, scheduleRecord.getGroupCourseId(),
-                scheduleRecord.getClassroomId(), scheduleRecord.getLessonId(), scheduleRecord.getStartDate().getTime(),
-                scheduleRecord.getEndDate().getTime(), System.currentTimeMillis());
     }
 
     @Override

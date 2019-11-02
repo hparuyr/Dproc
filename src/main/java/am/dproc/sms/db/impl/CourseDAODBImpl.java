@@ -36,21 +36,23 @@ public class CourseDAODBImpl implements CourseDAO {
             + "FROM mydb.COURSE";
     private static final String GET_COURSES_BY_GROUP_ID = ""
             + "SELECT C.* "
-            + "FROM COURSE C JOIN GROUP_COURSE GC ON C.ID = GC.COURSE_ID "
+            + "FROM COURSE C "
+            + "JOIN GROUP_COURSE GC "
+            + "ON C.ID = GC.COURSE_ID "
             + "WHERE GC.GROUP_ID = ?";
-    private static final String EDIT_COURSE_NAME = ""
+    private static final String UPDATE_COURSE_NAME = ""
             + "UPDATE mydb.COURSE "
             + "SET NAME = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
-    private static final String EDIT_COURSE_DURATION = ""
+    private static final String UPDATE_COURSE_DURATION = ""
             + "UPDATE mydb.COURSE "
             + "SET DURATION = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
-    private static final String EDIT_COURSE_DESCRIPTION = ""
+    private static final String UPDATE_COURSE_DESCRIPTION = ""
             + "UPDATE mydb.COURSE "
             + "SET DESCRIPTION = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
-    private static final String EDIT_COURSE_DURATION_UNIT_TYPE = ""
+    private static final String UPDATE_COURSE_DURATION_UNIT_TYPE = ""
             + "UPDATE mydb.COURSE "
             + "SET DURATION_UNIT_TYPE = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
@@ -98,28 +100,28 @@ public class CourseDAODBImpl implements CourseDAO {
     }
 
     @Override
-    public Integer editCourseName(Integer id, String name) {
-        return jdbctemplate.update(EDIT_COURSE_NAME, name, System.currentTimeMillis(), id);
+    public Integer updateCourseName(Integer id, String name) {
+        return jdbctemplate.update(UPDATE_COURSE_NAME, name, System.currentTimeMillis(), id);
     }
 
     @Override
-    public Integer editCourseDescription(Integer id, String description) {
-        return jdbctemplate.update(EDIT_COURSE_DESCRIPTION, description, System.currentTimeMillis(), id);
+    public Integer updateCourseDescription(Integer id, String description) {
+        return jdbctemplate.update(UPDATE_COURSE_DESCRIPTION, description, System.currentTimeMillis(), id);
     }
 
     @Override
-    public Integer editCourseDuration(Integer id, Integer duration) {
-        return jdbctemplate.update(EDIT_COURSE_DURATION, duration, System.currentTimeMillis(), id);
+    public Integer updateCourseDuration(Integer id, Integer duration) {
+        return jdbctemplate.update(UPDATE_COURSE_DURATION, duration, System.currentTimeMillis(), id);
     }
 
     @Override
-    public Integer editCourseDurationUnitType(Integer id, String durationUnitType) {
+    public Integer updateCourseDurationUnitType(Integer id, String durationUnitType) {
         if (CourseDurationUnitType.DAYS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
-            return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.DAYS.index(), System.currentTimeMillis(), id);
+            return jdbctemplate.update(UPDATE_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.DAYS.index(), System.currentTimeMillis(), id);
         } else if (CourseDurationUnitType.WEEKS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
-            return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.WEEKS.index(), System.currentTimeMillis(), id);
+            return jdbctemplate.update(UPDATE_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.WEEKS.index(), System.currentTimeMillis(), id);
         } else if (CourseDurationUnitType.MONTHS.toString().toLowerCase().equals(durationUnitType.toLowerCase())) {
-            return jdbctemplate.update(EDIT_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.MONTHS.index(), System.currentTimeMillis(), id);
+            return jdbctemplate.update(UPDATE_COURSE_DURATION_UNIT_TYPE, CourseDurationUnitType.MONTHS.index(), System.currentTimeMillis(), id);
         }
         return -1;
 
@@ -147,7 +149,6 @@ public class CourseDAODBImpl implements CourseDAO {
             } else if (CourseDurationUnitType.MONTHS.index() == rs.getInt("DURATION_UNIT_TYPE")) {
                 course.setDurationUnitType("Months");
             }
-            course.setDurationUnitType(rs.getString("DURATION_UNIT_TYPE"));
             return course;
         }
 

@@ -14,7 +14,7 @@ public interface ClassroomService {
 
 	List<Classroom> getClassrooms(Integer min, Integer max);
 
-	Integer editClassroom(Classroom classroom);
+	Integer updateClassroom(Classroom classroom);
 
 	Integer deleteClassRoom(Integer id);
 

@@ -27,18 +27,18 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/comments")
 @Api(value = "StudentCommentController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class StudentCommentController {
 
 	@Autowired
 	StudentCommentService studentCommentService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addComment(StudentComment comment) {
 		Integer id = studentCommentService.addComment(comment);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -48,35 +48,30 @@ public class StudentCommentController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public StudentComment getComment(@PathParam(value = "id") Integer id) {
 		return studentCommentService.getComment(id);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<StudentComment> getComments(@QueryParam(value = "topicID") Integer id) {
 		return studentCommentService.getCommentsOfTopic(id);
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editComment(StudentComment comment) {
-		Integer status = this.studentCommentService.editComment(comment);
+	public Response updateComment(StudentComment comment) {
+		Integer status = this.studentCommentService.updateComment(comment);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
+		Map<String, String> message = new HashMap<>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.NO_CONTENT).entity(message).build();
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response deleteComment(@PathParam(value = "id") Integer id) {
 		if (studentCommentService.deleteComment(id) == 1) {

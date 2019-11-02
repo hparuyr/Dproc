@@ -10,7 +10,7 @@ import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.helpers.RandomPassGenerator;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.StudentInfo;
-import am.dproc.sms.models.StudentStatus;
+import am.dproc.sms.enums.StudentStatus;
 import am.dproc.sms.services.interfaces.EmailService;
 import am.dproc.sms.services.interfaces.GroupService;
 import am.dproc.sms.services.interfaces.StudentInfoService;

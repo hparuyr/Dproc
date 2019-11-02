@@ -20,11 +20,11 @@ public class QuestionServiceImpl implements QuestionService {
 	AnswerService answerService;
 
 	@Override
-	public Integer createQuestion(Question question) {
+	public Integer addQuestion(Question question) {
 		if (question.getContent() == null || question.getTestId() == null) {
 			return -1;
 		}
-		return questionDAO.createQuestion(question);
+		return questionDAO.addQuestion(question);
 	}
 
 	@Override

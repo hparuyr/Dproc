@@ -14,6 +14,8 @@ public interface GroupDAO {
 
     List<Group> getGroups();
 
+    Group getGroupsByIDAndSchoolID(Integer id, Integer schoolID);
+
     List<Group> getGroupsBySchoolId(Integer schoolId);
 
 	List<Group> getGroupsByStudentId(Integer studentId);

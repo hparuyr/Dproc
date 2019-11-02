@@ -22,24 +22,28 @@ public class AnswerDAODBImpl implements AnswerDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String CREATE_ANSWER = "" +
+    private static final String ADD_ANSWER = "" +
             "INSERT " +
-            "INTO mydb.ANSWER(QUESTION_ID, CONTENT, SCORE, REATION_DATE) " +
+            "INTO mydb.ANSWER(QUESTION_ID, CONTENT, SCORE, CREATION_DATE) " +
             "VALUES (?, ?, ?, ?)";
     private static final String GET_ANSWER_BY_ID = "" +
-            "SELECT QUESTION_ID, CONTENT, SCORE " +
+            "SELECT ID, QUESTION_ID, CONTENT, SCORE " +
             "FROM mydb.ANSWER " +
             "WHERE ID = ?";
     private static final String GET_ANSWERS_FOR_QUESTION = "" +
-            "SELECT QUESTION_ID, CONTENT, SCORE " +
+            "SELECT ID, QUESTION_ID, CONTENT, SCORE " +
             "FROM mydb.ANSWER " +
             "WHERE QUESTION_ID = ?";
     private static final String GET_ALL_ANSWERS = "" +
-            "SELECT QUESTION_ID, CONTENT, SCORE " +
+            "SELECT ID, QUESTION_ID, CONTENT, SCORE " +
             "FROM mydb.ANSWER";
-    private static final String UPDATE_ANSWER = "" +
+    private static final String UPDATE_CONTENT = "" +
             "UPDATE mydb.ANSWER " +
-            "SET CONTENT = ?, SCORE = ?, QUESTION_ID = ?, CHANGE_DATE = ? " +
+            "SET CONTENT = ?, CHANGE_DATE = ? " +
+            "WHERE ID = ?";
+    private static final String UPDATE_SCORE = "" +
+            "UPDATE mydb.ANSWER " +
+            "SET SCORE = ?, CHANGE_DATE = ? " +
             "WHERE ID = ?";
     private static final String DELETE_ANSWER = "" +
             "DELETE " +
@@ -47,10 +51,10 @@ public class AnswerDAODBImpl implements AnswerDAO {
             "WHERE ID = ?";
 
     @Override
-    public Integer createAnswer(Answer answer) {
+    public Integer addAnswer(Answer answer) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_ANSWER, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(ADD_ANSWER, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, answer.getQuestionId());
             ps.setString(2, answer.getContent());
             ps.setInt(3, answer.getScore());
@@ -77,9 +81,13 @@ public class AnswerDAODBImpl implements AnswerDAO {
     }
 
     @Override
-    public Integer updateAnswer(Answer answer) {
-        return jdbcTemplate.update(UPDATE_ANSWER, answer.getContent(), answer.getScore(), answer.getQuestionId(),
-                System.currentTimeMillis(), answer.getId());
+    public Integer updateContent(Integer id, String content) {
+        return jdbcTemplate.update(UPDATE_CONTENT, content, System.currentTimeMillis(), id);
+    }
+
+    @Override
+    public Integer updateScore(Integer id, Integer score) {
+        return jdbcTemplate.update(UPDATE_SCORE, score, System.currentTimeMillis(), id);
     }
 
     @Override
@@ -90,14 +98,14 @@ public class AnswerDAODBImpl implements AnswerDAO {
     private static class AnswerMapper implements RowMapper<Answer> {
         @Override
         public Answer mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Answer ans = new Answer();
+            Answer answer = new Answer();
 
-            ans.setId(rs.getInt("ID"));
-            ans.setQuestionId(rs.getInt("QUESTION_ID"));
-            ans.setContent(rs.getString("CONTENT"));
-            ans.setScore(rs.getInt("SCORE"));
+            answer.setId(rs.getInt("ID"));
+            answer.setQuestionId(rs.getInt("QUESTION_ID"));
+            answer.setContent(rs.getString("CONTENT"));
+            answer.setScore(rs.getInt("SCORE"));
 
-            return ans;
+            return answer;
         }
     }
 }

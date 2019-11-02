@@ -25,6 +25,15 @@ public class CourseServiceImpl implements CourseService {
                 || course.getDuration() == null || course.getDurationUnitType() == null) {
             return -1;
         }
+        Integer courseID = this.courseDAO.addCourse(course);
+
+        if (course.getListOfLessons() != null) {
+            for (int i = 0; i < course.getListOfLessons().size(); i++) {
+                course.getListOfLessons().get(i).setCourseID(courseID);
+                lessonService.addLesson(course.getListOfLessons().get(i));
+            }
+        }
+
         return this.courseDAO.addCourse(course);
     }
 
@@ -55,31 +64,30 @@ public class CourseServiceImpl implements CourseService {
         return 0;
     }
 
-    public Integer editCourse(Course course) {
-
+    public Integer updateCourse(Course course) {
 
         boolean bool = false;
 
         if (course.getName() != null) {
-            if (this.courseDAO.editCourseName(course.getId(), course.getName()) == 0) {
+            if (this.courseDAO.updateCourseName(course.getId(), course.getName()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (course.getDescription() != null) {
-            if (this.courseDAO.editCourseDescription(course.getId(), course.getDescription()) == 0) {
+            if (this.courseDAO.updateCourseDescription(course.getId(), course.getDescription()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (course.getDuration() != null) {
-            if (this.courseDAO.editCourseDuration(course.getId(), course.getDuration()) == 0) {
+            if (this.courseDAO.updateCourseDuration(course.getId(), course.getDuration()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (course.getDurationUnitType() != null) {
-            if (this.courseDAO.editCourseDurationUnitType(course.getId(), course.getDurationUnitType()) == 0) {
+            if (this.courseDAO.updateCourseDurationUnitType(course.getId(), course.getDurationUnitType()) == 0) {
                 return -1;
             }
             bool = true;

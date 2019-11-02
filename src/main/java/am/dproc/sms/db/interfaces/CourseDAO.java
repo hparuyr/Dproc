@@ -14,13 +14,13 @@ public interface CourseDAO {
 
     List<Course> getCoursesByGroupId(Integer groupId);
 
-    Integer editCourseName(Integer id, String name);
+    Integer updateCourseName(Integer id, String name);
 
-    Integer editCourseDescription(Integer id, String description);
+    Integer updateCourseDescription(Integer id, String description);
 
-    Integer editCourseDuration(Integer id, Integer duration);
+    Integer updateCourseDuration(Integer id, Integer duration);
 
-    Integer editCourseDurationUnitType(Integer id, String durationUnitType);
+    Integer updateCourseDurationUnitType(Integer id, String durationUnitType);
 
     Integer deleteCourse(Integer id);
 

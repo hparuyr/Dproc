@@ -12,7 +12,7 @@ public interface StudentCommentDAO {
 
 	List<StudentComment> getCommentsOfTopic(Integer topicID);
 
-	Integer editComment(Integer id, String comment);
+	Integer updateComment(Integer id, String comment);
 
 	Integer deleteComment(Integer id);
 

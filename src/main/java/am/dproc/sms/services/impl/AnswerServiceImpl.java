@@ -16,11 +16,11 @@ public class AnswerServiceImpl implements AnswerService {
     AnswerDAO answerDAO;
 
     @Override
-    public Integer createAnswer(Answer answer) {
+    public Integer addAnswer(Answer answer) {
         if (answer.getQuestionId() == null || answer.getContent() == null || answer.getScore() == null) {
             return -1;
         }
-        return answerDAO.createAnswer(answer);
+        return answerDAO.addAnswer(answer);
     }
 
     @Override
@@ -40,7 +40,25 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Integer updateAnswer(Answer answer) {
-        return answerDAO.updateAnswer(answer);
+
+        boolean bool = false;
+
+        if (answer.getContent() != null) {
+            if (answerDAO.updateContent(answer.getId(), answer.getContent()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (answer.getScore() != null) {
+            if (answerDAO.updateScore(answer.getId(), answer.getScore()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+
+        System.out.println(bool);
+        return bool ? 1 : 0;
+
     }
 
     @Override

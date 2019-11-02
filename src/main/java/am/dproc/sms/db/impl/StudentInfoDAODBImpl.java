@@ -23,10 +23,10 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	private static final String ADD_STUDENT_INFO = "INSERT INTO mydb.USER_INFO (USER_ID, PASSPORT_ID, SOCIAL_CARD_ID, BIRTH_DATE, PHONE_NUMBER, ADDRESS, IMAGE_URL,"
 												+ " GENDER, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_STUDENT_INFO_BY_STUDENT_ID = "SELECT * FROM mydb.USER_INFO WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_PASSPORT_ID = "UPDATE mydb.USER_INFO SET PASSPORT_ID = ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_SOCIAL_CARD_ID = "UPDATE mydb.USER_INFO SET SOCIAL_CARD_ID = ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_BIRTH_DATE = "UPDATE mydb.USER_INFO SET BIRTH_DATE= ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_IMAGE_URL = "UPDATE mydb.USER_INFO SET IMAGE_URL = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_PASSPORT_ID = "UPDATE mydb.USER_INFO SET PASSPORT_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_SOCIAL_CARD_ID = "UPDATE mydb.USER_INFO SET SOCIAL_CARD_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_BIRTH_DATE = "UPDATE mydb.USER_INFO SET BIRTH_DATE= ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_IMAGE_URL = "UPDATE mydb.USER_INFO SET IMAGE_URL = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
 	private static final String DELETE_STUDENT_INFO_BY_STUDENT_ID = "DELETE FROM mydb.USER_INFO WHERE USER_ID = ?";
 
 	@Override

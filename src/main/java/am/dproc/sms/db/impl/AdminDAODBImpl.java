@@ -18,15 +18,15 @@ public class AdminDAODBImpl implements AdminDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_ADMIN = "INSERT INTO mydb.ADMIN (NAME, SURNAME, EMAIL, PASSWORD, CREATION_DATE,CHANGE_DATE, SCHOOL_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String ADD_ADMIN = "INSERT INTO mydb.ADMIN (FIRSTNAME, LASTNAME, EMAIL, PASSWORD, CREATION_DATE,CHANGE_DATE, SCHOOL_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ADMIN_BY_ID = "SELECT * FROM mydb.ADMIN WHERE ID = ?";
 	private static final String GET_ADMINS = "SELECT * FROM mydb.ADMIN";
 	private static final String GET_ADMINS_BY_SCHOOL_ID = "SELECT * FROM mydb.ADMIN WHERE SCHOOL_ID = ?";
-	private static final String UPDATE_ADMIN_NAME = "UPDATE mydb.ADMIN SET NAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_SURNAME = "UPDATE mydb.ADMIN SET SURNAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_EMAIL = "UPDATE mydb.ADMIN SET EMAIL= ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_PASSWORD = "UPDATE mydb.ADMIN SET PASSWORD = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_SCHOOL_ID = "UPDATE mydb.ADMIN SET SCHOOL_ID = ?, CHANGE_DATE = ?, WHERE ID = ?";
+	private static final String UPDATE_ADMIN_NAME = "UPDATE mydb.ADMIN SET FIRSTNAME = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_SURNAME = "UPDATE mydb.ADMIN SET LASTNAME = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_EMAIL = "UPDATE mydb.ADMIN SET EMAIL= ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_PASSWORD = "UPDATE mydb.ADMIN SET PASSWORD = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_SCHOOL_ID = "UPDATE mydb.ADMIN SET SCHOOL_ID = ?, CHANGE_DATE = ? WHERE ID = ?";
 	private static final String DELETE_ADMIN_BY_ID = "DELETE FROM mydb.ADMIN WHERE ID = ?";
 
 	@Override
@@ -90,12 +90,12 @@ public class AdminDAODBImpl implements AdminDAO {
 		@Override
 		public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Admin admin = new Admin();
-			admin.setId(rs.getInt("id"));
-			admin.setFirstname(rs.getString("name"));
-			admin.setLastname(rs.getString("surname"));
-			admin.setEmail(rs.getString("email"));
-			admin.setPassword(rs.getString("password"));
-			admin.setSchoolId(rs.getInt("schoolId"));
+			admin.setId(rs.getInt("ID"));
+			admin.setFirstname(rs.getString("FIRSTNAME"));
+			admin.setLastname(rs.getString("LASTNAME"));
+			admin.setEmail(rs.getString("EMAIL"));
+			admin.setPassword(rs.getString("PASSWORD"));
+			admin.setSchoolId(rs.getInt("SCHOOL_ID"));
 			return admin;
 		}
 

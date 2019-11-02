@@ -6,11 +6,11 @@ import am.dproc.sms.models.Test;
 
 public interface TestService {
 
+    Integer addTest(Test test);
+
     Test getTest(Integer id);
 
     List<Test> getAllTests();
-
-    Integer createTest(Test test);
 
     Integer updateTest(Test test);
 

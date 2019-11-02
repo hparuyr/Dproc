@@ -25,17 +25,18 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/question")
 @Api(value = "QuestionController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class QuestionController {
 
 	@Autowired
 	QuestionService questionService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createQuestion(Question question) {
-		Integer id = questionService.createQuestion(question);
+	public Response addQuestion(Question question) {
+		Integer id = questionService.addQuestion(question);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -45,21 +46,18 @@ public class QuestionController {
 	}
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/{id}")
 	public Question getQuestion(@PathParam(value = "id") Integer id) {
 		return questionService.getQuestion(id);
 	}
 
 	@GET
-	@Produces({MediaType.APPLICATION_JSON})
 	@Path(value = "/all")
 	public List<Question> getAllQuestions() {
 		return questionService.getAllQuestions();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Integer updateQuestion(Question question) {
 		return questionService.updateQuestion(question);
 	}

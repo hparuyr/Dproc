@@ -13,11 +13,11 @@ public class TestResultServiceImpl implements TestResultService {
     TestResultDAO testResultDAO;
 
     @Override
-    public Integer createTestResult(Integer testId, Integer studentId, Double score) {
+    public Integer addTestResult(Integer testId, Integer studentId, Double score) {
         if (testId == null || studentId == null || score == null) {
             return -1;
         }
-        return testResultDAO.createTestResult(testId, studentId, score);
+        return testResultDAO.addTestResult(testId, studentId, score);
     }
 
     @Override

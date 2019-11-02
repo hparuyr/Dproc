@@ -40,7 +40,12 @@ public class GroupServiceImpl implements GroupService {
 	public List<Group> getSchoolGroups(Integer schoolId) {
 		return this.group.getGroupsBySchoolId(schoolId);
 	}
-	
+
+	@Override
+	public Group getGroupsByIDAndSchoolID(Integer id, Integer schoolID){
+		return null;
+	}
+
 	@Override
 	public List<Group> getGroupsByStudentId(Integer studentId) {
 		return group.getGroupsByStudentId(studentId);

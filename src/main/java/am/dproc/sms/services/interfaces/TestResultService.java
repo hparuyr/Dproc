@@ -2,13 +2,15 @@ package am.dproc.sms.services.interfaces;
 
 public interface TestResultService {
 
-	Integer createTestResult(Integer testId, Integer studentId, Double score);
+	Integer addTestResult(Integer testId, Integer studentId, Double score);
 
 	Double getLastTestResultForStudent(Integer testId, Integer studentId);
 
 	Double getTestResultById(Integer id);
 
 	Double getAverageTestResultForStudent(Integer studentId);
+
+	Double getAverageTestResultForStudentCourse(Integer studentId, Integer courseId);
 
 	Integer updateTestResultForStudent(Integer testId, Integer studentId, Double score);
 
@@ -17,7 +19,5 @@ public interface TestResultService {
 	Integer deleteTestResultById(Integer id);
 
 	Integer deleteTestResultForStudent(Integer testId, Integer studentId);
-
-	Double getAverageTestResultForStudentCourse(Integer studentId, Integer courseId);
 
 }

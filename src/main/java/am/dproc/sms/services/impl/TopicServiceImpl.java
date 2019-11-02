@@ -43,18 +43,18 @@ public class TopicServiceImpl implements TopicService {
 	}
 
 	@Override
-	public Integer editTopic(Topic topic) {
+	public Integer updateTopic(Topic topic) {
 
 		boolean bool = false;
 
 		if (topic.getVideoURL() != null) {
-			if (this.topicDAO.editTopicVideoURL(topic.getId(), topic.getVideoURL()) == 0) {
+			if (this.topicDAO.updateTopicVideoURL(topic.getId(), topic.getVideoURL()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 		if (topic.getWebPageURL() != null) {
-			if (this.topicDAO.editTopicWebPageURL(topic.getId(), topic.getWebPageURL()) == 0) {
+			if (this.topicDAO.updateTopicWebPageURL(topic.getId(), topic.getWebPageURL()) == 0) {
 				return -1;
 			}
 			bool = true;

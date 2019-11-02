@@ -27,13 +27,14 @@ import io.swagger.annotations.Api;
 @RestController
 @Path("/student")
 @Api(value = "StudentController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class StudentController {
+
 	@Autowired
 	StudentService studentService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addStudent(Student student) {
 		int id = this.studentService.addStudent(student);
 		if (id > 0) {
@@ -51,8 +52,6 @@ public class StudentController {
 
 	@Path("/all")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response addStudents(List<Student> student) {
 		int[] ids = this.studentService.addStudents(student);
 		if (ids.length > 0) {
@@ -63,7 +62,6 @@ public class StudentController {
 	}
 	
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response getStudent(@PathParam(value = "id") Integer id) {
 		Student student = studentService.getStudent(id);
@@ -77,14 +75,11 @@ public class StudentController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Student> getStudent() {
 		return studentService.getStudents();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateStudent(Student student) {
 		if (studentService.updateStudent(student) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -94,7 +89,6 @@ public class StudentController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteStudent(@PathParam(value = "id") Integer id) {
 		if (studentService.deleteStudent(id) == 1) {

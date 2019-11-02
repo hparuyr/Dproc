@@ -14,7 +14,7 @@ public interface LessonService {
 
 	List<Lesson> getAllLesson();
 
-	Integer editLesson(Lesson lesson);
+	Integer updateLesson(Lesson lesson);
 
 	Integer deleteLesson(Integer id);
 

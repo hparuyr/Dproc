@@ -16,10 +16,10 @@ public interface SchoolDAO {
 
 	Integer updateSchoolAddress(Integer id, String address);
 
-	Integer deleteSchool(Integer id);
-
 	Integer updateSchoolPhoneNumber(Integer id, String phoneNumber);
 
 	Integer updateSchoolEMail(Integer id, String eMail);
+
+	Integer deleteSchool(Integer id);
 
 }

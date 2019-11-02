@@ -34,7 +34,7 @@ public class StudentCommentDAODBImpl implements StudentCommentDAO {
             + "SELECT ID, TOPIC_ID, STUDENT_ID, COMMENT "
             + "FROM mydb.STUDENT_COMMENT "
             + "WHERE TOPIC_ID = ?";
-    private static final String EDIT_COMMENT = ""
+    private static final String UPDATE_COMMENT = ""
             + "UPDATE mydb.STUDENT_COMMENT "
             + "SET COMMENT = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
@@ -70,8 +70,8 @@ public class StudentCommentDAODBImpl implements StudentCommentDAO {
     }
 
     @Override
-    public Integer editComment(Integer id, String comment) {
-        return jdbctemplate.update(EDIT_COMMENT, comment, System.currentTimeMillis(), id);
+    public Integer updateComment(Integer id, String comment) {
+        return jdbctemplate.update(UPDATE_COMMENT, comment, System.currentTimeMillis(), id);
     }
 
     @Override

@@ -37,11 +37,11 @@ public class TopicDAODBImpl implements TopicDAO {
             + "SELECT ID, LESSON_ID, VIDEO_URL, WEB_PAGE_URL "
             + "FROM mydb.TOPIC "
             + "WHERE LESSON_ID = ?";
-    private static final String EDIT_TOPIC_VIDEO_URL = ""
+    private static final String UPDATE_TOPIC_VIDEO_URL = ""
             + "UPDATE mydb.TOPIC "
             + "SET VIDEO_URL = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
-    private static final String EDIT_TOPIC_WEB_PAGE_URL = ""
+    private static final String UPDATE_TOPIC_WEB_PAGE_URL = ""
             + "UPDATE mydb.TOPIC "
             + "SET WEB_PAGE_URL = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
@@ -82,13 +82,13 @@ public class TopicDAODBImpl implements TopicDAO {
     }
 
     @Override
-    public Integer editTopicVideoURL(Integer id, String videoURL) {
-        return jdbctemplate.update(EDIT_TOPIC_VIDEO_URL, videoURL, System.currentTimeMillis(), id);
+    public Integer updateTopicVideoURL(Integer id, String videoURL) {
+        return jdbctemplate.update(UPDATE_TOPIC_VIDEO_URL, videoURL, System.currentTimeMillis(), id);
     }
 
     @Override
-    public Integer editTopicWebPageURL(Integer id, String webPageURL) {
-        return jdbctemplate.update(EDIT_TOPIC_WEB_PAGE_URL, webPageURL, System.currentTimeMillis(), id);
+    public Integer updateTopicWebPageURL(Integer id, String webPageURL) {
+        return jdbctemplate.update(UPDATE_TOPIC_WEB_PAGE_URL, webPageURL, System.currentTimeMillis(), id);
     }
 
     @Override

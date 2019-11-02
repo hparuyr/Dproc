@@ -3,6 +3,7 @@ package am.dproc.sms.models;
 import java.util.List;
 
 public abstract class User {
+
 	private Integer id;
 	private String firstname;
 	private String lastname;

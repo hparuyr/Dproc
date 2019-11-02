@@ -22,7 +22,7 @@ public class QuestionDAODBImpl implements QuestionDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String CREATE_QUESTION = "" +
+    private static final String ADD_QUESTION = "" +
             "INSERT " +
             "INTO mydb.QUESTION(TEST_ID, CONTENT, CREATION_DATE) " +
             "VALUES (?, ?, ?)";
@@ -47,10 +47,10 @@ public class QuestionDAODBImpl implements QuestionDAO {
             "WHERE ID = ?";
 
     @Override
-    public Integer createQuestion(Question question) {
+    public Integer addQuestion(Question question) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_QUESTION, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(ADD_QUESTION, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, question.getTestId());
             ps.setString(2, question.getContent());
             ps.setLong(3, System.currentTimeMillis());

@@ -30,6 +30,11 @@ import am.dproc.sms.services.interfaces.TestResultService;
 
 @Service
 public class StudentReportServiceImpl implements StudentReportService {
+	@Override
+	public File getStudentReport(Integer studentId) {
+		return null;
+	}
+	/*
 	@Autowired
 	StudentService studentService;
 	@Autowired
@@ -156,4 +161,5 @@ public class StudentReportServiceImpl implements StudentReportService {
 		doc.add(new Paragraph(""));
 		doc.add(new Paragraph(""));
 	}
+	 */
 }

@@ -34,11 +34,11 @@ public class StudentCommentServiceImpl implements StudentCommentService {
 	}
 
 	@Override
-	public Integer editComment(StudentComment comment) {
+	public Integer updateComment(StudentComment comment) {
 		boolean bool = false;
 
 		if (comment.getComment() != null) {
-			if (this.studentCommentDAO.editComment(comment.getId(), comment.getComment()) == 0) {
+			if (this.studentCommentDAO.updateComment(comment.getId(), comment.getComment()) == 0) {
 				return -1;
 			}
 			bool = true;

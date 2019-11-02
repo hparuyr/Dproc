@@ -6,7 +6,7 @@ import am.dproc.sms.models.Answer;
 
 public interface AnswerService {
 
-	Integer createAnswer(Answer answer);
+	Integer addAnswer(Answer answer);
 
 	Answer getAnswer(Integer id);
 

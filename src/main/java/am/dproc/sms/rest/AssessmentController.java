@@ -22,17 +22,18 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/assessment")
 @Api(value = "AssessmentController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class AssessmentController {
 
     @Autowired
     AssessmentService assessmentService;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     public Response addAssessment(Assessment assessment) {
         Integer id = assessmentService.addAssessment(assessment);
         if (id == -1) {
-            Map<String, String> message = new HashMap<String, String>();
+            Map<String, String> message = new HashMap<>();
             message.put("Message", "All fields must be filled!");
             return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
         } else if (id == 0) {
@@ -43,14 +44,12 @@ public class AssessmentController {
 
     @GET
     @Path(value = "/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Assessment getAssessment(@PathParam(value = "id") Integer id) {
         return assessmentService.getAssessment(id);
     }
 
     @GET
     @Path(value = "user/{userId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Assessment> getAllAssessmentsByUserId(@PathParam(value = "userId") Integer userId) {
         return assessmentService.getAllAssessmentsByUserId(userId);
     }
@@ -58,7 +57,6 @@ public class AssessmentController {
     // TODO
     @GET
     @Path(value = "assignment/{assignmentId}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Assessment> getAssessmentsByAssignmentId(@PathParam(value = "assignmentId") Integer assignmentId) {
         return assessmentService.getAssessmentsByAssignmentId(assignmentId);
     }
@@ -71,7 +69,6 @@ public class AssessmentController {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Assessment> getAllAssessments() {
         return assessmentService.getAllAssessments();
     }

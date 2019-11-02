@@ -20,11 +20,11 @@ public class TestServiceImpl implements TestService {
 	QuestionService questionService;
 
 	@Override
-	public Integer createTest(Test test) {
+	public Integer addTest(Test test) {
 		if (test.getLessonId() == null || test.getTitle()  == null) {
 			return -1;
 		}
-		return testDAO.createTest(test);
+		return testDAO.addTest(test);
 	}
 
 	@Override

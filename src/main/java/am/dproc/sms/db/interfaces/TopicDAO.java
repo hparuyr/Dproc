@@ -14,9 +14,9 @@ public interface TopicDAO {
 
 	List<Topic> getAllTopics();
 
-	Integer editTopicVideoURL(Integer id, String videoURL);
+	Integer updateTopicVideoURL(Integer id, String videoURL);
 
-	Integer editTopicWebPageURL(Integer id, String webPageURL);
+	Integer updateTopicWebPageURL(Integer id, String webPageURL);
 
 	Integer deleteTopic(Integer id);
 

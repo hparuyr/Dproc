@@ -38,6 +38,8 @@ import io.swagger.annotations.Api;
 @RestController
 @Path("/survey")
 @Api(value = "SurveyController")
+@Produces("application/pdf")
+@Consumes(MediaType.APPLICATION_JSON_VALUE)
 public class SurveyController {
 
 	@Autowired
@@ -51,7 +53,7 @@ public class SurveyController {
 	
 	@Path("/init")
 	@POST
-	public void initSurvey() throws IOException {
+	public void initSurvey() {
 		if(getSurvey().size() > 0) {
 			return;
 		}
@@ -59,7 +61,7 @@ public class SurveyController {
 		saveSurveyQuestions(response.getBody());
 	}
 	
-	private int[] saveSurveyQuestions(String body) throws IOException{
+	private int[] saveSurveyQuestions(String body) {
 		Document doc = Jsoup.parse(body);
 		Elements newsHeadlines = doc.select("form table tbody tr");
 		List<SurveyQuestion> surveyList = new ArrayList<>();
@@ -138,30 +140,29 @@ public class SurveyController {
 	
 	@Path("/result/{studentId}")
 	@GET
-	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public SurveyResult getResultByStudentId(@PathParam("studentId") int studentId) {
 		return surveyResultService.getByStudentId(studentId);
 	}
 	
 	@Path("/result")
 	@GET
-	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public List<SurveyResult> getAllResults() {
 		return surveyResultService.getAll();
 	}
-	
+
+	@Path("/result")
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	public int updateGroupId(SurveyResult surveyResult) {
 		return surveyResultService.update(surveyResult);
 	}
-	
-	@Path("/{studentId}")
+
+	@Path("/result/{studentId}")
 	@DELETE
 	public int delete(@PathParam("studentId") int studentId) {
 		return surveyResultService.delete(studentId);
 	}
 
+	@Path("/result")
 	@DELETE
 	public int deleteAll() {
 		return surveyResultService.deleteAll();

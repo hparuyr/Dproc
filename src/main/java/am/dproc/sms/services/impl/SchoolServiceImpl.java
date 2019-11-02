@@ -61,19 +61,19 @@ public class SchoolServiceImpl implements SchoolService {
 		}
 
 		if (school.getAddress() != null) {
-			if (this.schoolDAO.updateSchoolAddress(school.getId(), school.getAddress()) == 1)
+			if (this.schoolDAO.updateSchoolAddress(school.getId(), school.getAddress()) == 0)
 				return -1;
 			bool = true;
 		}
 
 		if (school.getPhoneNumber() != null) {
-			if (this.schoolDAO.updateSchoolPhoneNumber(school.getId(), school.getPhoneNumber()) == 1)
+			if (this.schoolDAO.updateSchoolPhoneNumber(school.getId(), school.getPhoneNumber()) == 0)
 				return -1;
 			bool = true;
 		}
 
 		if (school.geteMail() != null) {
-			if (this.schoolDAO.updateSchoolEMail(school.getId(), school.geteMail()) == 1)
+			if (this.schoolDAO.updateSchoolEMail(school.getId(), school.geteMail()) == 0)
 				return -1;
 			bool = true;
 		}

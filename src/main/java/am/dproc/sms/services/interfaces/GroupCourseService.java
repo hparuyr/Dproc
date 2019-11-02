@@ -20,6 +20,8 @@ public interface GroupCourseService {
 
     List<GroupCourse> getByTeacherID(Integer id);
 
+    List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID);
+
     Integer update(GroupCourse groupCourse);
 
     Integer deleteByGroupID(Integer groupId);

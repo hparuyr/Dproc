@@ -40,30 +40,30 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public Integer editClassroom(Classroom classroom) {
+    public Integer updateClassroom(Classroom classroom) {
 
         boolean bool = false;
 
         if (classroom.getName() != null) {
-            if (this.classroomDAO.editClassroomName(classroom.getId(), classroom.getName()) == 0) {
+            if (this.classroomDAO.updateClassroomName(classroom.getId(), classroom.getName()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (classroom.getCapacity() != null) {
-            if (this.classroomDAO.editClassroomCapacity(classroom.getId(), classroom.getCapacity()) == 0) {
+            if (this.classroomDAO.updateClassroomCapacity(classroom.getId(), classroom.getCapacity()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (classroom.getType() != null) {
-            if (this.classroomDAO.editClassroomType(classroom.getId(), classroom.getType()) == 0) {
+            if (this.classroomDAO.updateClassroomType(classroom.getId(), classroom.getType()) == 0) {
                 return -1;
             }
             bool = true;
         }
         if (classroom.getSubject() != null) {
-            if (this.classroomDAO.editClassroomSubject(classroom.getId(), classroom.getSubject()) == 0) {
+            if (this.classroomDAO.updateClassroomSubject(classroom.getId(), classroom.getSubject()) == 0) {
                 return -1;
             }
             bool = true;

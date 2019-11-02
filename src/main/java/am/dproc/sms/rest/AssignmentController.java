@@ -25,17 +25,18 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/assignment")
 @Api(value = "AssignmentController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class AssignmentController {
 
 	@Autowired
 	AssignmentService assignmentService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addAssignment(Assignment assignment) {
 		Integer id = assignmentService.addAssignment(assignment);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -46,20 +47,17 @@ public class AssignmentController {
 
 	@GET
 	@Path(value = "/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Assignment getAssignment(@PathParam(value = "id") Integer id) {
 		return assignmentService.getAssignment(id);
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assignment> getAllAssignments() {
 		return assignmentService.getAllAssignments();
 	}
 
 	@GET
 	@Path(value = "teacher/{teacherId}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public List<Assignment> getAssignmentsByTeacherId(@PathParam(value = "teacherId") Integer teacherId) {
 		return assignmentService.getAssignmentsByTeacherId(teacherId);
 	}

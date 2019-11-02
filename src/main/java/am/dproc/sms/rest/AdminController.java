@@ -24,14 +24,14 @@ import io.swagger.annotations.Api;
 @RestController
 @Path("/admin")
 @Api(value = "AdminController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class AdminController {
 	
 	@Autowired
 	AdminService admin;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addAdmin(Admin admin) {
 		if (this.admin.addAdmin(admin) == 1) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(1);
@@ -41,21 +41,17 @@ public class AdminController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Admin getAdmin(@PathParam(value = "id") Integer id) {
 		return admin.getAdmin(id);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Admin> getAdmins() {
 		return admin.getAdmins();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateAdmin(Admin admin) {
 		if (this.admin.updateAdmin(admin) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -65,7 +61,6 @@ public class AdminController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteAdmin(@PathParam(value = "id") Integer id) {
 		if (admin.deleteAdmin(id) == 1) {

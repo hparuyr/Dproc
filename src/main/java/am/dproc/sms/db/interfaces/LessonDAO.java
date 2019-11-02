@@ -14,9 +14,9 @@ public interface LessonDAO {
 
 	List<Lesson> getAllLessons();
 
-	Integer editLessonName(Integer id, String name);
+	Integer updateLessonName(Integer id, String name);
 
-	Integer editLessonContent(Integer id, String content);
+	Integer updateLessonContent(Integer id, String content);
 
 	Integer deleteLesson(Integer id);
 

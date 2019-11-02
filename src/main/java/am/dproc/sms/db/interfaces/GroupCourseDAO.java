@@ -16,9 +16,11 @@ public interface GroupCourseDAO {
 
     List<GroupCourse> getByCourseID(Integer courseId);
 
-    List<GroupCourse> getAll();
+    List<GroupCourse> getByTeacherID(Integer teacherID);
 
-    List<GroupCourse> getByTeacherID(Integer id);
+    List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID);
+
+    List<GroupCourse> getAll();
 
     Integer update(GroupCourse groupCourse);
 

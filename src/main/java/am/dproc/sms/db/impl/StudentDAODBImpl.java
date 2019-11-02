@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.StudentInfo;
-import am.dproc.sms.models.StudentStatus;
+import am.dproc.sms.enums.StudentStatus;
 
 @Repository
 public class StudentDAODBImpl implements StudentDAO {
@@ -34,9 +34,9 @@ public class StudentDAODBImpl implements StudentDAO {
 														+ "`USER`.`STATUS`, `USER`.`TYPE` FROM `STUDENT_GROUP` join `USER` on"
 														+ " `STUDENT_GROUP`.`STUDENT_ID`= `USER`.`ID`  WHERE `GROUP_ID`= ?";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.USER WHERE ID = ?";
-	private static final String UPDATE_STUDENT = "UPDATE mydb.STUDNET SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? WHERE ID = ?";
-	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET FIRSTNAME = ? WHERE ID = ?";
-	private static final String UPDATE_STUDENT_LASTNAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT = "UPDATE mydb.USER SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_FIRST_NAME = "UPDATE mydb.USER SET FIRSTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_LAST_NAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.USER SET EMAIL= ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_PASSWORD = "UPDATE mydb.USER SET PASSWORD = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_STATUS = "UPDATE mydb.USER SET STATUS = ? WHERE ID = ?";
@@ -56,12 +56,11 @@ public class StudentDAODBImpl implements StudentDAO {
 			ps.setLong(7, System.currentTimeMillis());
 			return ps;
 		}, keyHolder);
-		return keyHolder.getKey().intValue();
+		return (Integer) keyHolder.getKey();
 	}
 
 	@Override
 	public int[] addStudents(List<Student> students) {
-		Long currentTimeMillis = System.currentTimeMillis();
 
 		return jdbctemplate.execute((PreparedStatementCreator) con -> {
 			PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
@@ -72,8 +71,8 @@ public class StudentDAODBImpl implements StudentDAO {
 				ps.setString(4, student.getPassword());
 				// add StudentStatus type to student object
 				ps.setInt(5, StudentStatus.PENDING.ordinal());
-				ps.setLong(6, currentTimeMillis);
-				ps.setLong(7, currentTimeMillis);
+				ps.setLong(6, System.currentTimeMillis());
+				ps.setLong(7, System.currentTimeMillis());
 				ps.addBatch();
 			}
 			ps.executeBatch();
@@ -133,13 +132,13 @@ public class StudentDAODBImpl implements StudentDAO {
 	}
 	
 	@Override
-	public Integer updateStudentFirstname(Integer id, String firstname) {
-		return jdbctemplate.update(UPDATE_STUDENT_NAME, firstname, id);
+	public Integer updateStudentFirstName(Integer id, String firstName) {
+		return jdbctemplate.update(UPDATE_STUDENT_FIRST_NAME, firstName, id);
 	}
 
 	@Override
-	public Integer updateStudentLastname(Integer id, String lastanme) {
-		return jdbctemplate.update(UPDATE_STUDENT_LASTNAME, lastanme, id);
+	public Integer updateStudentLastName(Integer id, String lastName) {
+		return jdbctemplate.update(UPDATE_STUDENT_LAST_NAME, lastName, id);
 	}
 
 	@Override

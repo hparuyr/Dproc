@@ -20,11 +20,11 @@ public class TeacherInfoDAODBImpl implements TeacherInfoDAO {
 	private static final String ADD_TEACHER_INFO = "INSERT INTO mydb.USER_INFO (USER_ID, PASSPORT_ID, SOCIAL_CARD_ID, BIRTH_DATE, PHONE_NUMBER, ADDRESS, IMAGE_URL,"
 												+ "GENDER, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_TEACHER_INFO_BY_TEACHER_ID = "SELECT * FROM mydb.USER_INFO WHERE ADMIN_ID = ?";
-	private static final String UPDATE_TEACHER_INFO_PASSPORT_ID = "UPDATE mydb.ADMIN_INFO SET PASSPORT_ID = ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
-	private static final String UPDATE_TEACHER_INFO_SOCIAL_CARD_ID = "UPDATE mydb.ADMIN_INFO SET SOCIAL_ID = ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
-	private static final String UPDATE_TEACHER_INFO_BIRTH_DATE = "UPDATE mydb.ADMIN_INFO SET BIRTH_DATE= ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
-	private static final String UPDATE_TEACHER_INFO_IMAGE_URL = "UPDATE mydb.ADMIN_INFO SET IMAGE_URL = ?, CHANGE_DATE = ?, WHERE ADMIN_ID = ?";
-	private static final String DELETE_TEACHER_INFO_BY_TEACHER_ID = "DELETE FROM mydb.ADMIN_INFO WHERE ADMIN_ID = ?";
+	private static final String UPDATE_TEACHER_INFO_PASSPORT_ID = "UPDATE mydb.USER_INFO SET PASSPORT_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_TEACHER_INFO_SOCIAL_CARD_ID = "UPDATE mydb.USER_INFO SET SOCIAL_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_TEACHER_INFO_BIRTH_DATE = "UPDATE mydb.USER_INFO SET BIRTH_DATE= ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_TEACHER_INFO_IMAGE_URL = "UPDATE mydb.USER_INFO SET IMAGE_URL = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String DELETE_TEACHER_INFO_BY_TEACHER_ID = "DELETE FROM mydb.USER_INFO WHERE USER_ID = ?";
 
 	@Override
 	public Integer addTeacherInfo(TeacherInfo teacherInfo) {
@@ -40,14 +40,14 @@ public class TeacherInfoDAODBImpl implements TeacherInfoDAO {
 	}
 
 	@Override
-	public Integer updateTeacherInfoPassportId(Integer teacherId, Integer passportId) {
+	public Integer updateTeacherInfoPassportId(Integer teacherId, String passportId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_TEACHER_INFO_PASSPORT_ID,
 				passportId, currentTimeMillis, teacherId);
 	}
 
 	@Override
-	public Integer updateTeacherInfoSocialCardId(Integer teacherId, Integer socialCardId) {
+	public Integer updateTeacherInfoSocialCardId(Integer teacherId, String socialCardId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_TEACHER_INFO_SOCIAL_CARD_ID,
 				socialCardId, currentTimeMillis, teacherId);

@@ -5,6 +5,6 @@ import java.io.IOException;
 
 public interface CSVExportService {
 	
-	public File getCSVFile(Integer id) throws IOException;
+	File getCSVFile(Integer id, Integer schoolID) throws IOException;
 
 }

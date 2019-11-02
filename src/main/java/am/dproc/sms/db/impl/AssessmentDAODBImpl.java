@@ -23,10 +23,10 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
 
     private static final String ADD_ASSESSMENT = "" +
             "INSERT " +
-            "INTO mydb.ASSESSMENT(USER_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT, CREATION_DATE) " +
+            "INTO mydb.ASSESSMENT(STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT, CREATION_DATE) " +
             "VALUES (?, ?, ?, ?, ?)";
     private static final String GET_ASSESSMENT_BY_ID = "" +
-            "SELECT ID, USER_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
+            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
             "FROM mydb.ASSESSMENT " +
             "WHERE ID = ?";
     private static final String GET_AVG_SCORE_BY_STUDENT_COURSE = "" +
@@ -42,11 +42,11 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
             "FROM ASSESSMENT " +
             "WHERE STUDENT_ID = ?";
     private static final String GET_ALL_ASSESSMENT_BY_STUDENT_ID = "" +
-            "SELECT ID, USER_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
+            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
             "FROM mydb.ASSESSMENT " +
             "WHERE STUDENT_ID = ?";
     private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "" +
-            "SELECT ID, USER_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
+            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
             "FROM mydb.ASSESSMENT " +
             "WHERE ASSIGNMENT_ID = ?";
     private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "" +
@@ -54,8 +54,15 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
             "FROM mydb.ASSESSMENT " +
             "WHERE STUDENT_ID = ? " +
             "AND ASSIGNMENT_ID = ?";
+    private static final String GET_ASSESSMENT_OBJ_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "" +
+            "SELECT A.ID, A.SCORE, A.COMMENT " +
+            "FROM mydb.ASSESSMENT A " +
+            "JOIN ASSIGNMENT_COMPLETED AC " +
+            "ON AC.ID = A.ASSIGNMENT_COMPLETED_ID " +
+            "WHERE AC.STUDENT_ID = ? " +
+            "AND AC.ASSIGNMENT_ID = ?";
     private static final String GET_ALL_ASSESSMENTS = "" +
-            "SELECT ID, USER_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
+            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
             "FROM mydb.ASSESSMENT";
     private static final String DELETE_ASSESSMENT_BY_ID = "" +
             "DELETE " +
@@ -104,6 +111,20 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
     @Override
     public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
         return jdbcTemplate.queryForObject(GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID, Integer.class, studentId, assignmentId);
+    }
+
+    @Override
+    public Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID) {
+
+        return jdbcTemplate.queryForObject(GET_ASSESSMENT_OBJ_BY_STUDENT_ID_AND_ASSIGNMENT_ID, (rs, rowNum) -> {
+            Assessment assessment = new Assessment();
+
+            assessment.setId(rs.getInt("ID"));
+            assessment.setScore(rs.getInt("SCORE"));
+            assessment.setComment(rs.getString("COMMENT"));
+
+            return assessment;
+        }, studentID, assignmentID);
     }
 
     @Override

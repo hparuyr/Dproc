@@ -23,20 +23,20 @@ import am.dproc.sms.services.interfaces.GroupCourseService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/groupService-courseService")
+@Path("/group-course")
 @Api(value = "GroupCourseController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class GroupCourseController {
 
 	@Autowired
 	GroupCourseService groupCourseService;
 
-	@Path("/assign")
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response assignCourseToGroup(GroupCourse groupCourse) {
 		Integer id = groupCourseService.create(groupCourse);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -47,51 +47,45 @@ public class GroupCourseController {
 
 	@Path("/{id}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public GroupCourse getById(@PathParam("id") int id) {
 		return groupCourseService.getById(id);
 	}
 
-	@Path("/{gid}/{cid}")
+	@Path("/{groupID}/{courseID}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public GroupCourse getByGroupAndCourse(@PathParam("gid") int groupId,@PathParam("cid") int courseId) {
-		return groupCourseService.getByGroupAndCourse(groupId, courseId);
+	public GroupCourse getByGroupAndCourse(@PathParam("groupID") int groupID,@PathParam("courseID") int courseID) {
+		return groupCourseService.getByGroupAndCourse(groupID, courseID);
 	}
 
-	@Path("/courseId/{id}")
+	@Path("/courseID/{id}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<GroupCourse> getByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.getByCourseID(courseId);
 	}
 	
-	@Path("/teacherId/{teacherId}")
+	@Path("/teacherID/{teacherID}")
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<GroupCourse> getByTeacherId(@PathParam("teacherId") int teacherId) {
-		return groupCourseService.getByTeacherID(teacherId);
+	public List<GroupCourse> getByTeacherId(@PathParam("teacherID") int teacherID) {
+		return groupCourseService.getByTeacherID(teacherID);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<GroupCourse> getAll() {
 		return groupCourseService.getAll();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
 	public int updateGroupId(GroupCourse groupCourse) {
 		return groupCourseService.update(groupCourse);
 	}
 	
-	@Path("/groupId/{id}")
+	@Path("/groupID/{id}")
 	@DELETE
 	public int deleteByGroupId(@PathParam("id") int groupId) {
 		return groupCourseService.deleteByGroupID(groupId);
 	}
 
-	@Path("/courseId/{id}")
+	@Path("/courseID/{id}")
 	@DELETE
 	public int deleteByCourseId(@PathParam("id") int courseId) {
 		return groupCourseService.deleteByCourseID(courseId);

@@ -24,7 +24,17 @@ public class LessonServiceImpl implements LessonService {
 		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseID() == null) {
 			return -1;
 		}
-		return this.lessonDAO.addLesson(lesson, lesson.getCourseID());
+
+		Integer lessonID = this.lessonDAO.addLesson(lesson, lesson.getCourseID());
+
+		if (lesson.getListOfTopics() != null) {
+			for (int i = 0; i < lesson.getListOfTopics().size(); i++) {
+				lesson.getListOfTopics().get(i).setLessonID(lessonID);
+				topicService.addTopic(lesson.getListOfTopics().get(i));
+			}
+		}
+
+		return lessonID;
 	}
 
 	@Override
@@ -45,18 +55,18 @@ public class LessonServiceImpl implements LessonService {
 	}
 
 	@Override
-	public Integer editLesson(Lesson lesson) {
+	public Integer updateLesson(Lesson lesson) {
 
 		boolean bool = false;
 
 		if (lesson.getName() != null) {
-			if (this.lessonDAO.editLessonName(lesson.getId(), lesson.getName()) == 0) {
+			if (this.lessonDAO.updateLessonName(lesson.getId(), lesson.getName()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 		if (lesson.getContent() != null) {
-			if (this.lessonDAO.editLessonContent(lesson.getId(), lesson.getContent()) == 0) {
+			if (this.lessonDAO.updateLessonContent(lesson.getId(), lesson.getContent()) == 0) {
 				return -1;
 			}
 			bool = true;

@@ -27,11 +27,12 @@ public class TestResultController {
 
 	@POST
 	@Path(value = "/{testId}/{studentId}/{score}")
-	public Response createTestResult(@PathParam(value = "testId") Integer testId,
-			@PathParam(value = "studentId") Integer studentId, @PathParam(value = "score") Double score) {
-		Integer id = testResultService.createTestResult(testId, studentId, score);
+	public Response addTestResult(@PathParam(value = "testId") Integer testId,
+								  @PathParam(value = "studentId") Integer studentId,
+								  @PathParam(value = "score") Double score) {
+		Integer id = testResultService.addTestResult(testId, studentId, score);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {

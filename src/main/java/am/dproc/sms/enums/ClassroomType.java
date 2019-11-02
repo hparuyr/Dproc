@@ -4,7 +4,7 @@ public enum ClassroomType {
 	
 	FOR_SEMINAR (1),
 	FOR_LECTURE (2),
-	GENERAL_PORPOSE (3);
+	GENERAL_PURPOSE(3);
 
     private final Integer index;
 

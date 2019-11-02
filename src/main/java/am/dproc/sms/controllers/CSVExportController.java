@@ -20,10 +20,10 @@ public class CSVExportController {
     CSVExportService csv;
 
     @RequestMapping(value = "/export", method = RequestMethod.GET, produces = "text/csv")
-    public FileSystemResource greeting(@RequestParam(value = "teacherId") Integer teacherId) {
-
+    public FileSystemResource exportStudentsInfo(@RequestParam(value = "teacherID") Integer teacherID,
+                                                 @RequestParam(value = "schoolID") Integer schoolID) {
         try {
-            return new FileSystemResource(csv.getCSVFile(teacherId));
+            return new FileSystemResource(csv.getCSVFile(teacherID, schoolID));
         } catch (IOException e) {
             e.printStackTrace();
         }

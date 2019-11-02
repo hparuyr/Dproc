@@ -17,7 +17,7 @@ public class TestResultDAODBImpl implements TestResultDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String CREATE_TEST_RESULT = "" +
+    private static final String ADD_TEST_RESULT = "" +
             "INSERT " +
             "INTO mydb.TEST_RESULT(TEST_ID, STUDENT_ID, SCORE, CREATION_DATE) " +
             "VALUES (?, ?, ?, ?)";
@@ -70,11 +70,11 @@ public class TestResultDAODBImpl implements TestResultDAO {
 
 
     @Override
-    public Integer createTestResult(Integer testId, Integer studentId, Double score) {
+    public Integer addTestResult(Integer testId, Integer studentId, Double score) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(CREATE_TEST_RESULT, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = connection.prepareStatement(ADD_TEST_RESULT, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, testId);
             ps.setInt(2, studentId);
             ps.setDouble(3, score);

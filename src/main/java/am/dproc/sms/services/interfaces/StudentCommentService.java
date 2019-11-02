@@ -12,7 +12,7 @@ public interface StudentCommentService {
 
 	List<StudentComment> getCommentsOfTopic(Integer topicID);
 
-	Integer editComment(StudentComment Comment);
+	Integer updateComment(StudentComment Comment);
 
 	Integer deleteComment(Integer id);
 

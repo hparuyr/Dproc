@@ -18,6 +18,8 @@ public interface AssessmentDAO {
 	
 	Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId);
 
+	Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
+
 	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
 
 	Double getAverageScoreByStudent(Integer studentId);

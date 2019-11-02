@@ -24,20 +24,20 @@ import am.dproc.sms.services.interfaces.TopicService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path(value = "/topicService")
+@Path(value = "/topic")
 @Api(value = "TopicController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class TopicController {
 
 	@Autowired
 	TopicService topicService;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addTopic(Topic topic) {
 		Integer id = topicService.addTopic(topic);
 		if (id == -1) {
-			Map<String, String> message = new HashMap<String, String>();
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 		} else if (id == 0) {
@@ -47,7 +47,6 @@ public class TopicController {
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Topic> getAllTopics() {
 		return topicService.getAllTopics();
 	}
@@ -60,28 +59,26 @@ public class TopicController {
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editTopic(Topic topic) {
-		Integer status = this.topicService.editTopic(topic);
+	public Response updateTopic(Topic topic) {
+		Integer status = this.topicService.updateTopic(topic);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
+		Map<String, String> message;
+		message = new HashMap<>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.NO_CONTENT).entity(message).build();
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
 	@DELETE
 	@Path(value = "/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response deleteTopic(@PathParam(value = "id") Integer id) {
 		if (topicService.deleteTopic(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
+		Map<String, String> message = new HashMap<>();
 		message.put("Message", "First you must delete the comments of this topicService!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}

@@ -22,47 +22,54 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String CREATE_SQL = "" +
+    private static final String CREATE = "" +
             "INSERT " +
             "INTO GROUP_COURSE(GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE) " +
             "VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String GET_BY_ID_SQL = "" +
+    private static final String GET_BY_ID = "" +
             "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE " +
             "WHERE ID = ?";
-    private static final String GET_BY_GROUP_AND_COURSE_SQL = "" +
+    private static final String GET_BY_GROUP_AND_COURSE = "" +
             "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE " +
             "WHERE GROUP_ID=? " +
             "AND COURSE_ID = ?";
-    private static final String GET_BY_GROUP_SQL = "" +
-            "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE* " +
+    private static final String GET_BY_GROUP = "" +
+            "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE " +
             "WHERE GROUP_ID = ?";
-    private static final String GET_BY_COURSE_SQL = "" +
+    private static final String GET_BY_COURSE = "" +
             "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE " +
             "WHERE COURSE_ID = ?";
-    private static final String GET_ALL_SQL = "" +
+    private static final String GET_ALL = "" +
             "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE";
-    private static final String GET_BY_TEACHER_ID_SQL = "" +
+    private static final String GET_BY_TEACHER_ID = "" +
             "SELECT ID, GROUP_ID, COURSE_ID, TEACHER_ID, START_DATE, FINISHED, CREATION_DATE " +
             "FROM GROUP_COURSE " +
             "WHERE TEACHER_ID = ?";
-    private static final String UPDATE_SQL = "" +
+    private static final String GET_BY_TEACHER_ID_AND_SCHOOL_ID = "" +
+            "SELECT GC.ID, GC.COURSE_ID, GC.GROUP_ID, GC.TEACHER_ID, GC.START_DATE, GC.FINISHED " +
+            "FROM GROUP_COURSE GC " +
+            "JOIN mydb.GROUP G " +
+            "ON GC.GROUP_ID = G.ID " +
+            "WHERE G.SCHOOL_ID = ? " +
+            "AND GC.TEACHER_ID = ?";
+    private static final String UPDATE = "" +
             "UPDATE GROUP_COURSE " +
             "SET GROUP_ID = ?, COURSE_ID = ?, TEACHER_ID = ?, START_DATE = ?, FINISHED = ?, CHANGE_DATE = ? " +
             "WHERE ID = ?";
-    private static final String DELETE_BY_GROUP_SQL = "" +
+    private static final String DELETE_BY_GROUP = "" +
             "DELETE " +
             "FROM GROUP_COURSE " +
             "WHERE GROUP_ID = ?";
-    private static final String DELETE_BY_COURSE_SQL = "" +
+    private static final String DELETE_BY_COURSE = "" +
             "DELETE " +
             "FROM GROUP_COURSE " +
             "WHERE COURSE_ID = ?";
-    private static final String DELETE_ALL_SQL = "" +
+    private static final String DELETE_ALL = "" +
             "DELETE " +
             "FROM GROUP_COURSE";
 
@@ -71,7 +78,7 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         long currentTimeStamp = System.currentTimeMillis();
         jdbcTemplate.update(con -> {
-            PreparedStatement ps = con.prepareStatement(CREATE_SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement ps = con.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, groupCourse.getGroupId());
             ps.setInt(2, groupCourse.getCourseId());
             ps.setInt(3, groupCourse.getTeacherId());
@@ -85,55 +92,60 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
 
     @Override
     public GroupCourse getById(Integer id) {
-        return jdbcTemplate.queryForObject(GET_BY_ID_SQL, new Object[]{id}, new GroupCourseMapper());
+        return jdbcTemplate.queryForObject(GET_BY_ID, new Object[]{id}, new GroupCourseMapper());
     }
 
     @Override
     public GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId) {
-        return jdbcTemplate.queryForObject(GET_BY_GROUP_AND_COURSE_SQL, new Object[]{groupId, courseId},
+        return jdbcTemplate.queryForObject(GET_BY_GROUP_AND_COURSE, new Object[]{groupId, courseId},
                 new GroupCourseMapper());
     }
 
     @Override
     public List<GroupCourse> getByGroupID(Integer groupId) {
-        return jdbcTemplate.query(GET_BY_GROUP_SQL, new Object[]{groupId}, new GroupCourseMapper());
+        return jdbcTemplate.query(GET_BY_GROUP, new Object[]{groupId}, new GroupCourseMapper());
     }
 
     @Override
     public List<GroupCourse> getByCourseID(Integer courseId) {
-        return jdbcTemplate.query(GET_BY_COURSE_SQL, new Object[]{courseId}, new GroupCourseMapper());
+        return jdbcTemplate.query(GET_BY_COURSE, new Object[]{courseId}, new GroupCourseMapper());
     }
 
     @Override
     public List<GroupCourse> getAll() {
-        return jdbcTemplate.query(GET_ALL_SQL, new GroupCourseMapper());
+        return jdbcTemplate.query(GET_ALL, new GroupCourseMapper());
     }
 
     @Override
     public List<GroupCourse> getByTeacherID(Integer id) {
-        return jdbcTemplate.query(GET_BY_TEACHER_ID_SQL, new GroupCourseMapper(), id);
+        return jdbcTemplate.query(GET_BY_TEACHER_ID, new GroupCourseMapper(), id);
+    }
+
+    @Override
+    public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID) {
+        return jdbcTemplate.query(GET_BY_TEACHER_ID_AND_SCHOOL_ID, new GroupCourseMapper(), schoolID, teacherID);
     }
 
     @Override
     public Integer update(GroupCourse groupCourse) {
-        return jdbcTemplate.update(UPDATE_SQL, groupCourse.getGroupId(), groupCourse.getCourseId(),
+        return jdbcTemplate.update(UPDATE, groupCourse.getGroupId(), groupCourse.getCourseId(),
                 groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.getFinished(),
                 System.currentTimeMillis(), groupCourse.getId());
     }
 
     @Override
     public Integer deleteByGroupID(Integer groupId) {
-        return jdbcTemplate.update(DELETE_BY_GROUP_SQL, groupId);
+        return jdbcTemplate.update(DELETE_BY_GROUP, groupId);
     }
 
     @Override
     public Integer deleteByCourseID(Integer courseId) {
-        return jdbcTemplate.update(DELETE_BY_COURSE_SQL, courseId);
+        return jdbcTemplate.update(DELETE_BY_COURSE, courseId);
     }
 
     @Override
     public Integer deleteAll() {
-        return jdbcTemplate.update(DELETE_ALL_SQL);
+        return jdbcTemplate.update(DELETE_ALL);
     }
 
     private static class GroupCourseMapper implements RowMapper<GroupCourse> {

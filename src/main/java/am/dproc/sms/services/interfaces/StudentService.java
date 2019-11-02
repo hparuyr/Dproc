@@ -6,19 +6,19 @@ import am.dproc.sms.models.Student;
 
 public interface StudentService {
 
-	public Integer addStudent(Student student);
+	Integer addStudent(Student student);
 
-	public int[] addStudents(List<Student> students);
+	int[] addStudents(List<Student> students);
 
-	public Student getStudent(Integer id);
+	Student getStudent(Integer id);
 
-	public Student getStudentByEmail(String email);
+	Student getStudentByEmail(String email);
 
-	public List<Student> getGroupStudents(Integer groupId);
+	List<Student> getGroupStudents(Integer groupId);
 
-	public List<Student> getStudents();
+	List<Student> getStudents();
 
-	public Integer updateStudent(Student student);
+	Integer updateStudent(Student student);
 
-	public Integer deleteStudent(Integer id);
+	Integer deleteStudent(Integer id);
 }

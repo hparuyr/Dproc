@@ -6,7 +6,7 @@ import am.dproc.sms.models.Test;
 
 public interface TestDAO {	
 
-	Integer createTest(Test test);
+	Integer addTest(Test test);
 
 	Test getTest(Integer id);
 	

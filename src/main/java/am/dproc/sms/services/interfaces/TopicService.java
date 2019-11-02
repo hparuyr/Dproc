@@ -14,7 +14,7 @@ public interface TopicService {
 
 	List<Topic> getAllTopics();
 
-	Integer editTopic(Topic topic);
+	Integer updateTopic(Topic topic);
 
 	Integer deleteTopic(Integer lessonID);
 

@@ -25,7 +25,7 @@ public class LessonDAODBImpl implements LessonDAO {
     private static final String ADD_LESSON = ""
             + "INSERT "
             + "INTO mydb.LESSON (COURSE_ID, NAME, CONTENT, CREATION_DATE) "
-            + "VALUES(?, ?, ?, ?, ?)";
+            + "VALUES(?, ?, ?, ?)";
     private static final String GET_LESSONS = ""
             + "SELECT ID, COURSE_ID, NAME, CONTENT "
             + "FROM mydb.LESSON";
@@ -37,11 +37,11 @@ public class LessonDAODBImpl implements LessonDAO {
             + "SELECT ID, COURSE_ID, NAME, CONTENT "
             + "FROM mydb.LESSON "
             + "WHERE COURSE_ID = ?";
-    private static final String EDIT_LESSON_NAME = ""
+    private static final String UPDATE_LESSON_NAME = ""
             + "UPDATE mydb.LESSON "
             + "SET NAME = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
-    private static final String EDIT_LESSON_CONTENT = ""
+    private static final String UPDATE_LESSON_CONTENT = ""
             + "UPDATE mydb.LESSON "
             + "SET CONTENT = ?, CHANGE_DATE = ? "
             + "WHERE ID = ?";
@@ -81,13 +81,13 @@ public class LessonDAODBImpl implements LessonDAO {
     }
 
     @Override
-    public Integer editLessonName(Integer id, String name) {
-        return jdbctemplate.update(EDIT_LESSON_NAME, name, System.currentTimeMillis(), id);
+    public Integer updateLessonName(Integer id, String name) {
+        return jdbctemplate.update(UPDATE_LESSON_NAME, name, System.currentTimeMillis(), id);
     }
 
     @Override
-    public Integer editLessonContent(Integer id, String content) {
-        return jdbctemplate.update(EDIT_LESSON_CONTENT, content, System.currentTimeMillis(), id);
+    public Integer updateLessonContent(Integer id, String content) {
+        return jdbctemplate.update(UPDATE_LESSON_CONTENT, content, System.currentTimeMillis(), id);
     }
 
     @Override

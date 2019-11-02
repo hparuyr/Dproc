@@ -16,6 +16,8 @@ public interface AssessmentService {
 
     Integer getAssessmentByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
 
+    Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
+
     Double getAverageScoreByStudentCourse(Integer studentID, Integer courseID);
 
     Double getAverageScoreByStudent(Integer studentID);
