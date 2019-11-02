@@ -6,14 +6,14 @@ import am.dproc.sms.models.StudentInfo;
 
 public interface StudentInfoService {
 
-	public Integer addStudentInfo(StudentInfo studentInfo);
+	Integer addStudentInfo(StudentInfo studentInfo);
 
-	public int[] addStudentInfos(List<StudentInfo> infos);
+	int[] addStudentInfos(List<StudentInfo> infos);
 
-	public StudentInfo getStudentInfoByStudentId(Integer studentId);
+	StudentInfo getStudentInfoByStudentId(Integer studentId);
 
-	public Integer updateStudentInfo(StudentInfo studentInfo);
+	Integer updateStudentInfo(StudentInfo studentInfo);
 
-	public Integer deleteStudentInfo(Integer studentId);
+	Integer deleteStudentInfo(Integer studentId);
 
 }

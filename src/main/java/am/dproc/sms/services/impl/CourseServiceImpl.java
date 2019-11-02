@@ -21,7 +21,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Integer addCourse(Course course) {
-        if (course.getSchoolID() == null || course.getName() == null || course.getDescription() == null
+        if (course.getSchoolId() == null || course.getName() == null || course.getDescription() == null
                 || course.getDuration() == null || course.getDurationUnitType() == null) {
             return -1;
         }
@@ -29,7 +29,7 @@ public class CourseServiceImpl implements CourseService {
 
         if (course.getListOfLessons() != null) {
             for (int i = 0; i < course.getListOfLessons().size(); i++) {
-                course.getListOfLessons().get(i).setCourseID(courseID);
+                course.getListOfLessons().get(i).setCourseId(courseID);
                 lessonService.addLesson(course.getListOfLessons().get(i));
             }
         }

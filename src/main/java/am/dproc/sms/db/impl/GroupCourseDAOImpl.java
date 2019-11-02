@@ -102,12 +102,12 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
     }
 
     @Override
-    public List<GroupCourse> getByGroupID(Integer groupId) {
+    public List<GroupCourse> getByGroupId(Integer groupId) {
         return jdbcTemplate.query(GET_BY_GROUP, new Object[]{groupId}, new GroupCourseMapper());
     }
 
     @Override
-    public List<GroupCourse> getByCourseID(Integer courseId) {
+    public List<GroupCourse> getByCourseId(Integer courseId) {
         return jdbcTemplate.query(GET_BY_COURSE, new Object[]{courseId}, new GroupCourseMapper());
     }
 
@@ -117,13 +117,13 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
     }
 
     @Override
-    public List<GroupCourse> getByTeacherID(Integer id) {
+    public List<GroupCourse> getByTeacherId(Integer id) {
         return jdbcTemplate.query(GET_BY_TEACHER_ID, new GroupCourseMapper(), id);
     }
 
     @Override
-    public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID) {
-        return jdbcTemplate.query(GET_BY_TEACHER_ID_AND_SCHOOL_ID, new GroupCourseMapper(), schoolID, teacherID);
+    public List<GroupCourse> getByTeacherIdAndSchoolId(Integer teacherId, Integer schoolId) {
+        return jdbcTemplate.query(GET_BY_TEACHER_ID_AND_SCHOOL_ID, new GroupCourseMapper(), schoolId, teacherId);
     }
 
     @Override
@@ -134,12 +134,12 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
     }
 
     @Override
-    public Integer deleteByGroupID(Integer groupId) {
+    public Integer deleteByGroupId(Integer groupId) {
         return jdbcTemplate.update(DELETE_BY_GROUP, groupId);
     }
 
     @Override
-    public Integer deleteByCourseID(Integer courseId) {
+    public Integer deleteByCourseId(Integer courseId) {
         return jdbcTemplate.update(DELETE_BY_COURSE, courseId);
     }
 

@@ -25,7 +25,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public Classroom getClassroomByID(Integer id) {
+    public Classroom getClassroomById(Integer id) {
         return classroomDAO.getClassroom(id);
     }
 

@@ -12,6 +12,7 @@ public class School {
     private List<Group> listOfGroups;
     private List<Admin> listOfAdmins;
     private List<Teacher> listOfTeachers;
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

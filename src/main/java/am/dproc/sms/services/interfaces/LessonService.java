@@ -10,7 +10,7 @@ public interface LessonService {
 
 	Lesson getLesson(Integer id);
 
-	List<Lesson> getCourseLessons(Integer courseID);
+	List<Lesson> getCourseLessons(Integer courseId);
 
 	List<Lesson> getAllLesson();
 

@@ -16,9 +16,9 @@ public interface AssessmentDAO {
 
 	List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId);
 	
-	Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId);
+	Integer getAssessmentByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
-	Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
+	Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
 	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
 

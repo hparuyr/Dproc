@@ -5,7 +5,7 @@ import java.util.List;
 public class Lesson {
 
     private Integer id;
-    private Integer courseID;
+    private Integer courseId;
     private String name;
     private String content;
     private List<Topic> listOfTopics;
@@ -18,12 +18,12 @@ public class Lesson {
         this.id = id;
     }
 
-    public Integer getCourseID() {
-        return courseID;
+    public Integer getCourseId() {
+        return courseId;
     }
 
-    public void setCourseID(Integer courseID) {
-        this.courseID = courseID;
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 
     public String getName() {

@@ -16,12 +16,13 @@ import am.dproc.sms.models.SurveyQuestion;
 
 @Repository
 public class SurveyQuestionDAOImpl implements SurveyQuestionDAO {
+
     @Autowired
     JdbcTemplate template;
 
-    public static final String BATCH_CREATE = "INSERT INTO SURVEY_QUESTION (CONTENT, INPUT_NAME, CREATION_DATE, CHANGE_DATE) VALUES (?, ?, ?, ?)";
-    public static final String GET_ALL = "SELECT * FROM SURVEY_QUESTION";
-    PreparedStatement ps;
+    private static final String BATCH_CREATE = "INSERT INTO SURVEY_QUESTION (CONTENT, INPUT_NAME, CREATION_DATE, CHANGE_DATE) VALUES (?, ?, ?, ?)";
+    private static final String GET_ALL = "SELECT * FROM SURVEY_QUESTION";
+
 
     @Override
     public int create(String content, String inputName) {

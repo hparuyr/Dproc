@@ -3,7 +3,7 @@ package am.dproc.sms.models;
 public class Topic {
 
     private Integer id;
-    private Integer lessonID;
+    private Integer lessonId;
     private String videoURL;
     private String webPageURL;
 
@@ -15,12 +15,12 @@ public class Topic {
         this.id = id;
     }
 
-    public Integer getLessonID() {
-        return lessonID;
+    public Integer getLessonId() {
+        return lessonId;
     }
 
-    public void setLessonID(Integer lessonID) {
-        this.lessonID = lessonID;
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getVideoURL() {

@@ -14,7 +14,7 @@ public interface AssignmentDAO {
 
 	List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
 
-	Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID);
+	Assignment getAssignmentByLessonIdAndTeacherId(Integer lessonId, Integer teacherId);
 
 	Integer deleteAssignment(Integer id);
 

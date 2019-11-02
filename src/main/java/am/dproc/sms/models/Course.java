@@ -5,7 +5,7 @@ import java.util.List;
 public class Course {
 
     private Integer id;
-    private Integer schoolID;
+    private Integer schoolId;
     private String name;
     private String description;
     private Integer duration;
@@ -20,12 +20,12 @@ public class Course {
         this.id = id;
     }
 
-    public Integer getSchoolID() {
-        return schoolID;
+    public Integer getSchoolId() {
+        return schoolId;
     }
 
-    public void setSchoolID(Integer schoolID) {
-        this.schoolID = schoolID;
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getName() {

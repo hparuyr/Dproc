@@ -21,12 +21,16 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentDAO studentDao;
+
 	@Autowired
 	StudentInfoService studentInfo;
+
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+
 	@Autowired
 	EmailService emailService;
+
 	@Autowired
 	GroupService groupService;
 
@@ -48,8 +52,8 @@ public class StudentServiceImpl implements StudentService {
 			String msg = String.format("Your temporary password: %s%nPlease login to complete your account information", randomPass);
 //			String msg = "Your temporary password: " + randomPass
 //					+ "\nPlease login to complete your account information";
-//			emailService.send(msg, "Temporary_Password", student.getEmail());
-//			emailService.send(msg, "Temporary_Password", new String[]{student.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
+//			emailService.send(msg, "Temporary_Password", studentService.getEmail());
+//			emailService.send(msg, "Temporary_Password", new String[]{studentService.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
 //					"gorhakobiann@gmail.com","tigranuhi89@rambler.ru"});
 			return id;
 		}
@@ -64,7 +68,7 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student getStudent(Integer id) {
 		Student student = studentDao.getStudent(id);
-//		student.setStudentInfo(this.studentInfo.getStudentInfoByStudentId(id));
+//		studentService.setStudentInfo(this.studentInfo.getStudentInfoByStudentId(id));
 		student.setGroups(groupService.getGroupsByStudentId(id));
 		return student;
 	}

@@ -109,8 +109,8 @@ public class CSVUploadController {
 			Arrays.toString(line);
 			System.out.println(line[0] + " " + line[1]);
 			Student student = new Student();
-			student.setFirstname(line[0]);
-			student.setLastname(line[1]);
+			student.setFirstName(line[0]);
+			student.setLastName(line[1]);
 			student.setEmail(line[2]);
 			int rand1 = (int) ((Math.random() * 1000000) + 1);
 			int rand2 = (int) ((Math.random() * 1000000) + 1);

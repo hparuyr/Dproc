@@ -26,8 +26,10 @@ public class TeacherServiceImpl implements TeacherService {
 
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+
 	@Autowired
 	EmailService emailService;
+
 	@Autowired
 	GroupService groupService;
 
@@ -49,7 +51,7 @@ public class TeacherServiceImpl implements TeacherService {
 			String msg = String.format("Your temporary password: %s%nPlease login to complete your account information", randomPass);
 //					"Your temporary password: " + randomPass + "\nPlease login to complete your account information";
 //			emailService.send(msg, "Temporary_Password", teacher.getEmail());
-//			emailService.send(msg, "Temporary_Password", new String[]{student.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
+//			emailService.send(msg, "Temporary_Password", new String[]{studentService.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
 //					"gorhakobiann@gmail.com","tigranuhi89@rambler.ru"});
 			return id;
 		}

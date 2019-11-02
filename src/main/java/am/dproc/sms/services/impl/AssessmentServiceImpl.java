@@ -44,13 +44,13 @@ public class AssessmentServiceImpl implements AssessmentService {
     }
 
     @Override
-    public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
-        return assessmentDAO.getAssessmentByStudentIDAndAssignmentID(studentId, assignmentId);
+    public Integer getAssessmentByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId) {
+        return assessmentDAO.getAssessmentByStudentIdAndAssignmentId(studentId, assignmentId);
     }
 
     @Override
-    public Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID) {
-        return assessmentDAO.getAssessmentObjByStudentIDAndAssignmentID(studentID, assignmentID);
+    public Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId) {
+        return assessmentDAO.getAssessmentObjByStudentIdAndAssignmentId(studentId, assignmentId);
     }
 
     @Override

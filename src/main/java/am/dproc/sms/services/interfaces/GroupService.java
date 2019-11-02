@@ -12,13 +12,13 @@ public interface GroupService {
 
 	Group getGroup(Integer id);
 
-	List<Group> getSchoolGroups(Integer schoolID);
+	List<Group> getSchoolGroups(Integer schoolId);
 
-	Group getGroupsByIDAndSchoolID(Integer id, Integer schoolID);
+	Group getGroupsByIDAndSchoolId(Integer id, Integer schoolId);
 
 	List<Group> getGroups();
 
-	List<Group> getGroupsByStudentId(Integer studentID);
+	List<Group> getGroupsByStudentId(Integer studentId);
 
 	Integer updateGroup(Group group);
 

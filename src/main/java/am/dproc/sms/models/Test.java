@@ -7,7 +7,7 @@ public class Test {
     private Integer id;
     private String title;
     private Integer lessonId;
-    List<Question> questions;
+    private List<Question> questions;
 
     public List<Question> getQuestions() {
         return questions;

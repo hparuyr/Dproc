@@ -41,32 +41,39 @@ public class ScheduleController {
 	}
 
 	@GET
-	@Path(value = "teacher/{teacherID}/{start}/{end}")
-	public List<ScheduleRecord> getScheduleForTeacherInPeriod(@PathParam(value = "teacherID") Integer teacherID,
-			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
-		return scheduleService.getScheduleForTeacherInPeriod(teacherID, startDate, endDate);
+	@Path(value = "teacher/{teacherId}/{start}/{end}")
+	public List<ScheduleRecord> getScheduleForTeacherInPeriod(
+			@PathParam(value = "teacherId") Integer teacherId,
+			@PathParam(value = "start") Long startDate,
+			@PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForTeacherInPeriod(teacherId, startDate, endDate);
 	}
 
 	@GET
-	@Path(value = "student/{studentID}/{start}/{end}")
-	public List<ScheduleRecord> getScheduleForStudentInPeriod(@PathParam(value = "studentID") Integer studentID,
-			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
-		return scheduleService.getScheduleForStudentInPeriod(studentID, startDate, endDate);
+	@Path(value = "student/{studentId}/{start}/{end}")
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(
+			@PathParam(value = "studentId") Integer studentId,
+			@PathParam(value = "start") Long startDate,
+			@PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForStudentInPeriod(studentId, startDate, endDate);
 	}
 
 	@GET
-	@Path(value = "groupCourse/{groupCourseID}/{start}/{end}")
+	@Path(value = "groupCourse/{groupCourseId}/{start}/{end}")
 	public List<ScheduleRecord> getScheduleForGroupCourseInPeriod(
-			@PathParam(value = "groupCourseID") Integer groupCourseId, @PathParam(value = "start") Long starDate,
+			@PathParam(value = "groupCourseId") Integer groupCourseId,
+			@PathParam(value = "start") Long starDate,
 			@PathParam(value = "end") Long endDate) {
 		return scheduleService.getScheduleForGroupCourseInPeriod(groupCourseId, starDate, endDate);
 	}
 
 	@GET
-	@Path(value = "classRoom/{classroomID}/{start}/{end}")
-	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(@PathParam(value = "classroomID") Integer classroomID,
-			@PathParam(value = "start") Long starDate, @PathParam(value = "end") Long endDate) {
-		return scheduleService.getScheduleForClassRoomInPeriod(classroomID, starDate, endDate);
+	@Path(value = "classRoom/{classroomId}/{start}/{end}")
+	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(
+			@PathParam(value = "classroomId") Integer classroomId,
+			@PathParam(value = "start") Long starDate,
+			@PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForClassRoomInPeriod(classroomId, starDate, endDate);
 	}
 
 	@PUT

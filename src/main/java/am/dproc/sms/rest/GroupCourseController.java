@@ -34,7 +34,7 @@ public class GroupCourseController {
 
 	@POST
 	public Response assignCourseToGroup(GroupCourse groupCourse) {
-		Integer id = groupCourseService.create(groupCourse);
+		Integer id = groupCourseService.add(groupCourse);
 		if (id == -1) {
 			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
@@ -47,26 +47,28 @@ public class GroupCourseController {
 
 	@Path("/{id}")
 	@GET
-	public GroupCourse getById(@PathParam("id") int id) {
+	public GroupCourse getById(@PathParam("id") Integer id) {
 		return groupCourseService.getById(id);
 	}
 
-	@Path("/{groupID}/{courseID}")
+	@Path("/{groupId}/{courseId}")
 	@GET
-	public GroupCourse getByGroupAndCourse(@PathParam("groupID") int groupID,@PathParam("courseID") int courseID) {
-		return groupCourseService.getByGroupAndCourse(groupID, courseID);
+	public GroupCourse getByGroupAndCourse(
+			@PathParam("groupId") Integer groupId,
+			@PathParam("courseId") Integer courseId) {
+		return groupCourseService.getByGroupAndCourse(groupId, courseId);
 	}
 
 	@Path("/courseID/{id}")
 	@GET
-	public List<GroupCourse> getByCourseId(@PathParam("id") int courseId) {
+	public List<GroupCourse> getByCourseId(@PathParam("id") Integer courseId) {
 		return groupCourseService.getByCourseID(courseId);
 	}
 	
-	@Path("/teacherID/{teacherID}")
+	@Path("/teacherId/{teacherId}")
 	@GET
-	public List<GroupCourse> getByTeacherId(@PathParam("teacherID") int teacherID) {
-		return groupCourseService.getByTeacherID(teacherID);
+	public List<GroupCourse> getByTeacherId(@PathParam("teacherId") Integer teacherId) {
+		return groupCourseService.getByTeacherId(teacherId);
 	}
 
 	@GET
@@ -75,24 +77,24 @@ public class GroupCourseController {
 	}
 
 	@PUT
-	public int updateGroupId(GroupCourse groupCourse) {
+	public Integer updateGroupId(GroupCourse groupCourse) {
 		return groupCourseService.update(groupCourse);
 	}
 	
-	@Path("/groupID/{id}")
+	@Path("/groupId/{id}")
 	@DELETE
-	public int deleteByGroupId(@PathParam("id") int groupId) {
-		return groupCourseService.deleteByGroupID(groupId);
+	public Integer deleteByGroupId(@PathParam("id") Integer groupId) {
+		return groupCourseService.deleteByGroupId(groupId);
 	}
 
-	@Path("/courseID/{id}")
+	@Path("/courseId/{id}")
 	@DELETE
-	public int deleteByCourseId(@PathParam("id") int courseId) {
-		return groupCourseService.deleteByCourseID(courseId);
+	public Integer deleteByCourseId(@PathParam("id") Integer courseId) {
+		return groupCourseService.deleteByCourseId(courseId);
 	}
 
 	@DELETE
-	public int deleteAll() {
+	public Integer deleteAll() {
 		return groupCourseService.deleteAll();
 	}
 }

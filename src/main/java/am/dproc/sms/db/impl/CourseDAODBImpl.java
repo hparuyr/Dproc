@@ -66,7 +66,7 @@ public class CourseDAODBImpl implements CourseDAO {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbctemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_COURSE, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, course.getSchoolID());
+            ps.setInt(1, course.getSchoolId());
             ps.setString(2, course.getName());
             ps.setString(3, course.getDescription());
             ps.setInt(4, course.getDuration());
@@ -138,7 +138,7 @@ public class CourseDAODBImpl implements CourseDAO {
 
             Course course = new Course();
             course.setId(rs.getInt("ID"));
-            course.setSchoolID(rs.getInt("SCHOOL_ID"));
+            course.setSchoolId(rs.getInt("SCHOOL_ID"));
             course.setName(rs.getString("NAME"));
             course.setDescription(rs.getString("DESCRIPTION"));
             course.setDuration(rs.getInt("DURATION"));

@@ -21,15 +21,15 @@ public class LessonServiceImpl implements LessonService {
 
 	@Override
 	public Integer addLesson(Lesson lesson) {
-		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseID() == null) {
+		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseId() == null) {
 			return -1;
 		}
 
-		Integer lessonID = this.lessonDAO.addLesson(lesson, lesson.getCourseID());
+		Integer lessonID = this.lessonDAO.addLesson(lesson, lesson.getCourseId());
 
 		if (lesson.getListOfTopics() != null) {
 			for (int i = 0; i < lesson.getListOfTopics().size(); i++) {
-				lesson.getListOfTopics().get(i).setLessonID(lessonID);
+				lesson.getListOfTopics().get(i).setLessonId(lessonID);
 				topicService.addTopic(lesson.getListOfTopics().get(i));
 			}
 		}
@@ -45,8 +45,8 @@ public class LessonServiceImpl implements LessonService {
 	}
 
 	@Override
-	public List<Lesson> getCourseLessons(Integer courseID) {
-		return this.lessonDAO.getLessonsOfCourse(courseID);
+	public List<Lesson> getCourseLessons(Integer courseId) {
+		return this.lessonDAO.getLessonsOfCourse(courseId);
 	}
 
 	@Override

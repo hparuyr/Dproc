@@ -6,11 +6,11 @@ import am.dproc.sms.models.Lesson;
 
 public interface LessonDAO {
 	
-	Integer addLesson(Lesson lesson, Integer courseID);
+	Integer addLesson(Lesson lesson, Integer courseId);
 
 	Lesson getLesson(Integer id);
 
-	List<Lesson> getLessonsOfCourse(Integer courseID);
+	List<Lesson> getLessonsOfCourse(Integer courseId);
 
 	List<Lesson> getAllLessons();
 

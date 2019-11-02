@@ -47,8 +47,8 @@ public class StudentDAODBImpl implements StudentDAO {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbctemplate.update(con -> {
 			PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, student.getFirstname());
-			ps.setString(2, student.getLastname());
+			ps.setString(1, student.getFirstName());
+			ps.setString(2, student.getLastName());
 			ps.setString(3, student.getEmail());
 			ps.setString(4, student.getPassword());
 			ps.setInt(5, student.getStatus());
@@ -65,8 +65,8 @@ public class StudentDAODBImpl implements StudentDAO {
 		return jdbctemplate.execute((PreparedStatementCreator) con -> {
 			PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
 			for (Student student : students) {
-				ps.setString(1, student.getFirstname());
-				ps.setString(2, student.getLastname());
+				ps.setString(1, student.getFirstName());
+				ps.setString(2, student.getLastName());
 				ps.setString(3, student.getEmail());
 				ps.setString(4, student.getPassword());
 				// add StudentStatus type to student object
@@ -127,7 +127,7 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Integer updateStudent(Student student) {
-		return jdbctemplate.update(UPDATE_STUDENT, student.getFirstname(), student.getLastname(), student.getEmail(),
+		return jdbctemplate.update(UPDATE_STUDENT, student.getFirstName(), student.getLastName(), student.getEmail(),
 				student.getPassword(), student.getStatus(), student.getId());
 	}
 	
@@ -167,8 +167,8 @@ public class StudentDAODBImpl implements StudentDAO {
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
 			student.setId(rs.getInt("ID"));
-			student.setFirstname(rs.getString("FIRSTNAME"));
-			student.setLastname(rs.getString("LASTNAME"));
+			student.setFirstName(rs.getString("FIRSTNAME"));
+			student.setLastName(rs.getString("LASTNAME"));
 			student.setEmail(rs.getString("EMAIL"));
 			student.setPassword(rs.getString("PASSWORD"));
 			student.setStatus(rs.getInt("STATUS"));

@@ -10,7 +10,7 @@ public interface AnswerDAO {
 
 	Answer getAnswer(Integer id);
 
-	List<Answer> getAnswersForQuestion(Integer questionID);
+	List<Answer> getAnswersForQuestion(Integer questionId);
 
 	List<Answer> getAllAnswers();
 

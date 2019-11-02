@@ -12,9 +12,9 @@ public interface AssignmentService {
 
 	List<Assignment> getAllAssignments();
 
-	List<Assignment> getAssignmentsByTeacherId(Integer teacherID);
+	List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
 
-	Assignment getAssignmentByLessonID(Integer lessonID, Integer teacherID);
+	Assignment getAssignmentByLessonId(Integer lessonId, Integer teacherId);
 
 	Integer deleteAssignment(Integer id);
 

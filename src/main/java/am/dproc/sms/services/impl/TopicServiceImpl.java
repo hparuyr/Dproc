@@ -21,7 +21,7 @@ public class TopicServiceImpl implements TopicService {
 
 	@Override
 	public Integer addTopic(Topic topic) {
-		if (topic.getVideoURL() == null || topic.getWebPageURL() == null || topic.getLessonID() == null) {
+		if (topic.getVideoURL() == null || topic.getWebPageURL() == null || topic.getLessonId() == null) {
 			return -1;
 		}
 		return topicDAO.addTopic(topic);

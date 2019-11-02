@@ -14,6 +14,7 @@ import am.dproc.sms.models.SurveyResult;
 
 @Repository
 public class SurveyResultDAOImpl implements SurveyResultDAO {
+
     @Autowired
     JdbcTemplate template;
 

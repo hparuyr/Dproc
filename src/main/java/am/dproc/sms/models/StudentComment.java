@@ -3,8 +3,8 @@ package am.dproc.sms.models;
 public class StudentComment {
 
     private Integer id;
-    private Integer topicID;
-    private Integer studentID;
+    private Integer topicId;
+    private Integer studentId;
     private String comment;
 
     public Integer getId() {
@@ -15,20 +15,20 @@ public class StudentComment {
         this.id = id;
     }
 
-    public Integer getTopicID() {
-        return topicID;
+    public Integer getTopicId() {
+        return topicId;
     }
 
-    public void setTopicID(Integer topicID) {
-        this.topicID = topicID;
+    public void setTopicId(Integer topicId) {
+        this.topicId = topicId;
     }
 
-    public Integer getStudentID() {
-        return studentID;
+    public Integer getStudentId() {
+        return studentId;
     }
 
-    public void setStudentID(Integer studentID) {
-        this.studentID = studentID;
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 
     public String getComment() {

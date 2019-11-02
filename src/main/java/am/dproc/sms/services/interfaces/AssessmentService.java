@@ -10,17 +10,17 @@ public interface AssessmentService {
 
     Assessment getAssessment(Integer id);
 
-    List<Assessment> getAllAssessmentsByUserId(Integer userID);
+    List<Assessment> getAllAssessmentsByUserId(Integer userId);
 
-    List<Assessment> getAssessmentsByAssignmentId(Integer assignmentID);
+    List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId);
 
-    Integer getAssessmentByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
+    Integer getAssessmentByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
-    Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID);
+    Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
-    Double getAverageScoreByStudentCourse(Integer studentID, Integer courseID);
+    Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
 
-    Double getAverageScoreByStudent(Integer studentID);
+    Double getAverageScoreByStudent(Integer studentId);
 
     List<Assessment> getAllAssessments();
 

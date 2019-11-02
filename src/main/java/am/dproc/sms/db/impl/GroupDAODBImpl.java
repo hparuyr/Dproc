@@ -73,8 +73,8 @@ public class GroupDAODBImpl implements GroupDAO {
     }
 
     @Override
-    public Group getGroupsByIDAndSchoolID(Integer id, Integer schoolID) {
-        return jdbctemplate.queryForObject(GET_GROUPS_BY_ID_AND_SCHOOL_ID, new GroupMapper(), id, schoolID);
+    public Group getGroupsByIDAndSchoolId(Integer id, Integer schoolId) {
+        return jdbctemplate.queryForObject(GET_GROUPS_BY_ID_AND_SCHOOL_ID, new GroupMapper(), id, schoolId);
     }
 
     @Override

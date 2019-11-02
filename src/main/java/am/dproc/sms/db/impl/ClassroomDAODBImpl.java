@@ -65,7 +65,7 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbctemplate.update(connection -> {
 			PreparedStatement ps = connection.prepareStatement(ADD_CLASSROOM, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, classroom.getSchoolID());
+			ps.setInt(1, classroom.getSchoolId());
 			ps.setString(2, classroom.getName());
 			ps.setInt(3, classroom.getCapacity());
 			if (ClassroomType.FOR_SEMINAR.toString().toLowerCase().equals(classroom.getType().toLowerCase())) {
@@ -139,7 +139,7 @@ public class ClassroomDAODBImpl implements ClassroomDAO {
 			Classroom classroom = new Classroom();
 
 			classroom.setId(rs.getInt("ID"));
-			classroom.setSchoolID(rs.getInt("SCHOOL_ID"));
+			classroom.setSchoolId(rs.getInt("SCHOOL_ID"));
 			classroom.setName(rs.getString("NAME"));
 			classroom.setCapacity(rs.getInt("CAPACITY"));
 			if (ClassroomType.FOR_SEMINAR.index() == rs.getInt("TYPE")) {

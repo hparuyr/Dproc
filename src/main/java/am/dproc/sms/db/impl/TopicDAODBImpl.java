@@ -56,7 +56,7 @@ public class TopicDAODBImpl implements TopicDAO {
 
         jdbctemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_TOPIC, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, topic.getLessonID());
+            ps.setInt(1, topic.getLessonId());
             ps.setString(2, topic.getVideoURL());
             ps.setString(3, topic.getWebPageURL());
             ps.setLong(4, System.currentTimeMillis());
@@ -102,7 +102,7 @@ public class TopicDAODBImpl implements TopicDAO {
             Topic topic = new Topic();
 
             topic.setId(rs.getInt("ID"));
-            topic.setLessonID(rs.getInt("LESSON_ID"));
+            topic.setLessonId(rs.getInt("LESSON_ID"));
             topic.setWebPageURL(rs.getString("WEB_PAGE_URL"));
             topic.setVideoURL(rs.getString("VIDEO_URL"));
 

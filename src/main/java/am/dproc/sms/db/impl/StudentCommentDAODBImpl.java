@@ -49,8 +49,8 @@ public class StudentCommentDAODBImpl implements StudentCommentDAO {
 
         jdbctemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_COMMENT, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, comment.getTopicID());
-            ps.setInt(2, comment.getStudentID());
+            ps.setInt(1, comment.getTopicId());
+            ps.setInt(2, comment.getStudentId());
             ps.setString(3, comment.getComment());
             ps.setLong(4, System.currentTimeMillis());
             return ps;
@@ -85,8 +85,8 @@ public class StudentCommentDAODBImpl implements StudentCommentDAO {
             StudentComment student = new StudentComment();
 
             student.setId(rs.getInt("ID"));
-            student.setTopicID(rs.getInt("TOPIC_ID"));
-            student.setStudentID(rs.getInt("STUDENT_ID"));
+            student.setTopicId(rs.getInt("TOPIC_ID"));
+            student.setStudentId(rs.getInt("STUDENT_ID"));
             student.setComment(rs.getString("COMMENT"));
 
             return student;

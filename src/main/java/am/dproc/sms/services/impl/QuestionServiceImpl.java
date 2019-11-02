@@ -2,7 +2,9 @@ package am.dproc.sms.services.impl;
 
 import java.util.List;
 
+import am.dproc.sms.db.impl.QuestionDAODBImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.QuestionDAO;

@@ -16,7 +16,7 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	GroupCourseDAO groupCourseDAO;
 
 	@Override
-	public Integer create(GroupCourse groupCourse) {
+	public Integer add(GroupCourse groupCourse) {
 		if (groupCourse.getCourseId() == null || groupCourse.getGroupId() == null ||
 				groupCourse.getStartDate() == null || groupCourse.getFinished() == null ||
 				groupCourse.getTeacherId() == null) {
@@ -36,13 +36,13 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	}
 
 	@Override
-	public List<GroupCourse> getByGroupID(Integer groupId) {
-		return groupCourseDAO.getByGroupID(groupId);
+	public List<GroupCourse> getByGroupId(Integer groupId) {
+		return groupCourseDAO.getByGroupId(groupId);
 	}
 
 	@Override
 	public List<GroupCourse> getByCourseID(Integer courseId) {
-		return groupCourseDAO.getByCourseID(courseId);
+		return groupCourseDAO.getByCourseId(courseId);
 	}
 
 	@Override
@@ -51,13 +51,13 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	}
 	
 	@Override
-	public List<GroupCourse> getByTeacherID(Integer id) {
-		return groupCourseDAO.getByTeacherID(id);
+	public List<GroupCourse> getByTeacherId(Integer id) {
+		return groupCourseDAO.getByTeacherId(id);
 	}
 
 	@Override
-	public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID) {
-		return groupCourseDAO.getByTeacherIDAndSchoolId(teacherID, schoolID);
+	public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherId, Integer schoolId) {
+		return groupCourseDAO.getByTeacherIdAndSchoolId(teacherId, schoolId);
 	}
 
 	@Override
@@ -66,13 +66,13 @@ public class GroupCourseServiceImpl implements GroupCourseService{
 	}
 
 	@Override
-	public Integer deleteByGroupID(Integer groupId) {
-		return groupCourseDAO.deleteByGroupID(groupId);
+	public Integer deleteByGroupId(Integer groupId) {
+		return groupCourseDAO.deleteByGroupId(groupId);
 	}
 
 	@Override
-	public Integer deleteByCourseID(Integer courseId) {
-		return groupCourseDAO.deleteByCourseID(courseId);
+	public Integer deleteByCourseId(Integer courseId) {
+		return groupCourseDAO.deleteByCourseId(courseId);
 	}
 
 	@Override

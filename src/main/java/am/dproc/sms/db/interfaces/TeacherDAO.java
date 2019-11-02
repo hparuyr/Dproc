@@ -6,29 +6,29 @@ import am.dproc.sms.models.Teacher;
 
 public interface TeacherDAO {
 
-	public Integer addTeacher(Teacher teacher);
+	Integer addTeacher(Teacher teacher);
 
-	public int[] addTeachers(List<Teacher> teachers);
+	int[] addTeachers(List<Teacher> teachers);
 
-	public Teacher getTeacher(Integer id);
+	Teacher getTeacher(Integer id);
 
-	public Teacher getTeacherByEmail(String email);
+	Teacher getTeacherByEmail(String email);
 
-	public List<Teacher> getTeachers();
+	List<Teacher> getTeachers();
 
-	public List<Teacher> getTeachersBySchoolId(Integer schoolId);
+	List<Teacher> getTeachersBySchoolId(Integer schoolId);
 
-	public Integer updateTeacher(Teacher teacher);
+	Integer updateTeacher(Teacher teacher);
 
-	public Integer updateTeacherFirstame(Integer id, String name);
+	Integer updateTeacherFirstame(Integer id, String name);
 
-	public Integer updateTeacherLastname(Integer id, String surname);
+	Integer updateTeacherLastname(Integer id, String surname);
 
-	public Integer updateTeacherEmail(Integer id, String email);
+	Integer updateTeacherEmail(Integer id, String email);
 
-	public Integer updateTeacherPassword(Integer id, String password);
+	Integer updateTeacherPassword(Integer id, String password);
 
-//	public Integer updateTeacherSchoolId(Integer id, Integer schoolId);
+	//	public Integer updateTeacherSchoolId(Integer id, Integer schoolId);
 
-	public Integer deleteTeacher(Integer id);
+	Integer deleteTeacher(Integer id);
 }

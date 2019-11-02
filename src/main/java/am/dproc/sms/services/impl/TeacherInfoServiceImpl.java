@@ -9,6 +9,7 @@ import am.dproc.sms.services.interfaces.TeacherInfoService;
 
 @Service
 public class TeacherInfoServiceImpl  implements TeacherInfoService{
+
 	@Autowired
 	TeacherInfoDAO teacherInfoDao;
 

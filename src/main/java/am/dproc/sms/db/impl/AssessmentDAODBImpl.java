@@ -109,12 +109,12 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
     }
 
     @Override
-    public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId) {
+    public Integer getAssessmentByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId) {
         return jdbcTemplate.queryForObject(GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID, Integer.class, studentId, assignmentId);
     }
 
     @Override
-    public Assessment getAssessmentObjByStudentIDAndAssignmentID(Integer studentID, Integer assignmentID) {
+    public Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentID, Integer assignmentID) {
 
         return jdbcTemplate.queryForObject(GET_ASSESSMENT_OBJ_BY_STUDENT_ID_AND_ASSIGNMENT_ID, (rs, rowNum) -> {
             Assessment assessment = new Assessment();

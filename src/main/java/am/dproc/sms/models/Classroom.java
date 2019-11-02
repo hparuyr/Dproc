@@ -3,7 +3,7 @@ package am.dproc.sms.models;
 public class Classroom {
 
     private Integer id;
-    private Integer schoolID;
+    private Integer schoolId;
     private String name;
     private Integer capacity;
     private String type;
@@ -17,12 +17,12 @@ public class Classroom {
         this.id = id;
     }
 
-    public Integer getSchoolID() {
-        return schoolID;
+    public Integer getSchoolId() {
+        return schoolId;
     }
 
-    public void setSchoolID(Integer schoolID) {
-        this.schoolID = schoolID;
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getName() {

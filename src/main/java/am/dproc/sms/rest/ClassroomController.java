@@ -50,7 +50,7 @@ public class ClassroomController {
 	@GET
 	@Path(value = "/{id}")
 	public Classroom getClassroom(@PathParam(value = "id") Integer id) {
-		return classroomService.getClassroomByID(id);
+		return classroomService.getClassroomById(id);
 	}
 
 	@GET

@@ -51,11 +51,11 @@ public class LessonDAODBImpl implements LessonDAO {
             + "WHERE ID = ?";
 
     @Override
-    public Integer addLesson(Lesson lesson, Integer courseID) {
+    public Integer addLesson(Lesson lesson, Integer courseId) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbctemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(ADD_LESSON, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, courseID);
+            ps.setInt(1, courseId);
             ps.setString(2, lesson.getName());
             ps.setString(3, lesson.getContent());
             ps.setLong(4, System.currentTimeMillis());
@@ -71,8 +71,8 @@ public class LessonDAODBImpl implements LessonDAO {
     }
 
     @Override
-    public List<Lesson> getLessonsOfCourse(Integer courseID) {
-        return jdbctemplate.query(GET_LESSONS_BY_COURSE_ID, new LessonMapper(), courseID);
+    public List<Lesson> getLessonsOfCourse(Integer courseId) {
+        return jdbctemplate.query(GET_LESSONS_BY_COURSE_ID, new LessonMapper(), courseId);
     }
 
     @Override
@@ -101,7 +101,7 @@ public class LessonDAODBImpl implements LessonDAO {
             Lesson lesson = new Lesson();
 
             lesson.setId(rs.getInt("ID"));
-            lesson.setCourseID(rs.getInt("COURSE_ID"));
+            lesson.setCourseId(rs.getInt("COURSE_ID"));
             lesson.setName(rs.getString("NAME"));
             lesson.setContent(rs.getString("CONTENT"));
 

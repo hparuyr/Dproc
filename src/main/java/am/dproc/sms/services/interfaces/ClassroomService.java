@@ -8,7 +8,7 @@ public interface ClassroomService {
 
 	Integer addClassroom(Classroom classroom);
 
-	Classroom getClassroomByID(Integer id);
+	Classroom getClassroomById(Integer id);
 
 	List<Classroom> getAllClassrooms();
 

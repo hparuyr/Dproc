@@ -12,21 +12,21 @@ public interface GroupCourseDAO {
 
     GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId);
 
-    List<GroupCourse> getByGroupID(Integer groupId);
+    List<GroupCourse> getByGroupId(Integer groupId);
 
-    List<GroupCourse> getByCourseID(Integer courseId);
+    List<GroupCourse> getByCourseId(Integer courseId);
 
-    List<GroupCourse> getByTeacherID(Integer teacherID);
+    List<GroupCourse> getByTeacherId(Integer teacherId);
 
-    List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherID, Integer schoolID);
+    List<GroupCourse> getByTeacherIdAndSchoolId(Integer teacherId, Integer schoolId);
 
     List<GroupCourse> getAll();
 
     Integer update(GroupCourse groupCourse);
 
-    Integer deleteByGroupID(Integer groupId);
+    Integer deleteByGroupId(Integer groupId);
 
-    Integer deleteByCourseID(Integer courseId);
+    Integer deleteByCourseId(Integer courseId);
 
     Integer deleteAll();
 }

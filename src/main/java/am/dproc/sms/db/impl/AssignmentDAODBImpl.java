@@ -93,8 +93,8 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
     }
 
     @Override
-    public Assignment getAssignmentByLessonIDAndTeacherID(Integer lessonID, Integer teacherID) {
-        return jdbcTemplate.queryForObject(GET_ALL_ASSIGNMENTS_BY_LESSON_ID_AND_TEACHER_ID, new AssignmentMapper(), lessonID, teacherID);
+    public Assignment getAssignmentByLessonIdAndTeacherId(Integer lessonId, Integer teacherId) {
+        return jdbcTemplate.queryForObject(GET_ALL_ASSIGNMENTS_BY_LESSON_ID_AND_TEACHER_ID, new AssignmentMapper(), lessonId, teacherId);
     }
 
     @Override

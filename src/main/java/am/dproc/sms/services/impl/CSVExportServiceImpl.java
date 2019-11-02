@@ -3,8 +3,6 @@ package am.dproc.sms.services.impl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import am.dproc.sms.models.*;
@@ -78,19 +76,15 @@ public class CSVExportServiceImpl implements CSVExportService {
 
         List<GroupCourse> listOfGroupCourse = groupCourse.getByTeacherIDAndSchoolId(teacherID, schoolID);
 
-        System.out.println(Arrays.toString(listOfGroupCourse.toArray()));
-
         for (GroupCourse value : listOfGroupCourse) {
             if (!value.getFinished()) {
                 List<Student> listOfStudents = student.getGroupStudents(value.getGroupId());
 
-                System.out.println(Arrays.toString(listOfStudents.toArray()));
-
                 if (listOfStudents.size() != 0) {
                     for (Student listOfStudent : listOfStudents) {
-                        csvWriter.append(listOfStudent.getFirstname());
+                        csvWriter.append(listOfStudent.getFirstName());
                         csvWriter.append(DEFAULT_SEPARATOR);
-                        csvWriter.append(listOfStudent.getLastname());
+                        csvWriter.append(listOfStudent.getLastName());
                         csvWriter.append(DEFAULT_SEPARATOR);
                         csvWriter.append(listOfStudent.getEmail());
                         csvWriter.append(DEFAULT_SEPARATOR);
@@ -99,29 +93,21 @@ public class CSVExportServiceImpl implements CSVExportService {
 
                         Course course = this.course.getCourse(value.getCourseId());
 
-                        System.out.println(course.toString());
-
                         csvWriter.append(course.getName());
                         csvWriter.append(DEFAULT_SEPARATOR);
 
                         List<Lesson> listOfLessons = course.getListOfLessons();
 
-                        System.out.println(Arrays.toString(listOfLessons.toArray()));
-
                         for (Lesson listOfLesson : listOfLessons) {
                             csvWriter.append(listOfLesson.getName());
                             csvWriter.append(DEFAULT_SEPARATOR);
 
-                            Assignment assignment = this.assignment.getAssignmentByLessonID(listOfLesson.getId(), teacherID);
-
-                            System.out.println(assignment.toString());
+                            Assignment assignment = this.assignment.getAssignmentByLessonId(listOfLesson.getId(), teacherID);
 
                             csvWriter.append(assignment.getTitle());
                             csvWriter.append(DEFAULT_SEPARATOR);
 
-                            Assessment assessment = this.assessment.getAssessmentObjByStudentIDAndAssignmentID(listOfStudent.getId(), assignment.getId());
-
-                            System.out.println(assessment.toString());
+                            Assessment assessment = this.assessment.getAssessmentObjByStudentIdAndAssignmentId(listOfStudent.getId(), assignment.getId());
 
                             csvWriter.append(assessment.getComment());
                             csvWriter.append(DEFAULT_SEPARATOR);
