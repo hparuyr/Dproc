@@ -32,7 +32,8 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
     private static final String GET_AVG_SCORE_BY_STUDENT_COURSE = "" +
             "SELECT AVG(ASM.SCORE) as avgScore " +
             "FROM ASSESSMENT ASM " +
-            "JOIN ASSIGNMENT ASGN ON ASM.ASSIGNMENT_ID = ASGN.ID " +
+            "JOIN ASSIGNMENT_COMPLETED AC ON ASM.ASSIGNMENT_COMPLETED_ID = AC.ID " +
+            "JOIN ASSIGNMENT ASGN ON AC.ASSIGNMENT_ID = ASGN.ID " +
             "JOIN LESSON L ON L.ID = ASGN.LESSON_ID " +
             "JOIN COURSE C ON C.ID = L.COURSE_ID " +
             "WHERE ASM.STUDENT_ID = ? AND C.ID = ? ";
