@@ -74,11 +74,10 @@ public class AdminInfoDAODBImpl implements AdminInfoDAO {
 		@Override
 		public AdminInfo mapRow(ResultSet rs, int rowNum) throws SQLException {
 			AdminInfo adminInfo = new AdminInfo();
-			adminInfo.setPassportId(rs.getInt("passportId"));
-			adminInfo.setSocialCardId(rs.getInt("socialCardId"));
-			adminInfo.setBirthDate(rs.getLong("birthDate"));
-			adminInfo.setCreationDate(rs.getLong("creation_date"));
-			adminInfo.setAdminId(rs.getInt("adminId"));
+			adminInfo.setAdminId(rs.getInt("ADMIN_ID"));
+			adminInfo.setPassportId(rs.getInt("PASSPORT_ID"));
+			adminInfo.setSocialCardId(rs.getInt("SOCIAL_CARD_ID"));
+			adminInfo.setBirthDate(rs.getLong("BIRTH_DATE"));
 			return adminInfo;
 		}
 

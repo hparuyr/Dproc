@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.helpers.RandomPassGenerator;
@@ -31,6 +32,7 @@ public class StudentServiceImpl implements StudentService {
 	GroupService groupService;
 
 	@Override
+	@Transactional
 	public Integer addStudent(Student student) {
 		Student existingStudent = studentDao.getStudentByEmail(student.getEmail());
 		if (existingStudent != null) {
@@ -42,13 +44,15 @@ public class StudentServiceImpl implements StudentService {
 		int id = studentDao.addStudent(student);
 		if (id > 0) {
 			StudentInfo studentInfo = student.getStudentInfo();
-			studentInfo.setUserId(id);
-			this.studentInfo.addStudentInfo(studentInfo);
+			if(studentInfo != null) {
+				studentInfo.setUserId(id);
+				this.studentInfo.addStudentInfo(studentInfo);
+			}
 
 			String msg = String.format("Your temporary password: %s%nPlease login to complete your account information", randomPass);
 //			String msg = "Your temporary password: " + randomPass
 //					+ "\nPlease login to complete your account information";
-//			emailService.send(msg, "Temporary_Password", student.getEmail());
+			emailService.send(msg, "Temporary_Password", student.getEmail());
 //			emailService.send(msg, "Temporary_Password", new String[]{student.getEmail(),"gevorg.ghazaryan00@gmail.com","tigranuhi.mkrt@gmail.com",
 //					"gorhakobiann@gmail.com","tigranuhi89@rambler.ru"});
 			return id;
@@ -98,5 +102,4 @@ public class StudentServiceImpl implements StudentService {
 	public Integer deleteStudent(Integer id) {
 		return this.studentDao.deleteStudent(id);
 	}
-
 }

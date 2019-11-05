@@ -10,9 +10,13 @@ public interface AdminDAO {
 
 	public Admin getAdmin(Integer id);
 
+	public Admin getAdminByEmail(String email);
+
 	public List<Admin> getAdmins();
 
 	public List<Admin> getAdminsBySchoolId(Integer schoolId);
+
+	public Integer updateAdmin(Admin admin);
 
 	public Integer updateAdminName(Integer id, String name);
 

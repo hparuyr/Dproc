@@ -1,4 +1,5 @@
-package am.dproc.sms.controllers;
+package am.dproc.sms.rest;
+
 
 import java.util.Properties;
 
@@ -9,20 +10,21 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class SendEmailController {
 	@Autowired
 	JavaMailSender sender;
 	
-	@RequestMapping("/email")
+	@Path("/email")
 	@ResponseBody
 	  String home() {
         try {

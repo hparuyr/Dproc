@@ -1,6 +1,6 @@
 package am.dproc.sms.models;
 
-public class Admin extends User {
+public class Admin extends Person {
 	private Integer schoolId;
 	private AdminInfo adminInfo;
 

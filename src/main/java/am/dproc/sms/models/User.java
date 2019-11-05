@@ -2,45 +2,10 @@ package am.dproc.sms.models;
 
 import java.util.List;
 
-public abstract class User {
-	private Integer id;
-	private String firstname;
-	private String lastname;
-	private String email;
-	private String password;
+public abstract class User extends Person {
 	private List<Group> groups;
 	private List<Course> courses;
 	
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getFirstname() {
-		return firstname;
-	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
-	public String getLastname() {
-		return lastname;
-	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public List<Group> getGroups() {
 		return groups;
 	}
@@ -53,10 +18,15 @@ public abstract class User {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
-				+ ", groups=" + groups + ", courses=" + courses + "]";
+		return "User [  getId()=" + getId() + ", getFirstname()="
+				+ getFirstname() + ", getLastname()=" + getLastname() + ", getEmail()=" + getEmail()
+				+ ", getPassword()=" + getPassword() + ", groups=" + groups + ", courses=" + courses + "]";
 	}
+	
+	
+
 	
 }
