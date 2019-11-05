@@ -5,16 +5,17 @@ import java.util.List;
 import am.dproc.sms.models.Question;
 
 public interface QuestionService {
-	Question getQuestion(Integer id);
 
-	List<Question> getAllQuestions();
+    Integer addQuestion(Question question);
 
-	Integer createQuestion(Question question);
+    Question getQuestion(Integer id);
 
-	Integer updateQuestion(Question question);
+    List<Question> getQuestionsForTest(Integer testId);
 
-	Integer deleteQuestion(Integer id);
+    List<Question> getAllQuestions();
 
-	List<Question> getQuestionsForTest(Integer testId);
+    Integer updateQuestion(Question question);
+
+    Integer deleteQuestion(Integer id);
 
 }

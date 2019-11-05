@@ -6,14 +6,14 @@ import am.dproc.sms.models.School;
 
 public interface SchoolService {
 
-	public Integer addSchool(School school);
+	Integer addSchool(School school);
 
-	public School getSchool(Integer id);
+	School getSchool(Integer id);
 
-	public List<School> getSchools();
+	List<School> getSchools();
 
-	public Integer updateSchool(School school);
+	Integer updateSchool(School school);
 
-	public Integer deleteSchool(Integer id);
+	Integer deleteSchool(Integer id);
 
 }

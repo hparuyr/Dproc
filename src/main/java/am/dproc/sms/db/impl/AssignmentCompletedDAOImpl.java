@@ -90,8 +90,8 @@ public class AssignmentCompletedDAOImpl implements AssignmentCompletedDAO {
 		public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Student student = new Student();
 			student.setId(rs.getInt("ID"));
-			student.setName(rs.getString("FIRSTNAME"));
-			student.setSurname(rs.getString("LASTNAME"));
+			student.setFirstName(rs.getString("FIRSTNAME"));
+			student.setLastName(rs.getString("LASTNAME"));
 			student.setEmail(rs.getString("EMAIL"));
 			student.setStatus(rs.getInt("STATUS"));
 			//student.setType(rs.getInt("TYPE")); ?????

@@ -12,11 +12,20 @@ import am.dproc.sms.services.interfaces.TestService;
 
 @Service
 public class TestServiceImpl implements TestService {
+
 	@Autowired
 	TestDAO testDAO;
 	
 	@Autowired
 	QuestionService questionService;
+
+	@Override
+	public Integer addTest(Test test) {
+		if (test.getLessonId() == null || test.getTitle()  == null) {
+			return -1;
+		}
+		return testDAO.addTest(test);
+	}
 
 	@Override
 	public Test getTest(Integer id) {
@@ -30,11 +39,6 @@ public class TestServiceImpl implements TestService {
 		List<Test> tests = testDAO.getAllTests();
 		tests.forEach(item -> item.setQuestions(questionService.getQuestionsForTest(item.getId())));
 		return tests;
-	}
-
-	@Override
-	public Integer createTest(Test test) {
-		return testDAO.createTest(test);
 	}
 
 	@Override

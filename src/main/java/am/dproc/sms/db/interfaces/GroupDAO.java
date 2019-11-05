@@ -6,17 +6,21 @@ import am.dproc.sms.models.Group;
 
 public interface GroupDAO {
 
-	public Integer addGroup(Group group);
+    Integer addGroup(Group group);
 
-	public List<Integer> addGroups(List<Group> groups);
+    List<Integer> addGroups(List<Group> groups);
 
-	public Group getGroup(Integer id);
+    Group getGroup(Integer id);
 
-	public List<Group> getGroups();
+    List<Group> getGroups();
 
-	public List<Group> getGroupsBySchoolId(Integer schoolId);
+    Group getGroupsByIDAndSchoolId(Integer id, Integer schoolId);
 
-	public Integer updateGroupName(Integer id, String name);
+    List<Group> getGroupsBySchoolId(Integer schoolId);
 
-	public Integer deleteGroup(Integer id);
+	List<Group> getGroupsByStudentId(Integer studentId);
+
+	Integer updateGroupName(Integer id, String name);
+
+    Integer deleteGroup(Integer id);
 }

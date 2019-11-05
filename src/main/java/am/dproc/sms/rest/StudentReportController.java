@@ -14,15 +14,17 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "studentReport")
 @Api(value = "StudentReportController")
+@Produces("application/pdf")
 public class StudentReportController {
+
 	@Autowired
 	StudentReportService repService;
 
 	@GET
 	@Path(value = "/{studentId}")
-	@Produces("application/pdf")
-	public Response getStudentReport(@PathParam(value = "studentId") Integer studentId) throws Exception {
+	public Response getStudentReport(@PathParam(value = "studentId") Integer studentId) {
 		File file = repService.getStudentReport(studentId);
 		return Response.ok(file).header("Content-Disposition", "attachment;").build();
 	}
+
 }

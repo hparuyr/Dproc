@@ -14,61 +14,71 @@ import am.dproc.sms.services.interfaces.TopicService;
 public class LessonServiceImpl implements LessonService {
 
 	@Autowired
-	LessonDAO lesson;
+	LessonDAO lessonDAO;
 
 	@Autowired
-	TopicService topic;
+	TopicService topicService;
 
 	@Override
 	public Integer addLesson(Lesson lesson) {
-		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseID() == null) {
-			return 0;
+		if (lesson.getName() == null || lesson.getContent() == null || lesson.getCourseId() == null) {
+			return -1;
 		}
-		return this.lesson.addLesson(lesson, lesson.getCourseID());
+
+		Integer lessonID = this.lessonDAO.addLesson(lesson, lesson.getCourseId());
+
+		if (lesson.getListOfTopics() != null) {
+			for (int i = 0; i < lesson.getListOfTopics().size(); i++) {
+				lesson.getListOfTopics().get(i).setLessonId(lessonID);
+				topicService.addTopic(lesson.getListOfTopics().get(i));
+			}
+		}
+
+		return lessonID;
 	}
 
 	@Override
 	public Lesson getLesson(Integer id) {
-		Lesson lesson = this.lesson.getLesson(id);
-		lesson.setListOfTopics(this.topic.getLessonTopics(id));
+		Lesson lesson = this.lessonDAO.getLesson(id);
+		lesson.setListOfTopics(this.topicService.getLessonTopics(id));
 		return lesson;
 	}
 
 	@Override
-	public List<Lesson> getCourseLessons(Integer courseID) {
-		return this.lesson.getLessonsOfCourse(courseID);
+	public List<Lesson> getCourseLessons(Integer courseId) {
+		return this.lessonDAO.getLessonsOfCourse(courseId);
 	}
 
 	@Override
 	public List<Lesson> getAllLesson() {
-		return lesson.getAllLessons();
+		return lessonDAO.getAllLessons();
 	}
 
 	@Override
-	public Integer editLesson(Lesson lesson) {
+	public Integer updateLesson(Lesson lesson) {
 
 		boolean bool = false;
 
 		if (lesson.getName() != null) {
-			if (this.lesson.editLessonName(lesson.getId(), lesson.getName()) == 0) {
+			if (this.lessonDAO.updateLessonName(lesson.getId(), lesson.getName()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 		if (lesson.getContent() != null) {
-			if (this.lesson.editLessonContent(lesson.getId(), lesson.getContent()) == 0) {
+			if (this.lessonDAO.updateLessonContent(lesson.getId(), lesson.getContent()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 
-		return bool == true ? 1 : 0;
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteLesson(Integer id) {
 		if (getLesson(id).getListOfTopics().size() == 0) {
-			return lesson.deleteLesson(id);
+			return lessonDAO.deleteLesson(id);
 		}
 		return 0;
 	}

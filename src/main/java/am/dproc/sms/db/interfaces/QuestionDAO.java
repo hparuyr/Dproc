@@ -6,7 +6,7 @@ import am.dproc.sms.models.Question;
 
 public interface QuestionDAO {	
 
-	Integer createQuestion(Question question);
+	Integer addQuestion(Question question);
 	
 	Question getQuestion(Integer id);
 

@@ -37,7 +37,6 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @Configuration
 @ApplicationPath("/api")
 public class JerseyConfig extends ResourceConfig {
-
 	public JerseyConfig() {
 		register(SchoolController.class);
 		register(GroupController.class);
@@ -65,19 +64,19 @@ public class JerseyConfig extends ResourceConfig {
 		register(AssignmentCompletedController.class);
 	}
 
-	@PostConstruct
-	public void init() {
-		this.configureSwagger();
-	}
+    @PostConstruct
+    public void init() {
+        this.configureSwagger();
+    }
 
-	private void configureSwagger() {
-		this.register(ApiListingResource.class);
-		this.register(SwaggerSerializers.class);
+    private void configureSwagger() {
+        this.register(ApiListingResource.class);
+        this.register(SwaggerSerializers.class);
 
-		BeanConfig swaggerConfigBean = new BeanConfig();
-		swaggerConfigBean.setBasePath("/api");
-		swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
-		swaggerConfigBean.setPrettyPrint(true);
-		swaggerConfigBean.setScan(true);
-	}
+        BeanConfig swaggerConfigBean = new BeanConfig();
+        swaggerConfigBean.setBasePath("/api");
+        swaggerConfigBean.setResourcePackage("am.dproc.sms.rest");
+        swaggerConfigBean.setPrettyPrint(true);
+        swaggerConfigBean.setScan(true);
+    }
 }

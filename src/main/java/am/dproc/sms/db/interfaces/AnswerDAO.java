@@ -6,16 +6,18 @@ import am.dproc.sms.models.Answer;
 
 public interface AnswerDAO {
 
-	Integer createAnswer(Answer answer);
+	Integer addAnswer(Answer answer);
 
 	Answer getAnswer(Integer id);
 
+	List<Answer> getAnswersForQuestion(Integer questionId);
+
 	List<Answer> getAllAnswers();
 
-	Integer updateAnswer(Answer answer);
+	Integer updateContent(Integer id, String content);
+
+	Integer updateScore(Integer id, Integer score);
 
 	Integer deleteAnswer(Integer id);
-
-	List<Answer> getAnswersForQuestion(Integer questionId);
 
 }

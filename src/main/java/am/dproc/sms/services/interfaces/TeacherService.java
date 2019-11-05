@@ -6,15 +6,15 @@ import am.dproc.sms.models.Teacher;
 
 public interface TeacherService {
 
-	public Integer addTeacher(Teacher teacher);
+	Integer addTeacher(Teacher teacher);
 
-	public Teacher gerTeacher(Integer id);
+	Teacher getTeacher(Integer id);
 
-	public List<Teacher> getSchoolTeachers(Integer schoolId);
+	List<Teacher> getSchoolTeachers(Integer schoolId);
 
-	public List<Teacher> getTeachers();
+	List<Teacher> getTeachers();
 	
-	public Integer updateTeacher(Teacher teacher);
+	Integer updateTeacher(Teacher teacher);
 
-	public Integer deleteTeacher(Integer id);
+	Integer deleteTeacher(Integer id);
 }

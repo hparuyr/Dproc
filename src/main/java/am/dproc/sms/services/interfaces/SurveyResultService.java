@@ -5,10 +5,17 @@ import java.util.List;
 import am.dproc.sms.models.SurveyResult;
 
 public interface SurveyResultService {
-	public int create(SurveyResult surveyResult);
-	public SurveyResult getByStudentId(int studentId);
-	public List<SurveyResult> getAll();
-	public int update(SurveyResult surveyResult);
-	public int delete(int studentId);
-	public int deleteAll();
+
+	int create(SurveyResult surveyResult);
+
+	SurveyResult getByStudentId(int studentId);
+
+	List<SurveyResult> getAll();
+
+	int update(SurveyResult surveyResult);
+
+	int delete(int studentId);
+
+	int deleteAll();
+
 }

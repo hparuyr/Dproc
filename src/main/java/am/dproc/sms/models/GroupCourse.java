@@ -1,65 +1,66 @@
 package am.dproc.sms.models;
 
 public class GroupCourse {
-	private int id;
-	private int groupId;
-	private int courseId;
-	private int teacherId;
-	private long startDate;
-	private boolean isFinished;
 
-	public int getId() {
-		return id;
-	}
+    private Integer id;
+    private Integer groupId;
+    private Integer courseId;
+    private Integer teacherId;
+    private Long startDate;
+    private Boolean isFinished;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public int getGroupId() {
-		return groupId;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
-	}
+    public Integer getGroupId() {
+        return groupId;
+    }
 
-	public int getCourseId() {
-		return courseId;
-	}
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
 
-	public void setCourseId(int courseId) {
-		this.courseId = courseId;
-	}
+    public Integer getCourseId() {
+        return courseId;
+    }
 
-	public int getTeacherId() {
-		return teacherId;
-	}
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 
-	public void setTeacherId(int teacherId) {
-		this.teacherId = teacherId;
-	}
+    public Integer getTeacherId() {
+        return teacherId;
+    }
 
-	public long getStartDate() {
-		return startDate;
-	}
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
 
-	public void setStartDate(long startDate) {
-		this.startDate = startDate;
-	}
+    public Long getStartDate() {
+        return startDate;
+    }
 
-	public boolean isFinished() {
-		return isFinished;
-	}
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
+    }
 
-	public void setIsFinished(boolean isFinished) {
-		this.isFinished = isFinished;
-	}
+    public Boolean getFinished() {
+        return isFinished;
+    }
 
-	@Override
-	public String toString() {
-		return "GroupCourseBean [id=" + id + ", groupId=" + groupId + ", courseId=" + courseId + ", teacherId="
-				+ teacherId + ", startDate=" + startDate + ", isFinished=" + isFinished + "]";
-	}
+    public void setFinished(Boolean finished) {
+        isFinished = finished;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupCourseBean [id=" + id + ", groupId=" + groupId + ", courseId=" + courseId + ", teacherId="
+                + teacherId + ", startDate=" + startDate + ", isFinished=" + isFinished + "]";
+    }
 
 }

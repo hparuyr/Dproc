@@ -8,40 +8,62 @@ import org.springframework.stereotype.Service;
 import am.dproc.sms.db.interfaces.AnswerDAO;
 import am.dproc.sms.models.Answer;
 import am.dproc.sms.services.interfaces.AnswerService;
+
 @Service
 public class AnswerServiceImpl implements AnswerService {
 
-	@Autowired
-	AnswerDAO answerDAO;
+    @Autowired
+    AnswerDAO answerDAO;
 
-	@Override
-	public Answer getAnswer(Integer id) {
-		return answerDAO.getAnswer(id);
-	}
+    @Override
+    public Integer addAnswer(Answer answer) {
+        if (answer.getQuestionId() == null || answer.getContent() == null || answer.getScore() == null) {
+            return -1;
+        }
+        return answerDAO.addAnswer(answer);
+    }
 
-	@Override
-	public List<Answer> getAllAnswers() {
-		return answerDAO.getAllAnswers();
-	}
-	
-	@Override
-	public List<Answer> getAnswersForQuestion(Integer questionId) {
-		return answerDAO.getAnswersForQuestion(questionId);
-	}
+    @Override
+    public Answer getAnswer(Integer id) {
+        return answerDAO.getAnswer(id);
+    }
 
-	@Override
-	public int createAnswer(Answer answer) {
-		return answerDAO.createAnswer(answer);
-	}
+    @Override
+    public List<Answer> getAnswersForQuestion(Integer questionId) {
+        return answerDAO.getAnswersForQuestion(questionId);
+    }
 
-	@Override
-	public int updateAnswer(Answer answer) {
-		return answerDAO.updateAnswer(answer);
-	}
+    @Override
+    public List<Answer> getAllAnswers() {
+        return answerDAO.getAllAnswers();
+    }
 
-	@Override
-	public int deleteAnswer(int id) {
-		return answerDAO.deleteAnswer(id);
-	}
+    @Override
+    public Integer updateAnswer(Answer answer) {
+
+        boolean bool = false;
+
+        if (answer.getContent() != null) {
+            if (answerDAO.updateContent(answer.getId(), answer.getContent()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (answer.getScore() != null) {
+            if (answerDAO.updateScore(answer.getId(), answer.getScore()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+
+        System.out.println(bool);
+        return bool ? 1 : 0;
+
+    }
+
+    @Override
+    public Integer deleteAnswer(Integer id) {
+        return answerDAO.deleteAnswer(id);
+    }
 
 }

@@ -13,42 +13,42 @@ import am.dproc.sms.services.interfaces.StudentCommentService;
 public class StudentCommentServiceImpl implements StudentCommentService {
 
 	@Autowired
-	StudentCommentDAO comment;
+	StudentCommentDAO studentCommentDAO;
 
 	@Override
 	public Integer addComment(StudentComment comment) {
-		if (comment.getComment() == null || comment.getComment() == "") {
-			return 0;
+		if (comment.getComment() == null || comment.getComment().equals("")) {
+			return -1;
 		}
-		return this.comment.addComment(comment);
+		return studentCommentDAO.addComment(comment);
 	}
 
 	@Override
 	public StudentComment getComment(Integer id) {
-		return comment.getComment(id);
+		return studentCommentDAO.getComment(id);
 	}
 
 	@Override
 	public List<StudentComment> getCommentsOfTopic(Integer topicID) {
-		return comment.getCommentsOfTopic(topicID);
+		return studentCommentDAO.getCommentsOfTopic(topicID);
 	}
 
 	@Override
-	public Integer editComment(StudentComment comment) {
+	public Integer updateComment(StudentComment comment) {
 		boolean bool = false;
 
 		if (comment.getComment() != null) {
-			if (this.comment.editComment(comment.getId(), comment.getComment()) == 0) {
+			if (this.studentCommentDAO.updateComment(comment.getId(), comment.getComment()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
-		return bool == true ? 1 : 0;
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteComment(Integer id) {
-		return comment.deleteComment(id);
+		return studentCommentDAO.deleteComment(id);
 	}
 
 }

@@ -30,6 +30,12 @@ import am.dproc.sms.services.interfaces.TestResultService;
 
 @Service
 public class StudentReportServiceImpl implements StudentReportService {
+
+	@Override
+	public File getStudentReport(Integer studentId) {
+		return null;
+	}
+	/*
 	@Autowired
 	StudentService studentService;
 	@Autowired
@@ -52,11 +58,11 @@ public class StudentReportServiceImpl implements StudentReportService {
 			PdfDocument pdfDoc = new PdfDocument(writer);
 
 			Document doc = new Document(pdfDoc);
-			Student student = studentService.getStudent(studentId);
-			addPersonalData(doc, student);
-			addProfileData(doc, student);
-			addCoursesData(doc, student);
-			addTotalAVGScores(doc, student);
+			Student studentService = studentService.getStudent(studentId);
+			addPersonalData(doc, studentService);
+			addProfileData(doc, studentService);
+			addCoursesData(doc, studentService);
+			addTotalAVGScores(doc, studentService);
 
 			doc.close();
 		} catch (IOException e) {
@@ -65,14 +71,14 @@ public class StudentReportServiceImpl implements StudentReportService {
 		return pdf;
 	}
 
-	private void addTotalAVGScores(Document doc, Student student) {
+	private void addTotalAVGScores(Document doc, Student studentService) {
 		doc.add(new Paragraph("AVG score for all courses").setBold().setTextAlignment(TextAlignment.CENTER));
 		Table scores = new Table(UnitValue.createPercentArray(2)).useAllAvailableWidth();
 		scores.addCell("Test");
 		scores.addCell("Assessment");
-		Double avgTestScore = testResultService.getAverageTestResultForStudent(student.getId());
+		Double avgTestScore = testResultService.getAverageTestResultForStudent(studentService.getId());
 		scores.addCell(avgTestScore == null ? "0" : avgTestScore.toString());
-		Double avgAssessmentScore = assessmentService.getAverageScoreByStudent(student.getId());
+		Double avgAssessmentScore = assessmentService.getAverageScoreByStudent(studentService.getId());
 		scores.addCell(avgAssessmentScore == null ? "0" : avgAssessmentScore.toString());
 
 		doc.add(scores);
@@ -80,9 +86,9 @@ public class StudentReportServiceImpl implements StudentReportService {
 		doc.add(new Paragraph(""));
 	}
 
-	private void addProfileData(Document doc, Student student) {
+	private void addProfileData(Document doc, Student studentService) {
 		doc.add(new Paragraph("Profile").setBold().setTextAlignment(TextAlignment.CENTER));
-		SurveyResult result = surveyResultService.getByStudentId(student.getId());
+		SurveyResult result = surveyResultService.getByStudentId(studentService.getId());
 
 		Table profile = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
 		profile.addCell("Ext");
@@ -102,10 +108,10 @@ public class StudentReportServiceImpl implements StudentReportService {
 		doc.add(new Paragraph(""));
 	}
 
-	private void addCoursesData(Document doc, Student student) {
+	private void addCoursesData(Document doc, Student studentService) {
 		doc.add(new Paragraph("Courses").setBold().setTextAlignment(TextAlignment.CENTER));
 
-		List<Course> courses = courseService.getCoursesByGroupId(student.getGroupId());
+		List<Course> courses = courseService.getCoursesByGroupId(studentService.getGroupId());
 
 		Table coursesTable = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
 		coursesTable.addCell("Name");
@@ -114,13 +120,13 @@ public class StudentReportServiceImpl implements StudentReportService {
 		coursesTable.addCell("AVG test score");
 		coursesTable.addCell("AVG homework score");
 
-		Integer studentId1 = student.getId();
+		Integer studentId1 = studentService.getId();
 		for (Course course : courses) {
 			Integer courseId = course.getId();
 			coursesTable.addCell(course.getName());
 			coursesTable.addCell(course.getDescription());
 			Date startDate = new Date(
-					groupCourseService.getByGroupAndCourse(student.getGroupId(), courseId).getStartDate());
+					groupCourseService.getByGroupAndCourse(studentService.getGroupId(), courseId).getStartDate());
 			coursesTable.addCell(startDate.toString());
 			Double testAvgScore = testResultService.getAverageTestResultForStudentCourse(studentId1, courseId);
 			coursesTable.addCell(testAvgScore == null ? "0" : testAvgScore.toString());
@@ -133,27 +139,28 @@ public class StudentReportServiceImpl implements StudentReportService {
 		doc.add(new Paragraph(""));
 	}
 
-	private void addPersonalData(Document doc, Student student) {
-		Paragraph title = new Paragraph(String.format("%s %s", student.getName(), student.getSurname())).setBold()
+	private void addPersonalData(Document doc, Student studentService) {
+		Paragraph title = new Paragraph(String.format("%s %s", studentService.getFirstName(), studentService.getLastName())).setBold()
 				.setTextAlignment(TextAlignment.CENTER);
 		doc.add(title);
 
 		try {
-			String url = student.getStudentInfo().getImageUrl();
-			ImageData imageData = ImageDataFactory.create(url);
+			String url = studentService.getStudentInfo().getImageUrl();
+			ImageData imageData = ImageDataFactory.add(url);
 			Image pdfImg = new Image(imageData).setAutoScaleHeight(true).setAutoScaleWidth(true); //.setAutoScale(true); //.setWidth(100).setHeight(90);
 			doc.add(pdfImg);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 
-		doc.add(new Paragraph(String.format("e-Mail\t%s", student.getEmail())));
+		doc.add(new Paragraph(String.format("e-Mail\t%s", studentService.getEmail())));
 		doc.add(new Paragraph(String.format("Phone\t%s", "-")));
 		doc.add(new Paragraph(String.format("Date of Birth\t%s", "-")));
 		doc.add(new Paragraph(String.format("Admission date\t%s", "-")));
-		doc.add(new Paragraph(String.format("Group\t%s", student.getGroupId())));
+		doc.add(new Paragraph(String.format("Group\t%s", studentService.getGroupId())));
 
 		doc.add(new Paragraph(""));
 		doc.add(new Paragraph(""));
 	}
+	 */
 }

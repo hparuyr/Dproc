@@ -19,16 +19,16 @@ import am.dproc.sms.services.interfaces.StudentInfoService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/studentInfo")
+@Path("/student-info")
 @Api(value = "StudentInfoController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class StudentInfoController {
 
 	@Autowired
 	StudentInfoService studentInfo;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addStudentInfo(StudentInfo studentInfo) {
 		if (this.studentInfo.addStudentInfo(studentInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(1);
@@ -38,8 +38,6 @@ public class StudentInfoController {
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateStudentInfo(StudentInfo studentInfo) {
 		if (this.studentInfo.updateStudentInfo(studentInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -49,7 +47,6 @@ public class StudentInfoController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteStudentAdminInfo(@PathParam(value = "id") Integer studentId) {
 		if (studentInfo.deleteStudentInfo(studentId) == 1) {

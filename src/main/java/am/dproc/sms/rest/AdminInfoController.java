@@ -19,16 +19,16 @@ import am.dproc.sms.services.interfaces.AdminInfoService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/adminInfo")
+@Path("/admin-info")
 @Api(value = "AdminInfoController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class AdminInfoController {
 
 	@Autowired
 	AdminInfoService adminInfo;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addAdminInfo(AdminInfo adminInfo) {
 		if (this.adminInfo.addAdminInfo(adminInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(1);
@@ -38,8 +38,6 @@ public class AdminInfoController {
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateAdminInfo(AdminInfo adminInfo) {
 		if (this.adminInfo.updateAdminInfo(adminInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -49,7 +47,6 @@ public class AdminInfoController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteAdminInfo(@PathParam(value = "id") Integer adminId) {
 		if (adminInfo.deleteAdminInfo(adminId) == 1) {

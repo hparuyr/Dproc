@@ -6,26 +6,26 @@ import am.dproc.sms.models.Assessment;
 
 public interface AssessmentDAO {
 
-	public Assessment getAssessment(Integer id);
+	Integer addAssessment(Assessment assessment);
 
-	public Assessment getAssessmentByTitle(String title);
+	Assessment getAssessment(Integer id);
 
-	public List<Assessment> getAllAssessments();
+	List<Assessment> getAllAssessments();
 
-	public List<Assessment> getAllAssessmentsByUserId(Integer userId);
+	List<Assessment> getAllAssessmentsByUserId(Integer userId);
 
-	public List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId);
+	List<Assessment> getAssessmentsByAssignmentId(Integer assignmentId);
 	
-	public Integer getAssessmentByStudentIDAndAssignmentID(Integer studentId, Integer assignmentId);
+	Integer getAssessmentByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
-	public Integer deleteAssessment(Integer id);
-
-	public Integer deleteAllAssessments();
-
-	public Integer addAssessment(Assessment asi);
+	Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentId, Integer assignmentId);
 
 	Double getAverageScoreByStudentCourse(Integer studentId, Integer courseId);
 
 	Double getAverageScoreByStudent(Integer studentId);
+
+	Integer deleteAssessment(Integer id);
+
+	Integer deleteAllAssessments();
 
 }

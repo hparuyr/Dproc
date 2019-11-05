@@ -19,16 +19,16 @@ import am.dproc.sms.services.interfaces.TeacherInfoService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Path("/teacherInfo")
+@Path("/teacher-info")
 @Api(value = "TeacherInfoController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class TeacherInfoController {
 
 	@Autowired
 	TeacherInfoService teacherInfo;
 
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> addTeacherInfo(TeacherInfo teacherInfo) {
 		if (this.teacherInfo.addTeacherInfo(teacherInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(1);
@@ -38,8 +38,6 @@ public class TeacherInfoController {
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateTeacherInfo(TeacherInfo teacherInfo) {
 		if (this.teacherInfo.updateTeacherInfo(teacherInfo) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -49,7 +47,6 @@ public class TeacherInfoController {
 	}
 
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteTeacherInfo(@PathParam(value = "id") Integer teacherId) {
 		if (teacherInfo.deleteTeacherInfo(teacherId) == 1) {

@@ -11,8 +11,14 @@ import am.dproc.sms.services.interfaces.ScheduleService;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
+
 	@Autowired
 	ScheduleDAO scheduleDAO;
+
+	@Override
+	public Integer addScheduleRecord(ScheduleRecord scheduleRecord) {
+		return scheduleDAO.addScheduleRecord(scheduleRecord);
+	}
 
 	@Override
 	public ScheduleRecord getScheduleRecordById(Integer id) {
@@ -32,11 +38,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(Integer classRoomId, Long startDate, Long endDate) {
 		return scheduleDAO.getScheduleForClassRoomInPeriod(classRoomId, startDate, endDate);
-	}
-
-	@Override
-	public Integer createScheduleRecord(ScheduleRecord scheduleRecord) {
-		return scheduleDAO.createScheduleRecord(scheduleRecord);
 	}
 
 	@Override

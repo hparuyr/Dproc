@@ -4,50 +4,50 @@ import java.util.List;
 
 public class Lesson {
 
-	private Integer id;
-	private Integer courseID;
-	private String name;
-	private String content;
-	private List<Topic> listOfTopics;
+    private Integer id;
+    private Integer courseId;
+    private String name;
+    private String content;
+    private List<Topic> listOfTopics;
 
-	public Integer getId() {
-		return id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Integer getCourseID() {
-		return courseID;
-	}
+    public Integer getCourseId() {
+        return courseId;
+    }
 
-	public void setCourseID(Integer courseID) {
-		this.courseID = courseID;
-	}
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public List<Topic> getListOfTopics() {
-		return listOfTopics;
-	}
+    public List<Topic> getListOfTopics() {
+        return listOfTopics;
+    }
 
-	public void setListOfTopics(List<Topic> listOfTopics) {
-		this.listOfTopics = listOfTopics;
-	}
+    public void setListOfTopics(List<Topic> listOfTopics) {
+        this.listOfTopics = listOfTopics;
+    }
 
 }

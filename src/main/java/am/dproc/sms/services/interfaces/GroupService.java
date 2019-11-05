@@ -6,17 +6,21 @@ import am.dproc.sms.models.Group;
 
 public interface GroupService {
 
-	public Integer addGroup(Group group);
+	Integer addGroup(Group group);
 
-	public List<Integer> addGroups(List<Group> groups);
+	List<Integer> addGroups(List<Group> groups);
 
-	public Group getGroup(Integer id);
+	Group getGroup(Integer id);
 
-	public List<Group> getSchoolGroups(Integer schoolId);
+	List<Group> getSchoolGroups(Integer schoolId);
 
-	public List<Group> getGroups();
+	Group getGroupsByIDAndSchoolId(Integer id, Integer schoolId);
 
-	public Integer updateGroup(Group group);
+	List<Group> getGroups();
 
-	public Integer deleteGroup(Integer id);
+	List<Group> getGroupsByStudentId(Integer studentId);
+
+	Integer updateGroup(Group group);
+
+	Integer deleteGroup(Integer id);
 }

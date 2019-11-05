@@ -6,16 +6,16 @@ import am.dproc.sms.models.Lesson;
 
 public interface LessonService {
 	
-	public Integer addLesson(Lesson lesson);
+	Integer addLesson(Lesson lesson);
 
-	public Lesson getLesson(Integer id);
+	Lesson getLesson(Integer id);
 
-	public List<Lesson> getCourseLessons(Integer courseID);
+	List<Lesson> getCourseLessons(Integer courseId);
 
-	public List<Lesson> getAllLesson();
+	List<Lesson> getAllLesson();
 
-	public Integer editLesson(Lesson lesson);
+	Integer updateLesson(Lesson lesson);
 
-	public Integer deleteLesson(Integer id);
+	Integer deleteLesson(Integer id);
 
 }

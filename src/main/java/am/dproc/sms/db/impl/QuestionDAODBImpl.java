@@ -1,12 +1,16 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import am.dproc.sms.db.interfaces.QuestionDAO;
@@ -15,59 +19,85 @@ import am.dproc.sms.models.Question;
 @Repository
 public class QuestionDAODBImpl implements QuestionDAO {
 
-	@Autowired
-	JdbcTemplate template;
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-	private static final String CREATE_QUESTION = "insert into mydb.QUESTION(CONTENT, TEST_ID, CREATION_DATE) values (?, ?, ?)";
-	private static final String GET_QUESTION_BY_ID = "select * from mydb.QUESTION where ID = ?";
-	private static final String GET_QUESTIONS_FOR_TEST = "select * from mydb.QUESTION where TEST_ID = ?";
-	private static final String GET_ALL_QUESTIONS = "select * from mydb.QUESTION";
-	private static final String UPDATE_QUESTION = "update mydb.QUESTION set CONTENT = ?, TEST_ID = ?, CHANGE_DATE = ? where ID = ?";
-	private static final String DELETE_QUESTION = "delete from mydb.QUESTION where ID = ?";
+    private static final String ADD_QUESTION = "" +
+            "INSERT " +
+            "INTO mydb.QUESTION(TEST_ID, CONTENT, CREATION_DATE) " +
+            "VALUES (?, ?, ?)";
+    private static final String GET_QUESTION_BY_ID = "" +
+            "SELECT ID, TEST_ID, CONTENT " +
+            "FROM mydb.QUESTION " +
+            "WHERE ID = ?";
+    private static final String GET_QUESTIONS_FOR_TEST = "" +
+            "SELECT ID, TEST_ID, CONTENT " +
+            "FROM mydb.QUESTION " +
+            "WHERE TEST_ID = ?";
+    private static final String GET_ALL_QUESTIONS = "" +
+            "SELECT ID, TEST_ID, CONTENT " +
+            "FROM mydb.QUESTION";
+    private static final String UPDATE_QUESTION = "" +
+            "UPDATE mydb.QUESTION " +
+            "SET CONTENT = ?, TEST_ID = ?, CHANGE_DATE = ? " +
+            "WHERE ID = ?";
+    private static final String DELETE_QUESTION = "" +
+            "DELETE " +
+            "FROM mydb.QUESTION " +
+            "WHERE ID = ?";
 
-	@Override
-	public Integer createQuestion(Question question) {
-		return template.update(CREATE_QUESTION, question.getContent(), question.getTestId(),
-				System.currentTimeMillis());
-	}
+    @Override
+    public Integer addQuestion(Question question) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(ADD_QUESTION, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, question.getTestId());
+            ps.setString(2, question.getContent());
+            ps.setLong(3, System.currentTimeMillis());
+            return ps;
+        }, keyHolder);
 
-	@Override
-	public Question getQuestion(Integer id) {
-		return template.queryForObject(GET_QUESTION_BY_ID, new QuestionMapper(), id);
-	}
+        return keyHolder.getKey().intValue();
+    }
 
-	@Override
-	public List<Question> getAllQuestions() {
-		return template.query(GET_ALL_QUESTIONS, new QuestionMapper());
-	}
+    @Override
+    public Question getQuestion(Integer id) {
+        return jdbcTemplate.queryForObject(GET_QUESTION_BY_ID, new QuestionMapper(), id);
+    }
 
-	@Override
-	public List<Question> getQuestionsForTest(Integer testId) {
-		return template.query(GET_QUESTIONS_FOR_TEST, new QuestionMapper(), testId);
-	}
+    @Override
+    public List<Question> getAllQuestions() {
+        return jdbcTemplate.query(GET_ALL_QUESTIONS, new QuestionMapper());
+    }
 
-	@Override
-	public Integer updateQuestion(Question question) {
-		return template.update(UPDATE_QUESTION, question.getContent(), question.getTestId(), System.currentTimeMillis(),
-				question.getId());
-	}
+    @Override
+    public List<Question> getQuestionsForTest(Integer testId) {
+        return jdbcTemplate.query(GET_QUESTIONS_FOR_TEST, new QuestionMapper(), testId);
+    }
 
-	@Override
-	public Integer deleteQuestion(Integer id) {
-		return template.update(DELETE_QUESTION, id);
-	}
+    @Override
+    public Integer updateQuestion(Question question) {
+        return jdbcTemplate.update(UPDATE_QUESTION, question.getContent(), question.getTestId(), System.currentTimeMillis(),
+                question.getId());
+    }
 
-	private static class QuestionMapper implements RowMapper<Question> {
+    @Override
+    public Integer deleteQuestion(Integer id) {
+        return jdbcTemplate.update(DELETE_QUESTION, id);
+    }
 
-		@Override
-		public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
-			Question q = new Question();
-			q.setId(rs.getInt("ID"));
-			q.setContent(rs.getString("CONTENT"));
-			q.setTestId(rs.getInt("TEST_ID"));
+    private static class QuestionMapper implements RowMapper<Question> {
 
-			return q;
-		}
+        @Override
+        public Question mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Question question = new Question();
 
-	}
+            question.setId(rs.getInt("ID"));
+            question.setTestId(rs.getInt("TEST_ID"));
+            question.setContent(rs.getString("CONTENT"));
+
+            return question;
+        }
+
+    }
 }

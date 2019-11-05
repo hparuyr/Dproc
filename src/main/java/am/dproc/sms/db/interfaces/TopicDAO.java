@@ -6,18 +6,18 @@ import am.dproc.sms.models.Topic;
 
 public interface TopicDAO {
 	
-	public Integer addTopic(Topic topic);
+	Integer addTopic(Topic topic);
 
-	public List<Topic> getTopicsOfLesson(Integer lessonID);
+	List<Topic> getTopicsOfLesson(Integer lessonID);
 
-	public Topic getTopic(Integer id);
+	Topic getTopic(Integer id);
 
-	public List<Topic> getAllTopics();
+	List<Topic> getAllTopics();
 
-	public Integer editTopicVideoURL(Integer id, String videoURL);
+	Integer updateTopicVideoURL(Integer id, String videoURL);
 
-	public Integer editTopicWebPageURL(Integer id, String webPageURL);
+	Integer updateTopicWebPageURL(Integer id, String webPageURL);
 
-	public Integer deleteTopic(Integer id);
+	Integer deleteTopic(Integer id);
 
 }

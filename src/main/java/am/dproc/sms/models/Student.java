@@ -1,8 +1,9 @@
 package am.dproc.sms.models;
 
+
 public class Student extends User{
+
 	private Integer status;
-	private Integer groupId;
 	private StudentInfo studentInfo;
 
 	public Integer getStatus() {
@@ -13,14 +14,6 @@ public class Student extends User{
 		this.status = status;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
 	public StudentInfo getStudentInfo() {
 		return studentInfo;
 	}
@@ -29,4 +22,10 @@ public class Student extends User{
 		this.studentInfo = studentInfo;
 	}
 
+	@Override
+	public String toString() {
+		String student = super.toString();
+		return student + "Student [status=" + status + ", studentInfo=" + studentInfo + "]";
+	}
+	
 }

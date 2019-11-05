@@ -22,58 +22,61 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/schedule")
 @Api(value = "ScheduleController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class ScheduleController {
+
 	@Autowired
 	ScheduleService scheduleService;
 
 	@POST
-	@Consumes({ MediaType.APPLICATION_JSON })
-	public Integer createScheduleRecord(ScheduleRecord scheduleRecord) {
-		return scheduleService.createScheduleRecord(scheduleRecord);
+	public Integer addScheduleRecord(ScheduleRecord scheduleRecord) {
+		return scheduleService.addScheduleRecord(scheduleRecord);
 	}
 
 	@GET
 	@Path(value = "/{id}")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public ScheduleRecord getScheduleRecordById(@PathParam(value = "id") Integer id) {
 		return scheduleService.getScheduleRecordById(id);
 	}
 
 	@GET
 	@Path(value = "teacher/{teacherId}/{start}/{end}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<ScheduleRecord> getScheduleForTeacherInPeriod(@PathParam(value = "teacherId") Integer teacherId,
-			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
+	public List<ScheduleRecord> getScheduleForTeacherInPeriod(
+			@PathParam(value = "teacherId") Integer teacherId,
+			@PathParam(value = "start") Long startDate,
+			@PathParam(value = "end") Long endDate) {
 		return scheduleService.getScheduleForTeacherInPeriod(teacherId, startDate, endDate);
 	}
 
 	@GET
 	@Path(value = "student/{studentId}/{start}/{end}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<ScheduleRecord> getScheduleForStudentInPeriod(@PathParam(value = "studentId") Integer studentId,
-			@PathParam(value = "start") Long startDate, @PathParam(value = "end") Long endDate) {
+	public List<ScheduleRecord> getScheduleForStudentInPeriod(
+			@PathParam(value = "studentId") Integer studentId,
+			@PathParam(value = "start") Long startDate,
+			@PathParam(value = "end") Long endDate) {
 		return scheduleService.getScheduleForStudentInPeriod(studentId, startDate, endDate);
 	}
 
 	@GET
 	@Path(value = "groupCourse/{groupCourseId}/{start}/{end}")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<ScheduleRecord> getScheduleForGroupCourseInPeriod(
-			@PathParam(value = "groupCourseId") Integer groupCourseId, @PathParam(value = "start") Long starDate,
+			@PathParam(value = "groupCourseId") Integer groupCourseId,
+			@PathParam(value = "start") Long starDate,
 			@PathParam(value = "end") Long endDate) {
 		return scheduleService.getScheduleForGroupCourseInPeriod(groupCourseId, starDate, endDate);
 	}
 
 	@GET
-	@Path(value = "classRoom/{classRoomId}/{start}/{end}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(@PathParam(value = "classRoomId") Integer classRoomId,
-			@PathParam(value = "start") Long starDate, @PathParam(value = "end") Long endDate) {
-		return scheduleService.getScheduleForClassRoomInPeriod(classRoomId, starDate, endDate);
+	@Path(value = "classRoom/{classroomId}/{start}/{end}")
+	public List<ScheduleRecord> getScheduleForClassRoomInPeriod(
+			@PathParam(value = "classroomId") Integer classroomId,
+			@PathParam(value = "start") Long starDate,
+			@PathParam(value = "end") Long endDate) {
+		return scheduleService.getScheduleForClassRoomInPeriod(classroomId, starDate, endDate);
 	}
 
 	@PUT
-	@Consumes({ MediaType.APPLICATION_JSON })
 	public Integer updateScheduleRecord(ScheduleRecord scheduleRecord) {
 		return scheduleService.updateScheduleRecord(scheduleRecord);
 	}

@@ -16,34 +16,37 @@ import am.dproc.sms.services.interfaces.TeacherService;
 public class SchoolServiceImpl implements SchoolService {
 
 	@Autowired
-	SchoolDAO school;
+	SchoolDAO schoolDAO;
 
 	@Autowired
-	GroupService group;
+	GroupService groupService;
 
 	@Autowired
-	AdminService admin;
+	AdminService adminService;
 
 	@Autowired
-	TeacherService teacher;
+	TeacherService teacherService;
 
 	@Override
 	public Integer addSchool(School school) {
-		return this.school.addSchool(school);
+		if (school.getAddress() == null || school.geteMail() == null || school.getName() == null || school.getPhoneNumber() == null) {
+			return -1;
+		}
+		return schoolDAO.addSchool(school);
 	}
 
 	@Override
 	public School getSchool(Integer id) {
-		School school = this.school.getSchool(id);
-		school.setListOfGroups(this.group.getSchoolGroups(id));
-		school.setListOfAdmins(this.admin.getSchoolAdmins(id));
-		school.setListOfTeachers(this.teacher.getSchoolTeachers(id));
+		School school = this.schoolDAO.getSchool(id);
+		school.setListOfGroups(this.groupService.getSchoolGroups(id));
+		school.setListOfAdmins(this.adminService.getSchoolAdmins(id));
+		school.setListOfTeachers(this.teacherService.getSchoolTeachers(id));
 		return school;
 	}
 
 	@Override
 	public List<School> getSchools() {
-		return school.getSchooles();
+		return schoolDAO.getSchools();
 	}
 
 	@Override
@@ -51,35 +54,35 @@ public class SchoolServiceImpl implements SchoolService {
 		boolean bool = false;
 
 		if (school.getName() != null) {
-			if (this.school.updateSchoolName(school.getId(), school.getName()) == 0) {
+			if (this.schoolDAO.updateSchoolName(school.getId(), school.getName()) == 0) {
 				return -1;
 			}
 			bool = true;
 		}
 
 		if (school.getAddress() != null) {
-			if (this.school.updateSchoolAddress(school.getId(), school.getAddress()) == 1)
+			if (this.schoolDAO.updateSchoolAddress(school.getId(), school.getAddress()) == 0)
 				return -1;
 			bool = true;
 		}
 
 		if (school.getPhoneNumber() != null) {
-			if (this.school.updateSchoolPhoneNumber(school.getId(), school.getPhoneNumber()) == 1)
+			if (this.schoolDAO.updateSchoolPhoneNumber(school.getId(), school.getPhoneNumber()) == 0)
 				return -1;
 			bool = true;
 		}
 
 		if (school.geteMail() != null) {
-			if (this.school.updateSchooleMail(school.getId(), school.geteMail()) == 1)
+			if (this.schoolDAO.updateSchoolEMail(school.getId(), school.geteMail()) == 0)
 				return -1;
 			bool = true;
 		}
-		return bool == true ? 1 : 0;
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteSchool(Integer id) {
-		return this.school.deleteSchool(id);
+		return this.schoolDAO.deleteSchool(id);
 	}
 
 }

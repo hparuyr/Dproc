@@ -6,23 +6,23 @@ import am.dproc.sms.models.Admin;
 
 public interface AdminDAO {
 
-	public Integer addAdmin(Admin admin);
+	Integer addAdmin(Admin admin);
 
-	public Admin getAdmin(Integer id);
+	Admin getAdmin(Integer id);
 
-	public List<Admin> getAdmins();
+	List<Admin> getAdmins();
 
-	public List<Admin> getAdminsBySchoolId(Integer schoolId);
+	List<Admin> getAdminsBySchoolId(Integer schoolId);
 
-	public Integer updateAdminName(Integer id, String name);
+	Integer updateAdminName(Integer id, String name);
 
-	public Integer updateAdminSurname(Integer id, String surname);
+	Integer updateAdminSurname(Integer id, String surname);
 
-	public Integer updateAdminEmail(Integer id, String email);
+	Integer updateAdminEmail(Integer id, String email);
 
-	public Integer updateAdminPassword(Integer id, String password);
+	Integer updateAdminPassword(Integer id, String password);
 
-	public Integer updateAdminSchoolId(Integer id, Integer schoolId);
+	Integer updateAdminSchoolId(Integer id, Integer schoolId);
 
-	public Integer deleteAdmin(Integer id);
+	Integer deleteAdmin(Integer id);
 }

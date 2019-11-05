@@ -4,12 +4,12 @@ import am.dproc.sms.models.AdminInfo;
 
 public interface AdminInfoService {
 
-	public Integer addAdminInfo(AdminInfo adminInfo);
+	Integer addAdminInfo(AdminInfo adminInfo);
 
-	public AdminInfo getAdminInfoByAdminId(Integer adminId);
+	AdminInfo getAdminInfoByAdminId(Integer adminId);
 
-	public Integer updateAdminInfo(AdminInfo adminInfo);
+	Integer updateAdminInfo(AdminInfo adminInfo);
 
-	public Integer deleteAdminInfo(Integer adminId);
+	Integer deleteAdminInfo(Integer adminId);
 
 }

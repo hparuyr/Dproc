@@ -18,22 +18,22 @@ public class AdminDAODBImpl implements AdminDAO {
 	@Autowired
 	JdbcTemplate jdbctemplate;
 
-	private static final String ADD_ADMIN = "INSERT INTO mydb.ADMIN (NAME, SURNAME, EMAIL, PASSWORD, CREATION_DATE,CHANGE_DATE, SCHOOL_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String ADD_ADMIN = "INSERT INTO mydb.ADMIN (FIRSTNAME, LASTNAME, EMAIL, PASSWORD, CREATION_DATE,CHANGE_DATE, SCHOOL_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ADMIN_BY_ID = "SELECT * FROM mydb.ADMIN WHERE ID = ?";
 	private static final String GET_ADMINS = "SELECT * FROM mydb.ADMIN";
 	private static final String GET_ADMINS_BY_SCHOOL_ID = "SELECT * FROM mydb.ADMIN WHERE SCHOOL_ID = ?";
-	private static final String UPDATE_ADMIN_NAME = "UPDATE mydb.ADMIN SET NAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_SURNAME = "UPDATE mydb.ADMIN SET SURNAME = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_EMAIL = "UPDATE mydb.ADMIN SET EMAIL= ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_PASSWORD = "UPDATE mydb.ADMIN SET PASSWORD = ?, CHANGE_DATE = ?, WHERE ID = ?";
-	private static final String UPDATE_ADMIN_SCHOOL_ID = "UPDATE mydb.ADMIN SET SCHOOL_ID = ?, CHANGE_DATE = ?, WHERE ID = ?";
+	private static final String UPDATE_ADMIN_NAME = "UPDATE mydb.ADMIN SET FIRSTNAME = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_SURNAME = "UPDATE mydb.ADMIN SET LASTNAME = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_EMAIL = "UPDATE mydb.ADMIN SET EMAIL= ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_PASSWORD = "UPDATE mydb.ADMIN SET PASSWORD = ?, CHANGE_DATE = ? WHERE ID = ?";
+	private static final String UPDATE_ADMIN_SCHOOL_ID = "UPDATE mydb.ADMIN SET SCHOOL_ID = ?, CHANGE_DATE = ? WHERE ID = ?";
 	private static final String DELETE_ADMIN_BY_ID = "DELETE FROM mydb.ADMIN WHERE ID = ?";
 
 	@Override
 	public Integer addAdmin(Admin admin) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(ADD_ADMIN, new Object[] { admin.getName(), admin.getSurname(), admin.getEmail(),
-				admin.getPassword(), currentTimeMillis, currentTimeMillis, admin.getSchoolId(), });
+		return jdbctemplate.update(ADD_ADMIN, admin.getFirstName(), admin.getLastName(), admin.getEmail(),
+				admin.getPassword(), currentTimeMillis, currentTimeMillis, admin.getSchoolId());
 	}
 
 	@Override
@@ -54,31 +54,31 @@ public class AdminDAODBImpl implements AdminDAO {
 	@Override
 	public Integer updateAdminName(Integer id, String name) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_ADMIN_NAME, new Object[] { name, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_ADMIN_NAME, name, currentTimeMillis, id);
 	}
 
 	@Override
 	public Integer updateAdminSurname(Integer id, String surname) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_ADMIN_SURNAME, new Object[] { surname, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_ADMIN_SURNAME, surname, currentTimeMillis, id);
 	}
 
 	@Override
 	public Integer updateAdminEmail(Integer id, String email) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_ADMIN_EMAIL, new Object[] { email, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_ADMIN_EMAIL, email, currentTimeMillis, id);
 	}
 
 	@Override
 	public Integer updateAdminPassword(Integer id, String password) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_ADMIN_PASSWORD, new Object[] { password, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_ADMIN_PASSWORD, password, currentTimeMillis, id);
 	}
 
 	@Override
 	public Integer updateAdminSchoolId(Integer id, Integer schoolId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_ADMIN_SCHOOL_ID, new Object[] { schoolId, currentTimeMillis, id });
+		return jdbctemplate.update(UPDATE_ADMIN_SCHOOL_ID, schoolId, currentTimeMillis, id);
 	}
 
 	@Override
@@ -90,12 +90,12 @@ public class AdminDAODBImpl implements AdminDAO {
 		@Override
 		public Admin mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Admin admin = new Admin();
-			admin.setId(rs.getInt("id"));
-			admin.setName(rs.getString("name"));
-			admin.setSurname(rs.getString("surname"));
-			admin.setEmail(rs.getString("email"));
-			admin.setPassword(rs.getString("password"));
-			admin.setSchoolId(rs.getInt("schoolId"));
+			admin.setId(rs.getInt("ID"));
+			admin.setFirstName(rs.getString("FIRSTNAME"));
+			admin.setLastName(rs.getString("LASTNAME"));
+			admin.setEmail(rs.getString("EMAIL"));
+			admin.setPassword(rs.getString("PASSWORD"));
+			admin.setSchoolId(rs.getInt("SCHOOL_ID"));
 			return admin;
 		}
 

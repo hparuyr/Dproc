@@ -6,15 +6,15 @@ import am.dproc.sms.models.Admin;
 
 public interface AdminService {
 
-	public Integer addAdmin(Admin admin);
+	Integer addAdmin(Admin admin);
 
-	public Admin getAdmin(Integer id);
+	Admin getAdmin(Integer id);
 
-	public List<Admin> getSchoolAdmins(Integer schoolId);
+	List<Admin> getSchoolAdmins(Integer schoolId);
 
-	public List<Admin> getAdmins();
+	List<Admin> getAdmins();
 
-	public Integer updateAdmin(Admin admin);
+	Integer updateAdmin(Admin admin);
 
-	public Integer deleteAdmin(Integer id);
+	Integer deleteAdmin(Integer id);
 }

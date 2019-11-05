@@ -26,61 +26,58 @@ import io.swagger.annotations.Api;
 @RestController
 @Path(value = "/lesson")
 @Api(value = "LessonController")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces({ MediaType.APPLICATION_JSON })
 public class LessonController {
 
 	@Autowired
-	LessonService lesson;
+	LessonService lessonService;
 	
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addCourse(Lesson lesson) {
-		Integer id = this.lesson.addLesson(lesson);
-		if (id == 0) {
-			Map<String, String> message = new HashMap<String, String>();
+		Integer id = this.lessonService.addLesson(lesson);
+		if (id == -1) {
+			Map<String, String> message = new HashMap<>();
 			message.put("Message", "All fields must be filled!");
 			return Response.status(Status.BAD_REQUEST).entity(message).build();
+		} else if (id == 0) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
 		}
 		return Response.status(Status.CREATED).entity(id).build();
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Lesson getLesson(@PathParam(value = "id") Integer id) {
-		return lesson.getLesson(id);
+		return lessonService.getLesson(id);
 	}
 
 	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
 	public List<Lesson> getLessons() {
-		return lesson.getAllLesson();
+		return lessonService.getAllLesson();
 	}
 
 	@PUT
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response editLesson(Lesson lesson) {
-		Integer status = this.lesson.editLesson(lesson);
+	public Response updateLesson(Lesson lesson) {
+		Integer status = this.lessonService.updateLesson(lesson);
 		if (status == 1) {
 			return Response.status(Status.OK).build();
 		} else if (status == -1) {
 			return Response.status(Status.SERVICE_UNAVAILABLE).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
+		Map<String, String> message = new HashMap<>();
 		message.put("Message", "Nothing to update!");
-		return Response.status(Status.NO_CONTENT).entity(message).build();
+		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 	
 	@DELETE
-	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response deleteLesson(@PathParam(value = "id") Integer id) {
-		if (lesson.deleteLesson(id) == 1) {
+		if (lessonService.deleteLesson(id) == 1) {
 			return Response.status(Status.OK).build();
 		}
-		Map<String, String> message = new HashMap<String, String>();
-		message.put("Message", "First you must delete the topics of this lesson!");
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "First you must delete the topics of this lessonService!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 
