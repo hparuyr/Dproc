@@ -47,9 +47,11 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
             "FROM mydb.ASSESSMENT " +
             "WHERE STUDENT_ID = ?";
     private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "" +
-            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
-            "FROM mydb.ASSESSMENT " +
-            "WHERE ASSIGNMENT_ID = ?";
+    		"SELECT ASM.ID, ASM.STUDENT_ID, ASM.ASSIGNMENT_COMPLETED_ID, ASM.SCORE, ASM.COMMENT " +
+    		"FROM mydb.ASSIGNMENT ASGN " +
+    		"JOIN mydb.ASSIGNMENT_COMPLETED AC ON AC.ASSIGNMENT_ID = ASGN.ID " +
+    		"JOIN mydb.ASSESSMENT ASM ON ASM.ASSIGNMENT_COMPLETED_ID = AC.ID " +
+    		"WHERE ASGN.ID = ? ";
     private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "" +
             "SELECT SCORE " +
             "FROM mydb.ASSESSMENT " +
