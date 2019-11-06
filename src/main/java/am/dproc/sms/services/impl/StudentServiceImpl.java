@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import am.dproc.sms.db.interfaces.PersonDAO;
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.helpers.RandomPassGenerator;
 import am.dproc.sms.models.Student;
@@ -23,6 +24,8 @@ public class StudentServiceImpl implements StudentService {
 	@Autowired
 	StudentDAO studentDao;
 	@Autowired
+	PersonDAO personDao;
+	@Autowired
 	StudentInfoService studentInfo;
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
@@ -34,13 +37,14 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	@Transactional
 	public Integer addStudent(Student student) {
-		Student existingStudent = studentDao.getStudentByEmail(student.getEmail());
-		if (existingStudent != null) {
+//		Student existingStudent = studentDao.getStudentByEmail(student.getEmail());
+		Integer personId = personDao.getPersonByEmail(student.getEmail());
+		if (personId > 0) {
 			return 0;
 		}
 		String randomPass = RandomPassGenerator.alphaNumericString(12);
 		student.setPassword(passwordEncoder.encode(randomPass));
-		student.setStatus(StudentStatus.PENDING.ordinal());
+		student.setStatus(StudentStatus.PENDING.index());
 		int id = studentDao.addStudent(student);
 		if (id > 0) {
 			StudentInfo studentInfo = student.getStudentInfo();
