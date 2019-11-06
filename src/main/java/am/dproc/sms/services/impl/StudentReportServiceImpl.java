@@ -105,7 +105,8 @@ public class StudentReportServiceImpl implements StudentReportService {
 	private void addCoursesData(Document doc, Student student) {
 		doc.add(new Paragraph("Courses").setBold().setTextAlignment(TextAlignment.CENTER));
 
-		List<Course> courses = courseService.getCoursesByGroupId(student.getGroupId());
+//		List<Course> courses = courseService.getCoursesByGroupId(student.getGroupId());
+		List<Course> courses = courseService.getCoursesByGroupId(1);
 
 		Table coursesTable = new Table(UnitValue.createPercentArray(5)).useAllAvailableWidth();
 		coursesTable.addCell("Name");
@@ -120,7 +121,8 @@ public class StudentReportServiceImpl implements StudentReportService {
 			coursesTable.addCell(course.getName());
 			coursesTable.addCell(course.getDescription());
 			Date startDate = new Date(
-					groupCourseService.getByGroupAndCourse(student.getGroupId(), courseId).getStartDate());
+//					groupCourseService.getByGroupAndCourse(student.getGroupId(), courseId).getStartDate());
+					groupCourseService.getByGroupAndCourse(1, courseId).getStartDate());
 			coursesTable.addCell(startDate.toString());
 			Double testAvgScore = testResultService.getAverageTestResultForStudentCourse(studentId1, courseId);
 			coursesTable.addCell(testAvgScore == null ? "0" : testAvgScore.toString());
@@ -151,7 +153,8 @@ public class StudentReportServiceImpl implements StudentReportService {
 		doc.add(new Paragraph(String.format("Phone\t%s", "-")));
 		doc.add(new Paragraph(String.format("Date of Birth\t%s", "-")));
 		doc.add(new Paragraph(String.format("Admission date\t%s", "-")));
-		doc.add(new Paragraph(String.format("Group\t%s", student.getGroupId())));
+//		doc.add(new Paragraph(String.format("Group\t%s", student.getGroupId())));
+		doc.add(new Paragraph(String.format("Group\t%s", 1)));
 
 		doc.add(new Paragraph(""));
 		doc.add(new Paragraph(""));

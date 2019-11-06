@@ -24,22 +24,6 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-	/*
-	 * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-	 * Exception { // auth.inMemoryAuthentication() // .withUser("user") //
-	 * .password("user") // .roles("USER") // .and() // .withUser("admin") //
-	 * .password("admin") // .roles("ADMIN") // .and() // .withUser("test") //
-	 * .password("test") // .roles("DIRECTOR");
-	 *
-	 * auth.jdbcAuthentication() .dataSource(dataSource)
-	 * .usersByUsernameQuery("select name, password, status from student where email = ?"
-	 * )
-	 * .authoritiesByUsernameQuery("select name, info from student where name = ?");
-	 *
-	 *
-	 * }
-	 */	
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -47,8 +31,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/user").hasAnyRole("USER", "ADMIN")
-			.antMatchers("/").permitAll()
-			.and().formLogin().loginPage("/login").permitAll();
+			.antMatchers("/authenticate").permitAll()
+			.anyRequest().authenticated();
 	}
 
 
