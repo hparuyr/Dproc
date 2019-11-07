@@ -1,8 +1,6 @@
 package am.dproc.sms.models;
 
-
 public class Student extends User{
-
 	private Integer status;
 	private StudentInfo studentInfo;
 
@@ -27,5 +25,6 @@ public class Student extends User{
 		String student = super.toString();
 		return student + "Student [status=" + status + ", studentInfo=" + studentInfo + "]";
 	}
+	
 	
 }

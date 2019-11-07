@@ -1,6 +1,6 @@
 package am.dproc.sms.models;
 
-public class UserInfo {
+public class PersonInfo {
 	private Integer userId;
 	private String passportId;
 	private String socialCardId;
@@ -58,12 +58,4 @@ public class UserInfo {
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
-	@Override
-	public String toString() {
-		return "UserInfo [userId=" + userId + ", passportId=" + passportId + ", socialCardId=" + socialCardId
-				+ ", birthDate=" + birthDate + ", phoneNumber=" + phoneNumber + ", address=" + address + ", imageUrl="
-				+ imageUrl + ", gender=" + gender + "]";
-	}
-	
-	
 }

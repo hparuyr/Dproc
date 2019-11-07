@@ -27,14 +27,14 @@ import io.swagger.annotations.Api;
 @RestController
 @Path("/teacher")
 @Api(value = "TeacherController")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces({ MediaType.APPLICATION_JSON })
 public class TeacherController {
 	
 	@Autowired
 	TeacherService teacherService;
 
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response addTeacher(Teacher teacher) {
 		int id = teacherService.addTeacher(teacher);
 		if (id > 0) {
@@ -51,6 +51,7 @@ public class TeacherController {
 	}
 
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public Response getTeacher(@PathParam(value = "id") Integer id) {
 		Teacher teacher = teacherService.getTeacher(id);
@@ -63,12 +64,15 @@ public class TeacherController {
 	}
 
 	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getTeachers() {
 		List<Teacher> teachers = teacherService.getTeachers();
 		return Response.status(Response.Status.OK).entity(teachers).build();
 	}
 
 	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
 	public ResponseEntity<Integer> updateTeacher(Teacher teacher) {
 		if (teacherService.updateTeacher(teacher) == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(1);
@@ -78,6 +82,7 @@ public class TeacherController {
 	}
 
 	@DELETE
+	@Produces({ MediaType.APPLICATION_JSON })
 	@Path(value = "/{id}")
 	public ResponseEntity<Integer> deleteTeacher(@PathParam(value = "id") Integer id) {
 		if (teacherService.deleteTeacher(id) == 1) {

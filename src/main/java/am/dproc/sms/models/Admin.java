@@ -1,24 +1,22 @@
 package am.dproc.sms.models;
 
-public class Admin extends User {
+public class Admin extends Person {
+	private Integer schoolId;
+	private AdminInfo adminInfo;
 
-    private Integer schoolId;
+	public Integer getSchoolId() {
+		return schoolId;
+	}
 
-    private AdminInfo adminInfo;
+	public void setSchoolId(Integer schoolId) {
+		this.schoolId = schoolId;
+	}
 
-    public Integer getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(Integer schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public AdminInfo getAdminInfo() {
-        return adminInfo;
-    }
-
-    public void setAdminInfo(AdminInfo adminInfo) {
-        this.adminInfo = adminInfo;
-    }
+	public AdminInfo getAdminInfo() {
+		return adminInfo;
+	}
+	
+	public void setAdminInfo(AdminInfo adminInfo) {
+		this.adminInfo = adminInfo;
+	}
 }

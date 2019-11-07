@@ -50,6 +50,11 @@ public class GroupServiceImpl implements GroupService {
 	public List<Group> getGroupsByStudentId(Integer studentId) {
 		return groupDAO.getGroupsByStudentId(studentId);
 	}
+	
+	@Override
+	public List<Group> getGroupsByStudentId(Integer studentId) {
+		return group.getGroupsByStudentId(studentId);
+	}
 
 	@Override
 	public List<Group> getGroups() {

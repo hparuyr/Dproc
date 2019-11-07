@@ -9,7 +9,6 @@ import am.dproc.sms.services.interfaces.TeacherInfoService;
 
 @Service
 public class TeacherInfoServiceImpl  implements TeacherInfoService{
-
 	@Autowired
 	TeacherInfoDAO teacherInfoDao;
 
@@ -25,17 +24,17 @@ public class TeacherInfoServiceImpl  implements TeacherInfoService{
 
 	@Override
 	public Integer updateTeacherInfo(TeacherInfo teacherInfo) {
-		if (teacherInfo.getPassportId() != null) {
-			return this.teacherInfoDao.updateTeacherInfoPassportId(teacherInfo.getUserId(),
-					teacherInfo.getPassportId());
-		} else if (teacherInfo.getSocialCardId() != null) {
-			return this.teacherInfoDao.updateTeacherInfoSocialCardId(teacherInfo.getUserId(),
-					teacherInfo.getSocialCardId());
-		} else if (teacherInfo.getBirthDate() != null) {
-			return this.teacherInfoDao.updateTeacherInfoBirthDate(teacherInfo.getUserId(), teacherInfo.getBirthDate());
-		} else if (teacherInfo.getImageUrl() != null) {
-			return this.teacherInfoDao.updateTeacherInfoImageUrl(teacherInfo.getUserId(), teacherInfo.getImageUrl());
-		}
+//		if (teacherInfo.getPassportId() != null) {
+//			return this.teacherInfoDao.updateTeacherInfoPassportId(teacherInfo.getTeacherId(),
+//					teacherInfo.getPassportId());
+//		} else if (teacherInfo.getSocialCardId() != null) {
+//			return this.teacherInfoDao.updateTeacherInfoSocialCardId(teacherInfo.getTeacherId(),
+//					teacherInfo.getSocialCardId());
+//		} else if (teacherInfo.getBirthDate() != null) {
+//			return this.teacherInfoDao.updateTeacherInfoBirthDate(teacherInfo.getTeacherId(), teacherInfo.getBirthDate());
+//		} else if (teacherInfo.getImageUrl() != null) {
+//			return this.teacherInfoDao.updateTeacherInfoImageUrl(teacherInfo.getTeacherId(), teacherInfo.getImageUrl());
+//		}
 		return 0;
 	}
 

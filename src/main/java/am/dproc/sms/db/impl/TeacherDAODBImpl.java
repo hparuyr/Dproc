@@ -1,5 +1,6 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,9 +8,11 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -43,49 +46,58 @@ public class TeacherDAODBImpl implements TeacherDAO {
 	@Override
 	public Integer addTeacher(Teacher teacher) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbctemplate.update(con -> {
-			PreparedStatement ps = con.prepareStatement(ADD_TEACHER, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, teacher.getFirstName());
-			ps.setString(2, teacher.getLastName());
-			ps.setString(3, teacher.getEmail());
-			ps.setString(4, teacher.getPassword());
-			ps.setInt(5, 1);
-			ps.setLong(6, 2);
-			ps.setLong(7, System.currentTimeMillis());
-			return ps;
+		jdbctemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_TEACHER, Statement.RETURN_GENERATED_KEYS);
+				ps.setString(1, teacher.getFirstname());
+				ps.setString(2, teacher.getLastname());
+				ps.setString(3, teacher.getEmail());
+				ps.setString(4, teacher.getPassword());
+				ps.setInt(5, 1);
+				ps.setLong(6, 2);
+				ps.setLong(7, System.currentTimeMillis());
+				return ps;
+			}
 		}, keyHolder);
 		return keyHolder.getKey().intValue();
 	}
 	
 	@Override
 	public int[] addTeachers(List<Teacher> teachers) {
-		return jdbctemplate.execute(con -> {
-			PreparedStatement ps = con.prepareStatement(ADD_TEACHER, Statement.RETURN_GENERATED_KEYS);
-			for (Teacher teacher : teachers) {
-				ps.setString(1, teacher.getFirstName());
-				ps.setString(2, teacher.getLastName());
-				ps.setString(3, teacher.getEmail());
-				ps.setString(4, teacher.getPassword());
-				// add StudentStatus type to student object
-				ps.setInt(5, 1);
-				ps.setInt(6, 2);
-				ps.setLong(7, System.currentTimeMillis());
-				ps.addBatch();
+		return jdbctemplate.execute(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_TEACHER, Statement.RETURN_GENERATED_KEYS);
+				for (Teacher teacher : teachers) {
+					ps.setString(1, teacher.getFirstname());
+					ps.setString(2, teacher.getLastname());
+					ps.setString(3, teacher.getEmail());
+					ps.setString(4, teacher.getPassword());
+					// add StudentStatus type to student object
+					ps.setInt(5, 1);
+					ps.setInt(6, 2);
+					ps.setLong(7, System.currentTimeMillis());
+					ps.addBatch();
+				}
+				ps.executeBatch();
+				return ps;
 			}
-			ps.executeBatch();
-			return ps;
-		}, (PreparedStatementCallback<int[]>) ps -> {
-			ResultSet rs = ps.getGeneratedKeys();
-			int curId;
-			int[] ids = new int[teachers.size()];
-			int current = 0;
-			while (rs.next()) {
-				curId = rs.getInt(1);
-				ids[current] = curId;
-				current++;
-				System.out.println(curId);
+		}, new PreparedStatementCallback<int[]>() {
+			@Override
+			public int[] doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ResultSet rs = ps.getGeneratedKeys();
+				int curId;
+				int[] ids = new int[teachers.size()];
+				int current = 0;
+				while (rs.next()) {
+					curId = rs.getInt(1);
+					ids[current] = curId;
+					current++;
+					System.out.println(curId);
+				}
+				return ids;
 			}
-			return ids;
 		});
 	}
 	
@@ -119,27 +131,27 @@ public class TeacherDAODBImpl implements TeacherDAO {
 
 	@Override
 	public Integer updateTeacher(Teacher teacher) {
-		return jdbctemplate.update(UPDATE_TEACHER, teacher.getFirstName(), teacher.getLastName(), teacher.getEmail(), teacher.getPassword(), teacher.getId());
+		return jdbctemplate.update(UPDATE_TEACHER, new Object[] { teacher.getFirstname(), teacher.getLastname(), teacher.getEmail(), teacher.getPassword(), teacher.getId() });
 	}
 
 	@Override
 	public Integer updateTeacherFirstame(Integer id, String firstname) {
-		return jdbctemplate.update(UPDATE_TEACHER_FIRSTNAME, firstname, id);
+		return jdbctemplate.update(UPDATE_TEACHER_FIRSTNAME, new Object[] { firstname, id });
 	}
 	
 	@Override
 	public Integer updateTeacherLastname(Integer id, String lastname) {
-		return jdbctemplate.update(UPDATE_TEACHER_LASTNAME, lastname, id);
+		return jdbctemplate.update(UPDATE_TEACHER_LASTNAME, new Object[] { lastname, id });
 	}
 
 	@Override
 	public Integer updateTeacherEmail(Integer id, String email) {
-		return jdbctemplate.update(UPDATE_TEACHER_EMAIL, email, id);
+		return jdbctemplate.update(UPDATE_TEACHER_EMAIL, new Object[] { email, id });
 	}
 
 	@Override
 	public Integer updateTeacherPassword(Integer id, String password) {
-		return jdbctemplate.update(UPDATE_TEACHER_PASSWORD, password, id);
+		return jdbctemplate.update(UPDATE_TEACHER_PASSWORD, new Object[] { password, id });
 	}
 
 	@Override
@@ -152,8 +164,8 @@ public class TeacherDAODBImpl implements TeacherDAO {
 		public Teacher mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Teacher teacher = new Teacher();
 			teacher.setId(rs.getInt("ID"));
-			teacher.setFirstName(rs.getString("FIRSTNAME"));
-			teacher.setLastName(rs.getString("LASTNAME"));
+			teacher.setFirstname(rs.getString("FIRSTNAME"));
+			teacher.setLastname(rs.getString("LASTNAME"));
 			teacher.setEmail(rs.getString("EMAIL"));
 			teacher.setPassword(rs.getString("PASSWORD"));
 //			teacher.setStatus(rs.getInt("STATUS"));

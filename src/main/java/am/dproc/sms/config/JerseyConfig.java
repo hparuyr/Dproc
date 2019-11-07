@@ -12,6 +12,7 @@ import am.dproc.sms.rest.AnswerController;
 import am.dproc.sms.rest.AssessmentController;
 import am.dproc.sms.rest.AssignmentCompletedController;
 import am.dproc.sms.rest.AssignmentController;
+import am.dproc.sms.rest.AuthController;
 import am.dproc.sms.rest.ClassroomController;
 import am.dproc.sms.rest.CourseController;
 import am.dproc.sms.rest.GroupController;
@@ -20,6 +21,7 @@ import am.dproc.sms.rest.LessonController;
 import am.dproc.sms.rest.QuestionController;
 import am.dproc.sms.rest.ScheduleController;
 import am.dproc.sms.rest.SchoolController;
+import am.dproc.sms.rest.SendEmailController;
 import am.dproc.sms.rest.StudentCommentController;
 import am.dproc.sms.rest.StudentController;
 import am.dproc.sms.rest.StudentInfoController;
@@ -37,6 +39,7 @@ import io.swagger.jaxrs.listing.SwaggerSerializers;
 @Configuration
 @ApplicationPath("/api")
 public class JerseyConfig extends ResourceConfig {
+
 	public JerseyConfig() {
 		register(SchoolController.class);
 		register(GroupController.class);
@@ -62,6 +65,8 @@ public class JerseyConfig extends ResourceConfig {
 		register(SurveyController.class);
 		register(StudentReportController.class);
 		register(AssignmentCompletedController.class);
+		register(SendEmailController.class);
+		register(AuthController.class);
 	}
 
     @PostConstruct
