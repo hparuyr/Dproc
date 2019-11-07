@@ -2,8 +2,9 @@ package am.dproc.sms.rest;
 
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,23 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import am.dproc.sms.models.AuthenticationRequest;
-import am.dproc.sms.models.Student;
-import am.dproc.sms.models.UserPrincipal;
+import am.dproc.sms.models.AuthenticationResponse;
 import am.dproc.sms.services.impl.JwtUtil;
 import am.dproc.sms.services.interfaces.StudentService;
+import io.swagger.annotations.Api;
 
 @RestController
+@Path("/authenticate")
+@Api(value = "AuthController")
 public class AuthController {
 
 	@Autowired
@@ -47,8 +44,9 @@ public class AuthController {
 	JwtUtil jwtTokenUtil;
 	
 	@POST
-	@Path("/authenticate")
+//	@Path("/authenticate")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response createAuthenticationToken(AuthenticationRequest authenticationRequest) throws Exception {
 			try {
 				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -57,59 +55,29 @@ public class AuthController {
 			}
 			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 			final String jwt = jwtTokenUtil.generateToken(userDetails);
-			return Response.status(Response.Status.OK).entity(jwt).build();
+//			Map<String,String> token = new HashMap<>();
+//			token.put("jwt", jwt);
+			return Response.status(Response.Status.OK).entity(new AuthenticationResponse(jwt)).build();
 	}
 	
 	
 	
-	
-	@RequestMapping(value = {"/", "home"})
-	public String home(Authentication auth, Model model, HttpSession session) {
-		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>>>>>>inside home");
-		System.out.println("=====Session id====>>"+session.getId());
-		System.out.println(auth);
-		
-		if(auth != null) {
-			UserPrincipal user = (UserPrincipal) auth.getPrincipal();
-			System.out.println("=====Logged in user id====>>"+user.getId());
-			model.addAttribute("user",user);
-			return "/home";
-		}
-		return "redirect:/login";
-	}
+//	
+//	@RequestMapping(value = {"/", "home"})
+//	public String home(Authentication auth, Model model, HttpSession session) {
+//		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>>>>>>inside home");
+//		System.out.println("=====Session id====>>"+session.getId());
+//		System.out.println(auth);
+//		
+//		if(auth != null) {
+//			UserPrincipal user = (UserPrincipal) auth.getPrincipal();
+//			System.out.println("=====Logged in user id====>>"+user.getId());
+//			model.addAttribute("user",user);
+//			return "/home";
+//		}
+//		return "redirect:/login";
+//	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
-		return "login";
-	}
-	
-	@GetMapping("welcome")
-	public String welcome() {
-		System.out.println("========="+currentTime()+">>>>>>>>>>>>>>>>>>>>>>>inside welcome");
-		return "/welcome";
-	}
-
-	@GetMapping("teacher")
-	public String teacher() {
-		logTime();
-		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>inside teacher");
-		return "/teacher";
-	}
-
-	@GetMapping("student")
-	public String student() {
-		logTime();
-		System.out.println("=========>>"+currentTime()+">>>>>>>>>>>>>>>>inside teacher");
-		return "/student";
-	}
-
-	@GetMapping(value = "registration")
-	public String registration(Model model) {
-		if(!model.containsAttribute("user")) {
-			model.addAttribute("user", new Student());
-		}
-		return "/registration";
-	}
 
 //	@PostMapping(value = "registration")
 //	public String register(@ModelAttribute Student student) throws IllegalArgumentException, IllegalAccessException {
@@ -124,11 +92,11 @@ public class AuthController {
 //		return "/registration";
 //	}
 
-	@POST
-	@Path("registration")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response register(Student student) {
+//	@POST
+//	@Path("registration")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response register(Student student) {
 //		int id = studentService.addStudent(student);
 //		Map<String, String> message = new HashMap<>();
 //		message.put("message", String.format("User with email %s already exists", admin.getEmail()));
@@ -142,20 +110,9 @@ public class AuthController {
 //			model.addAttribute("message", "User was not created.");
 //		}
 //		return registration(model);
-		return null;
-	}
+//		return null;
+//	}
 	
-	@RequestMapping(value = "user")
-	@ResponseBody
-	public String user() {
-		return ("<h1>Welcome User</h1>");
-	}
-
-	@RequestMapping(value = "admin")
-	@ResponseBody
-	public String admin() {
-		return ("<h1>Welcome Admin</h1>");
-	}
 
 	// todo delete time utils
 	private void logTime() {
@@ -166,4 +123,27 @@ public class AuthController {
 		return LocalDateTime.now().toString().replace("T", " ");
 	}
 
+	
+//	{
+//		  "firstname": "Narek",
+//		  "lastname": "Malkhasyan",
+//		  "email": "narekmalkhasyan@mail.ru",
+//		  "password": 123,
+//		  "studentInfo": {
+//		    "passportId": "AK5824974",
+//		    "socialCardId": "00045821957",
+//		    "birthDate": 4840002545215,
+//		    "phoneNumber": "+37495821474",
+//		    "address": "28 Sayat-Nova Yerevan",
+//		    "imageUrl": "/img/std/847.jpg",
+//		    "gender": 1
+//		  }
+//		}
+//		oczjHiKfWQIO
+	
+	
+	
+	
+	
+	
 }

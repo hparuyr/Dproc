@@ -1,25 +1,75 @@
 package am.dproc.sms.controllers;
 
-import java.time.LocalDateTime;
-import javax.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-import am.dproc.sms.models.Student;
-import am.dproc.sms.models.UserPrincipal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import am.dproc.sms.models.AuthenticationRequest;
+import am.dproc.sms.services.impl.JwtUtil;
 import am.dproc.sms.services.interfaces.StudentService;
 
-@Controller
+@RestController
 public class LoginController {
 
+	
+//	@Autowired
+//	StudentService studentService;
+//	
+//	@Autowired
+//	AuthenticationManager authenticationManager;
+//	
+//	@Autowired 
+//	UserDetailsService userDetailsService;
+//	
+//	@Autowired
+//	JwtUtil jwtTokenUtil;
+//	
+//	@RequestMapping("/authenticate")
+////	@Consumes(MediaType.APPLICATION_JSON)
+//	public ResponseEntity<T> createAuthenticationToken(@Bod AuthenticationRequest authenticationRequest) throws Exception {
+//			try {
+//				authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+//			} catch (BadCredentialsException e) {
+//				throw new Exception("Incorrect username or password",e);
+//			}
+//			final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+//			final String jwt = jwtTokenUtil.generateToken(userDetails);
+//			return Response.status(Response.Status.OK).entity(jwt).build();
+//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //	@Autowired
 //	StudentService studentService;
 //	
