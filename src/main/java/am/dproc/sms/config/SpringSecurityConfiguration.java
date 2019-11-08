@@ -3,6 +3,7 @@ package am.dproc.sms.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -40,6 +41,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/admin").hasRole("ADMIN")
 			.antMatchers("/user").hasAnyRole("USER", "ADMIN")
 			.antMatchers("/api/authenticate").permitAll()
+			.antMatchers(HttpMethod.POST, "/api/student").permitAll()
 			.antMatchers("/swagger-ui.html").permitAll()
 			.antMatchers("/api/swagger.json").permitAll()
 			.antMatchers("/api/**").authenticated()
