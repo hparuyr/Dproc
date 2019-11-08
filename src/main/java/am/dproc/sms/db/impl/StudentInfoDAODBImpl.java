@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -23,17 +22,17 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	private static final String ADD_STUDENT_INFO = "INSERT INTO mydb.USER_INFO (USER_ID, PASSPORT_ID, SOCIAL_CARD_ID, BIRTH_DATE, PHONE_NUMBER, ADDRESS, IMAGE_URL,"
 												+ " GENDER, CREATION_DATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_STUDENT_INFO_BY_STUDENT_ID = "SELECT * FROM mydb.USER_INFO WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_PASSPORT_ID = "UPDATE mydb.USER_INFO SET PASSPORT_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_SOCIAL_CARD_ID = "UPDATE mydb.USER_INFO SET SOCIAL_CARD_ID = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_BIRTH_DATE = "UPDATE mydb.USER_INFO SET BIRTH_DATE= ?, CHANGE_DATE = ? WHERE USER_ID = ?";
-	private static final String UPDATE_STUDENT_INFO_IMAGE_URL = "UPDATE mydb.USER_INFO SET IMAGE_URL = ?, CHANGE_DATE = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_PASSPORT_ID = "UPDATE mydb.USER_INFO SET PASSPORT_ID = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_SOCIAL_CARD_ID = "UPDATE mydb.USER_INFO SET SOCIAL_CARD_ID = ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_BIRTH_DATE = "UPDATE mydb.USER_INFO SET BIRTH_DATE= ? WHERE USER_ID = ?";
+	private static final String UPDATE_STUDENT_INFO_IMAGE_URL = "UPDATE mydb.USER_INFO SET IMAGE_URL = ? WHERE USER_ID = ?";
 	private static final String DELETE_STUDENT_INFO_BY_STUDENT_ID = "DELETE FROM mydb.USER_INFO WHERE USER_ID = ?";
 
 	@Override
 	public Integer addStudentInfo(StudentInfo studentInfo) {
 		return jdbctemplate.update(ADD_STUDENT_INFO,
-				studentInfo.getUserId(), studentInfo.getPassportId(), studentInfo.getSocialCardId(), studentInfo.getBirthDate(),
-				studentInfo.getPhoneNumber(), studentInfo.getAddress(), studentInfo.getImageUrl(), studentInfo.getGender(), System.currentTimeMillis());
+				new Object[] { studentInfo.getUserId(), studentInfo.getPassportId(), studentInfo.getSocialCardId(), studentInfo.getBirthDate(),
+						studentInfo.getPhoneNumber(), studentInfo.getAddress(), studentInfo.getImageUrl(), studentInfo.getGender(), System.currentTimeMillis() });
 	}
 
 	@Override
@@ -72,28 +71,28 @@ public class StudentInfoDAODBImpl implements StudentInfoDAO {
 	public Integer updateStudentInfoPassportId(Integer studentId, String passportId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_PASSPORT_ID,
-				passportId, currentTimeMillis, studentId);
+				new Object[] { passportId, currentTimeMillis, studentId });
 	}
 
 	@Override
 	public Integer updateStudentInfoSocialCardId(Integer studentId, String socialCardId) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_SOCIAL_CARD_ID,
-				socialCardId, currentTimeMillis, studentId);
+				new Object[] { socialCardId, currentTimeMillis, studentId });
 	}
 
 	@Override
 	public Integer updateStudentInfoBirthDate(Integer studentId, Long birthDate) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_BIRTH_DATE,
-				birthDate, currentTimeMillis, studentId);
+				new Object[] { birthDate, currentTimeMillis, studentId });
 	}
 
 	@Override
 	public Integer updateStudentInfoImageUrl(Integer studentId, String imageUrl) {
 		Long currentTimeMillis = new java.util.Date().getTime();
 		return jdbctemplate.update(UPDATE_STUDENT_INFO_IMAGE_URL,
-				imageUrl, currentTimeMillis, studentId);
+				new Object[] { imageUrl, currentTimeMillis, studentId });
 	}
 
 	@Override

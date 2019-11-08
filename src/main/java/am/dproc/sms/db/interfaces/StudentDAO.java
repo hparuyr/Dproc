@@ -6,29 +6,29 @@ import am.dproc.sms.models.Student;
 
 public interface StudentDAO {
 
-	Integer addStudent(Student student);
+	public Integer addStudent(Student student);
 
-	int[] addStudents(List<Student> students);
+	public int[] addStudents(List<Student> students);
 
-	Student getStudent(Integer id);
+	public Student getStudent(Integer id);
 
-	Student getStudentByEmail(String email);
+	public Student getStudentByEmail(String email);
 
-	List<Student> getStudents();
+	public List<Student> getStudents();
 
-	List<Student> getStudentsByGroupId(Integer groupId);
+	public List<Student> getStudentsByGroupId(Integer groupId);
 
-	String getStudentStatus(Integer id);
+	public String getStudentStatus(Integer id);
 
-	Integer updateStudent(Student student);
+	public Integer updateStudent(Student student);
 
-	Integer updateStudentFirstName(Integer id, String firstName);
+	public Integer updateStudentFirstname(Integer id, String firstname);
 
-	Integer updateStudentLastName(Integer id, String lastName);
+	public Integer updateStudentLastname(Integer id, String lastname);
 
-	Integer updateStudentEmail(Integer id, String email);
+	public Integer updateStudentEmail(Integer id, String email);
 
-	Integer updateStudentPassword(Integer id, String password);
+	public Integer updateStudentPassword(Integer id, String password);
 
 	public Integer updateStudentStatus(Integer id, int status);
 

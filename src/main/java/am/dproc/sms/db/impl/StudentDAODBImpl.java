@@ -1,5 +1,6 @@
 package am.dproc.sms.db.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,8 +8,10 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -18,7 +21,7 @@ import org.springframework.stereotype.Repository;
 import am.dproc.sms.db.interfaces.StudentDAO;
 import am.dproc.sms.models.Student;
 import am.dproc.sms.models.StudentInfo;
-import am.dproc.sms.enums.StudentStatus;
+import am.dproc.sms.models.StudentStatus;
 
 @Repository
 public class StudentDAODBImpl implements StudentDAO {
@@ -34,9 +37,9 @@ public class StudentDAODBImpl implements StudentDAO {
 														+ "`USER`.`STATUS`, `USER`.`TYPE` FROM `STUDENT_GROUP` join `USER` on"
 														+ " `STUDENT_GROUP`.`STUDENT_ID`= `USER`.`ID`  WHERE `GROUP_ID`= ?";
 	private static final String GET_STUDENT_STATUS_BY_ID = "SELECT STATUS FROM mydb.USER WHERE ID = ?";
-	private static final String UPDATE_STUDENT = "UPDATE mydb.USER SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? WHERE ID = ?";
-	private static final String UPDATE_STUDENT_FIRST_NAME = "UPDATE mydb.USER SET FIRSTNAME = ? WHERE ID = ?";
-	private static final String UPDATE_STUDENT_LAST_NAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT = "UPDATE mydb.STUDNET SET FIRSTNAME = ?, LASTNAME = ?, EMAIL = ?, PASSWORD = ?, STATUS = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_NAME = "UPDATE mydb.STUDNET SET FIRSTNAME = ? WHERE ID = ?";
+	private static final String UPDATE_STUDENT_LASTNAME = "UPDATE mydb.USER SET LASTNAME = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_EMAIL = "UPDATE mydb.USER SET EMAIL= ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_PASSWORD = "UPDATE mydb.USER SET PASSWORD = ? WHERE ID = ?";
 	private static final String UPDATE_STUDENT_STATUS = "UPDATE mydb.USER SET STATUS = ? WHERE ID = ?";
@@ -45,50 +48,60 @@ public class StudentDAODBImpl implements StudentDAO {
 	@Override
 	public Integer addStudent(Student student) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		jdbctemplate.update(con -> {
-			PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, student.getFirstName());
-			ps.setString(2, student.getLastName());
-			ps.setString(3, student.getEmail());
-			ps.setString(4, student.getPassword());
-			ps.setInt(5, student.getStatus());
-			ps.setLong(6, 1);
-			ps.setLong(7, System.currentTimeMillis());
-			return ps;
-		}, keyHolder);
-		return (Integer) keyHolder.getKey();
-	}
-
-	@Override
-	public int[] addStudents(List<Student> students) {
-
-		return jdbctemplate.execute((PreparedStatementCreator) con -> {
-			PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
-			for (Student student : students) {
+		jdbctemplate.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, student.getFirstName());
 				ps.setString(2, student.getLastName());
 				ps.setString(3, student.getEmail());
 				ps.setString(4, student.getPassword());
-				// add StudentStatus type to student object
-				ps.setInt(5, StudentStatus.PENDING.ordinal());
-				ps.setLong(6, System.currentTimeMillis());
+				ps.setInt(5, student.getStatus());
+				ps.setLong(6, 1);
 				ps.setLong(7, System.currentTimeMillis());
-				ps.addBatch();
+				return ps;
 			}
-			ps.executeBatch();
-			return ps;
-		}, ps -> {
-			ResultSet rs = ps.getGeneratedKeys();
-			int curId;
-			int[] ids = new int[students.size()];
-			int current = 0;
-			while (rs.next()) {
-				curId = rs.getInt(1);
-				ids[current] = curId;
-				current++;
-				System.out.println(curId);
+		}, keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	@Override
+	public int[] addStudents(List<Student> students) {
+		Long currentTimeMillis = System.currentTimeMillis();
+
+		return jdbctemplate.execute(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				PreparedStatement ps = con.prepareStatement(ADD_STUDENT, Statement.RETURN_GENERATED_KEYS);
+				for (Student student : students) {
+					ps.setString(1, student.getFirstName());
+					ps.setString(2, student.getLastName());
+					ps.setString(3, student.getEmail());
+					ps.setString(4, student.getPassword());
+					// add StudentStatus type to student object
+					ps.setInt(5, StudentStatus.PENDING.ordinal());
+					ps.setLong(6, currentTimeMillis);
+					ps.setLong(7, currentTimeMillis);
+					ps.addBatch();
+				}
+				ps.executeBatch();
+				return ps;
 			}
-			return ids;
+		}, new PreparedStatementCallback<int[]>() {
+			@Override
+			public int[] doInPreparedStatement(PreparedStatement ps) throws SQLException, DataAccessException {
+				ResultSet rs = ps.getGeneratedKeys();
+				int curId;
+				int[] ids = new int[students.size()];
+				int current = 0;
+				while (rs.next()) {
+					curId = rs.getInt(1);
+					ids[current] = curId;
+					current++;
+					System.out.println(curId);
+				}
+				return ids;
+			}
 		});
 	}
 
@@ -127,34 +140,34 @@ public class StudentDAODBImpl implements StudentDAO {
 
 	@Override
 	public Integer updateStudent(Student student) {
-		return jdbctemplate.update(UPDATE_STUDENT, student.getFirstName(), student.getLastName(), student.getEmail(),
-				student.getPassword(), student.getStatus(), student.getId());
+		return jdbctemplate.update(UPDATE_STUDENT, new Object[] { student.getFirstName(), student.getLastName(), student.getEmail(),
+				student.getPassword(), student.getStatus(), student.getId() });
 	}
 	
 	@Override
-	public Integer updateStudentFirstName(Integer id, String firstName) {
-		return jdbctemplate.update(UPDATE_STUDENT_FIRST_NAME, firstName, id);
+	public Integer updateStudentFirstname(Integer id, String firstname) {
+		return jdbctemplate.update(UPDATE_STUDENT_NAME, new Object[] { firstname, id });
 	}
 
 	@Override
-	public Integer updateStudentLastName(Integer id, String lastName) {
-		return jdbctemplate.update(UPDATE_STUDENT_LAST_NAME, lastName, id);
+	public Integer updateStudentLastname(Integer id, String lastanme) {
+		return jdbctemplate.update(UPDATE_STUDENT_LASTNAME, new Object[] { lastanme, id });
 	}
 
 	@Override
 	public Integer updateStudentEmail(Integer id, String email) {
-		return jdbctemplate.update(UPDATE_STUDENT_EMAIL, email, id);
+		return jdbctemplate.update(UPDATE_STUDENT_EMAIL, new Object[] { email, id });
 	}
 
 	@Override
 	public Integer updateStudentPassword(Integer id, String password) {
-		return jdbctemplate.update(UPDATE_STUDENT_PASSWORD, password, id);
+		return jdbctemplate.update(UPDATE_STUDENT_PASSWORD, new Object[] { password, id });
 	}
 
 	@Override
 	public Integer updateStudentStatus(Integer id, int status) {
 		Long currentTimeMillis = new java.util.Date().getTime();
-		return jdbctemplate.update(UPDATE_STUDENT_STATUS, status, currentTimeMillis, id);
+		return jdbctemplate.update(UPDATE_STUDENT_STATUS, new Object[] { status, currentTimeMillis, id });
 	}
 
 	@Override

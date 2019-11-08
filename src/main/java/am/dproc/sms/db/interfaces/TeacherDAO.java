@@ -28,7 +28,7 @@ public interface TeacherDAO {
 
 	Integer updateTeacherPassword(Integer id, String password);
 
-	//	public Integer updateTeacherSchoolId(Integer id, Integer schoolId);
+//	public Integer updateTeacherSchoolId(Integer id, Integer schoolId);
 
 	Integer deleteTeacher(Integer id);
 }

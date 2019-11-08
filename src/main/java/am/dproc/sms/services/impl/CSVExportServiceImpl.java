@@ -58,7 +58,7 @@ public class CSVExportServiceImpl implements CSVExportService {
     @Override
     public File getCSVFile(Integer teacherID, Integer schoolID) throws IOException {
 
-        File file = new File(("src/main/info" + System.currentTimeMillis() + ".csv"));
+        File file = new File(("src/main/resources/info" + System.currentTimeMillis() + ".csv"));
         FileWriter csvWriter = new FileWriter(file);
 
         String[] header = {

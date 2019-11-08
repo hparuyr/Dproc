@@ -35,11 +35,17 @@ public class CourseDAODBImpl implements CourseDAO {
             + "SELECT ID, SCHOOL_ID, NAME, DESCRIPTION, DURATION, DURATION_UNIT_TYPE "
             + "FROM mydb.COURSE";
     private static final String GET_COURSES_BY_GROUP_ID = ""
-            + "SELECT C.* "
+            + "SELECT C.ID, C.SCHOOL_ID, C.NAME, C.DESCRIPTION, C.DURATION, C.DURATION_UNIT_TYPE "
             + "FROM COURSE C "
             + "JOIN GROUP_COURSE GC "
             + "ON C.ID = GC.COURSE_ID "
             + "WHERE GC.GROUP_ID = ?";
+    private static final String GET_COURSES_BY_STUDENT_ID = ""
+    		+ "SELECT C.ID, C.SCHOOL_ID, C.NAME, C.DESCRIPTION, C.DURATION, C.DURATION_UNIT_TYPE "
+    		+ "FROM STUDENT_GROUP SG "
+    		+ "  JOIN GROUP_COURSE GC ON SG.GROUP_ID = GC.GROUP_ID "
+    		+ "  JOIN COURSE C ON C.ID = GC.COURSE_ID "
+    		+ "WHERE STUDENT_ID = ?";
     private static final String UPDATE_COURSE_NAME = ""
             + "UPDATE mydb.COURSE "
             + "SET NAME = ?, CHANGE_DATE = ? "
@@ -97,6 +103,11 @@ public class CourseDAODBImpl implements CourseDAO {
     @Override
     public List<Course> getCoursesByGroupId(Integer groupId) {
         return jdbctemplate.query(GET_COURSES_BY_GROUP_ID, new CourseMapper(), groupId);
+    }
+
+    @Override
+    public List<Course> getCoursesByStudentId(Integer studentId) {
+        return jdbctemplate.query(GET_COURSES_BY_STUDENT_ID, new CourseMapper(), studentId);
     }
 
     @Override

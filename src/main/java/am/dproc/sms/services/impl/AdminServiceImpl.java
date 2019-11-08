@@ -13,57 +13,42 @@ import am.dproc.sms.services.interfaces.AdminService;
 @Service
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
-    AdminDAO admin;
+	@Autowired
+	AdminDAO adminDao;
 
-    @Autowired
-    AdminInfoService adminInfo;
+	@Autowired
+	AdminInfoService adminInfo;
 
-    @Override
-    public Integer addAdmin(Admin admin) {
-        return this.admin.addAdmin(admin);
-    }
+	@Override
+	public Integer addAdmin(Admin admin) {
+		return this.adminDao.addAdmin(admin);
+	}
 
-    @Override
-    public Admin getAdmin(Integer id) {
-        Admin admin = this.admin.getAdmin(id);
-        admin.setAdminInfo(this.adminInfo.getAdminInfoByAdminId(id));
-        return admin;
-    }
+	@Override
+	public Admin getAdmin(Integer id) {
+		Admin admin = this.adminDao.getAdmin(id);
+//		admin.setAdminInfo(this.adminInfo.getAdminInfoByAdminId(id));
+		return admin;
+	}
 
-    @Override
-    public List<Admin> getSchoolAdmins(Integer schoolId) {
-        return this.admin.getAdminsBySchoolId(schoolId);
-    }
+	@Override
+	public List<Admin> getSchoolAdmins(Integer schoolId) {
+		return this.adminDao.getAdminsBySchoolId(schoolId);
+	}
 
-    @Override
-    public List<Admin> getAdmins() {
-        return admin.getAdmins();
-    }
+	@Override
+	public List<Admin> getAdmins() {
+		return adminDao.getAdmins();
+	}
 
-    @Override
-    public Integer updateAdmin(Admin admin) {
-        if (admin.getFirstName() != null) {
-            return this.admin.updateAdminName(admin.getId(), admin.getFirstName());
-        }
-        if (admin.getLastName() != null) {
-            return this.admin.updateAdminSurname(admin.getId(), admin.getLastName());
-        }
-        if (admin.getEmail() != null) {
-            return this.admin.updateAdminEmail(admin.getId(), admin.getEmail());
-        }
-        if (admin.getPassword() != null) {
-            return this.admin.updateAdminPassword(admin.getId(), admin.getPassword());
-        }
-        if (admin.getSchoolId() != null) {
-            return this.admin.updateAdminSchoolId(admin.getId(), admin.getSchoolId());
-        }
-        return 0;
-    }
+	@Override
+	public Integer updateAdmin(Admin admin) {
+		return	adminDao.updateAdmin(admin);
+	}
 
-    @Override
-    public Integer deleteAdmin(Integer id) {
-        return this.admin.deleteAdmin(id);
-    }
+	@Override
+	public Integer deleteAdmin(Integer id) {
+		return this.adminDao.deleteAdmin(id);
+	}
 
 }

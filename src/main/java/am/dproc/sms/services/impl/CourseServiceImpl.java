@@ -54,6 +54,11 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.getCoursesByGroupId(groupId);
     }
 
+    @Override
+    public List<Course> getCoursesByStudentId(Integer studentId) {
+        return courseDAO.getCoursesByStudentId(studentId);
+    }
+
     public Integer updateCourse(Course course) {
 
         boolean bool = false;
@@ -93,4 +98,5 @@ public class CourseServiceImpl implements CourseService {
         }
         return 0;
     }
+
 }

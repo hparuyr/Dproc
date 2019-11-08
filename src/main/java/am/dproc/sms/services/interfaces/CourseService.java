@@ -14,6 +14,8 @@ public interface CourseService {
 
 	List<Course> getCoursesByGroupId(Integer groupId);
 
+	List<Course> getCoursesByStudentId(Integer studentId);
+
 	Integer updateCourse(Course course);
 
 	Integer deleteCourse(Integer id);

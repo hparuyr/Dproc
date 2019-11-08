@@ -6,22 +6,23 @@ import am.dproc.sms.models.Course;
 
 public interface CourseDAO {
 
-    Integer addCourse(Course course);
+	Integer addCourse(Course course);
 
-    Course getCourse(Integer id);
+	Course getCourse(Integer id);
 
-    List<Course> getCourses();
+	List<Course> getCourses();
 
-    List<Course> getCoursesByGroupId(Integer groupId);
+	List<Course> getCoursesByGroupId(Integer groupId);
 
-    Integer updateCourseName(Integer id, String name);
+	List<Course> getCoursesByStudentId(Integer studentId);
 
-    Integer updateCourseDescription(Integer id, String description);
+	Integer updateCourseName(Integer id, String name);
 
-    Integer updateCourseDuration(Integer id, Integer duration);
+	Integer updateCourseDescription(Integer id, String description);
 
-    Integer updateCourseDurationUnitType(Integer id, String durationUnitType);
+	Integer updateCourseDuration(Integer id, Integer duration);
 
-    Integer deleteCourse(Integer id);
+	Integer updateCourseDurationUnitType(Integer id, String durationUnitType);
 
+	Integer deleteCourse(Integer id);
 }
