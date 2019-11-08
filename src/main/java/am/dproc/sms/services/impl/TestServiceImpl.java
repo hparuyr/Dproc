@@ -24,7 +24,17 @@ public class TestServiceImpl implements TestService {
 		if (test.getLessonId() == null || test.getTitle()  == null) {
 			return -1;
 		}
-		return testDAO.addTest(test);
+
+		Integer testId = testDAO.addTest(test);
+
+		if (test.getQuestions() != null){
+			for (int i = 0; i < test.getQuestions().size(); i++) {
+				test.getQuestions().get(i).setTestId(testId);
+				questionService.addQuestion(test.getQuestions().get(i));
+			}
+		}
+
+		return testId;
 	}
 
 	@Override
@@ -43,11 +53,23 @@ public class TestServiceImpl implements TestService {
 
 	@Override
 	public Integer updateTest(Test test) {
-		return testDAO.updateTest(test);
+		boolean bool = false;
+
+		if (test.getTitle() != null) {
+			if (testDAO.updateTest(test.getId(), test.getTitle()) == 0) {
+				return -1;
+			}
+			bool = true;
+		}
+
+		return bool ? 1 : 0;
 	}
 
 	@Override
 	public Integer deleteTest(Integer id) {
-		return testDAO.deleteTest(id);
+		if (getTest(id).getQuestions().size() == 0) {
+			return testDAO.deleteTest(id);
+		}
+		return 0;
 	}
 }

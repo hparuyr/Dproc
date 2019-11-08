@@ -83,7 +83,7 @@ public class CourseController {
 			return Response.status(Status.OK).build();
 		}
 		Map<String, String> message = new HashMap<>();
-		message.put("Message", "First you must delete the lessons of this courseService!");
+		message.put("Message", "First you must delete the lessons of this course!");
 		return Response.status(Status.BAD_REQUEST).entity(message).build();
 	}
 

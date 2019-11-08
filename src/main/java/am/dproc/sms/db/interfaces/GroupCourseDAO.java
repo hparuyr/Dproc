@@ -24,9 +24,15 @@ public interface GroupCourseDAO {
 
     Integer update(GroupCourse groupCourse);
 
+    Integer updateTeacherId(Integer id, Integer teacherId);
+
+    Integer updateStartDate(Integer id, Long startDate);
+
     Integer deleteByGroupId(Integer groupId);
 
     Integer deleteByCourseId(Integer courseId);
+
+    Integer deleteById(Integer id);
 
     Integer deleteAll();
 }

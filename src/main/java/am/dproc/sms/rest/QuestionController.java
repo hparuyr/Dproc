@@ -58,13 +58,26 @@ public class QuestionController {
 	}
 
 	@PUT
-	public Integer updateQuestion(Question question) {
-		return questionService.updateQuestion(question);
+	public Response updateQuestion(Question question) {
+		Integer status = questionService.updateQuestion(question);
+		if (status == 1) {
+			return Response.status(Response.Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 	}
 
 	@DELETE
 	@Path(value = "/{id}")
-	public Integer deleteQuestion(@PathParam(value = "id") Integer id) {
-		return questionService.deleteQuestion(id);
+	public Response deleteQuestion(@PathParam(value = "id") Integer id) {
+		if (questionService.deleteQuestion(id) == 1) {
+			return Response.status(Response.Status.OK).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "First you must delete the answers of question!");
+		return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 	}
 }

@@ -48,4 +48,14 @@ public class Assessment {
         this.assignmentCompletedId = assignmentId;
     }
 
+    @Override
+    public String toString() {
+        return "Assessment{" +
+                "id=" + id +
+                ", score=" + score +
+                ", userId=" + userId +
+                ", assignmentCompletedId=" + assignmentCompletedId +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

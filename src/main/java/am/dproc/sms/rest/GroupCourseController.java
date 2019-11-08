@@ -77,8 +77,16 @@ public class GroupCourseController {
 	}
 
 	@PUT
-	public Integer updateGroupId(GroupCourse groupCourse) {
-		return groupCourseService.update(groupCourse);
+	public Response updateGroupId(GroupCourse groupCourse) {
+		Integer status = this.groupCourseService.update(groupCourse);
+		if (status == 1) {
+			return Response.status(Response.Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 	}
 	
 	@Path("/groupId/{id}")
@@ -91,6 +99,12 @@ public class GroupCourseController {
 	@DELETE
 	public Integer deleteByCourseId(@PathParam("id") Integer courseId) {
 		return groupCourseService.deleteByCourseId(courseId);
+	}
+
+	@Path("/{id}")
+	@DELETE
+	public Integer deleteById(@PathParam("id") Integer id) {
+		return groupCourseService.deleteById(id);
 	}
 
 	@DELETE

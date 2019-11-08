@@ -56,13 +56,26 @@ public class TestController {
 	}
 
 	@PUT
-	public Integer updateTest(Test test) {
-		return testService.updateTest(test);
+	public Response updateTest(Test test) {
+		Integer status = testService.updateTest(test);
+		if (status == 1) {
+			return Response.status(Response.Status.OK).build();
+		} else if (status == -1) {
+			return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "Nothing to update!");
+		return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 	}
 
 	@DELETE
 	@Path(value = "/{id}")
-	public Integer deleteTest(@PathParam(value = "id") Integer id) {
-		return testService.deleteTest(id);
+	public Response deleteTest(@PathParam(value = "id") Integer id) {
+		if (testService.deleteTest(id) == 1) {
+			return Response.status(Response.Status.OK).build();
+		}
+		Map<String, String> message = new HashMap<>();
+		message.put("Message", "First you must delete the questions of test!");
+		return Response.status(Response.Status.BAD_REQUEST).entity(message).build();
 	}
 }

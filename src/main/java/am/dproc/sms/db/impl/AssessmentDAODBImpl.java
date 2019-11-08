@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -32,7 +33,8 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
     private static final String GET_AVG_SCORE_BY_STUDENT_COURSE = "" +
             "SELECT AVG(ASM.SCORE) as avgScore " +
             "FROM ASSESSMENT ASM " +
-            "JOIN ASSIGNMENT ASGN ON ASM.ASSIGNMENT_ID = ASGN.ID " +
+            "JOIN ASSIGNMENT_COMPLETED AC ON ASM.ASSIGNMENT_COMPLETED_ID = AC.ID " +
+            "JOIN ASSIGNMENT ASGN ON AC.ASSIGNMENT_ID = ASGN.ID " +
             "JOIN LESSON L ON L.ID = ASGN.LESSON_ID " +
             "JOIN COURSE C ON C.ID = L.COURSE_ID " +
             "WHERE ASM.STUDENT_ID = ? AND C.ID = ? ";
@@ -46,9 +48,11 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
             "FROM mydb.ASSESSMENT " +
             "WHERE STUDENT_ID = ?";
     private static final String GET_ALL_ASSESSMENT_BY_ASSIGNMENT_ID = "" +
-            "SELECT ID, STUDENT_ID, ASSIGNMENT_COMPLETED_ID, SCORE, COMMENT " +
-            "FROM mydb.ASSESSMENT " +
-            "WHERE ASSIGNMENT_ID = ?";
+    		"SELECT ASM.ID, ASM.STUDENT_ID, ASM.ASSIGNMENT_COMPLETED_ID, ASM.SCORE, ASM.COMMENT " +
+    		"FROM mydb.ASSIGNMENT ASGN " +
+    		"JOIN mydb.ASSIGNMENT_COMPLETED AC ON AC.ASSIGNMENT_ID = ASGN.ID " +
+    		"JOIN mydb.ASSESSMENT ASM ON ASM.ASSIGNMENT_COMPLETED_ID = AC.ID " +
+    		"WHERE ASGN.ID = ? ";
     private static final String GET_ASSESSMENT_BY_STUDENT_ID_AND_ASSIGNMENT_ID = "" +
             "SELECT SCORE " +
             "FROM mydb.ASSESSMENT " +
@@ -116,15 +120,19 @@ public class AssessmentDAODBImpl implements AssessmentDAO {
     @Override
     public Assessment getAssessmentObjByStudentIdAndAssignmentId(Integer studentID, Integer assignmentID) {
 
-        return jdbcTemplate.queryForObject(GET_ASSESSMENT_OBJ_BY_STUDENT_ID_AND_ASSIGNMENT_ID, (rs, rowNum) -> {
-            Assessment assessment = new Assessment();
+        try {
+            return jdbcTemplate.queryForObject(GET_ASSESSMENT_OBJ_BY_STUDENT_ID_AND_ASSIGNMENT_ID, (rs, rowNum) -> {
+                Assessment assessment = new Assessment();
 
-            assessment.setId(rs.getInt("ID"));
-            assessment.setScore(rs.getInt("SCORE"));
-            assessment.setComment(rs.getString("COMMENT"));
+                assessment.setId(rs.getInt("ID"));
+                assessment.setScore(rs.getInt("SCORE"));
+                assessment.setComment(rs.getString("COMMENT"));
 
-            return assessment;
-        }, studentID, assignmentID);
+                return assessment;
+            }, studentID, assignmentID);
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
 
     @Override

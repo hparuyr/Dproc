@@ -1,7 +1,6 @@
 package am.dproc.sms.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,9 +15,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	StudentDAO studentDao;
-
-	@Autowired
-	JdbcTemplate jdbctemplate;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {

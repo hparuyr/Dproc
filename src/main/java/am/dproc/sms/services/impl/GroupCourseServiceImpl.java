@@ -10,75 +10,95 @@ import am.dproc.sms.models.GroupCourse;
 import am.dproc.sms.services.interfaces.GroupCourseService;
 
 @Service
-public class GroupCourseServiceImpl implements GroupCourseService{
+public class GroupCourseServiceImpl implements GroupCourseService {
 
-	@Autowired
-	GroupCourseDAO groupCourseDAO;
+    @Autowired
+    GroupCourseDAO groupCourseDAO;
 
-	@Override
-	public Integer add(GroupCourse groupCourse) {
-		if (groupCourse.getCourseId() == null || groupCourse.getGroupId() == null ||
-				groupCourse.getStartDate() == null || groupCourse.getFinished() == null ||
-				groupCourse.getTeacherId() == null) {
-			return -1;
-		}
-		return groupCourseDAO.create(groupCourse);
-	}
+    @Override
+    public Integer add(GroupCourse groupCourse) {
+        if (groupCourse.getCourseId() == null || groupCourse.getGroupId() == null ||
+                groupCourse.getStartDate() == null || groupCourse.getFinished() == null ||
+                groupCourse.getTeacherId() == null) {
+            return -1;
+        }
+        return groupCourseDAO.create(groupCourse);
+    }
 
-	@Override
-	public GroupCourse getById(Integer id) {
-		return groupCourseDAO.getById(id);
-	}
+    @Override
+    public GroupCourse getById(Integer id) {
+        return groupCourseDAO.getById(id);
+    }
 
-	@Override
-	public GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId) {
-		return groupCourseDAO.getByGroupAndCourse(groupId, courseId);
-	}
+    @Override
+    public GroupCourse getByGroupAndCourse(Integer groupId, Integer courseId) {
+        return groupCourseDAO.getByGroupAndCourse(groupId, courseId);
+    }
 
-	@Override
-	public List<GroupCourse> getByGroupId(Integer groupId) {
-		return groupCourseDAO.getByGroupId(groupId);
-	}
+    @Override
+    public List<GroupCourse> getByGroupId(Integer groupId) {
+        return groupCourseDAO.getByGroupId(groupId);
+    }
 
-	@Override
-	public List<GroupCourse> getByCourseID(Integer courseId) {
-		return groupCourseDAO.getByCourseId(courseId);
-	}
+    @Override
+    public List<GroupCourse> getByCourseID(Integer courseId) {
+        return groupCourseDAO.getByCourseId(courseId);
+    }
 
-	@Override
-	public List<GroupCourse> getAll() {
-		return groupCourseDAO.getAll();
-	}
-	
-	@Override
-	public List<GroupCourse> getByTeacherId(Integer id) {
-		return groupCourseDAO.getByTeacherId(id);
-	}
+    @Override
+    public List<GroupCourse> getAll() {
+        return groupCourseDAO.getAll();
+    }
 
-	@Override
-	public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherId, Integer schoolId) {
-		return groupCourseDAO.getByTeacherIdAndSchoolId(teacherId, schoolId);
-	}
+    @Override
+    public List<GroupCourse> getByTeacherId(Integer id) {
+        return groupCourseDAO.getByTeacherId(id);
+    }
 
-	@Override
-	public Integer update(GroupCourse groupCourse) {
-		return groupCourseDAO.update(groupCourse);
-	}
+    @Override
+    public List<GroupCourse> getByTeacherIDAndSchoolId(Integer teacherId, Integer schoolId) {
+        return groupCourseDAO.getByTeacherIdAndSchoolId(teacherId, schoolId);
+    }
 
-	@Override
-	public Integer deleteByGroupId(Integer groupId) {
-		return groupCourseDAO.deleteByGroupId(groupId);
-	}
+    @Override
+    public Integer update(GroupCourse groupCourse) {
+        boolean bool = false;
 
-	@Override
-	public Integer deleteByCourseId(Integer courseId) {
-		return groupCourseDAO.deleteByCourseId(courseId);
-	}
+        if (groupCourse.getTeacherId() != null) {
+            if (groupCourseDAO.updateTeacherId(groupCourse.getId(), groupCourse.getTeacherId()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
+        if (groupCourse.getStartDate() != null) {
+            if (groupCourseDAO.updateStartDate(groupCourse.getId(), groupCourse.getStartDate()) == 0) {
+                return -1;
+            }
+            bool = true;
+        }
 
-	@Override
-	public Integer deleteAll() {
-		return groupCourseDAO.deleteAll();
-	}
-	
-	
+        return bool ? 1 : 0;
+    }
+
+    @Override
+    public Integer deleteByGroupId(Integer groupId) {
+        return groupCourseDAO.deleteByGroupId(groupId);
+    }
+
+    @Override
+    public Integer deleteByCourseId(Integer courseId) {
+        return groupCourseDAO.deleteByCourseId(courseId);
+    }
+
+    @Override
+    public Integer deleteById(Integer id){
+        return groupCourseDAO.deleteById(id);
+    }
+
+    @Override
+    public Integer deleteAll() {
+        return groupCourseDAO.deleteAll();
+    }
+
+
 }

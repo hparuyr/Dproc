@@ -12,7 +12,7 @@ public interface QuestionDAO {
 
 	List<Question> getAllQuestions();
 	
-	Integer updateQuestion(Question question);
+	Integer updateQuestionContent(Integer id, String content);
 	
 	Integer deleteQuestion(Integer id);
 

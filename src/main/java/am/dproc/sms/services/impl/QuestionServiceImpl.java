@@ -2,9 +2,7 @@ package am.dproc.sms.services.impl;
 
 import java.util.List;
 
-import am.dproc.sms.db.impl.QuestionDAODBImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import am.dproc.sms.db.interfaces.QuestionDAO;
@@ -26,7 +24,17 @@ public class QuestionServiceImpl implements QuestionService {
 		if (question.getContent() == null || question.getTestId() == null) {
 			return -1;
 		}
-		return questionDAO.addQuestion(question);
+
+		Integer questionId = questionDAO.addQuestion(question);
+
+		if (question.getAnswers() != null) {
+			for (int i = 0; i < question.getAnswers().size(); i++) {
+				question.getAnswers().get(i).setQuestionId(questionId);
+				answerService.addAnswer(question.getAnswers().get(i));
+			}
+		}
+
+		return questionId;
 	}
 
 	@Override
@@ -52,12 +60,15 @@ public class QuestionServiceImpl implements QuestionService {
 
 	@Override
 	public Integer updateQuestion(Question question) {
-		return questionDAO.updateQuestion(question);
+		return questionDAO.updateQuestionContent(question.getId(), question.getContent());
 	}
 
 	@Override
 	public Integer deleteQuestion(Integer id) {
-		return questionDAO.deleteQuestion(id);
+		if (getQuestion(id).getAnswers().size() == 0) {
+			return questionDAO.deleteQuestion(id);
+		}
+		return 0;
 	}
 
 }

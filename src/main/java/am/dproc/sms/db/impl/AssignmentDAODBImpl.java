@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -37,7 +38,7 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
             "SELECT ID, TEACHER_ID, LESSON_ID, TITLE, DESCRIPTION, START_DATE, END_DATE " +
             "FROM mydb.ASSIGNMENT " +
             "WHERE TEACHER_ID = ?";
-    private static final String GET_ALL_ASSIGNMENTS_BY_LESSON_ID_AND_TEACHER_ID = "" +
+    private static final String GET_ASSIGNMENT_BY_LESSON_ID_AND_TEACHER_ID = "" +
             "SELECT ID, TEACHER_ID, LESSON_ID, TITLE, DESCRIPTION, START_DATE, END_DATE " +
             "FROM mydb.ASSIGNMENT " +
             "WHERE LESSON_ID = ? " +
@@ -94,7 +95,11 @@ public class AssignmentDAODBImpl implements AssignmentDAO {
 
     @Override
     public Assignment getAssignmentByLessonIdAndTeacherId(Integer lessonId, Integer teacherId) {
-        return jdbcTemplate.queryForObject(GET_ALL_ASSIGNMENTS_BY_LESSON_ID_AND_TEACHER_ID, new AssignmentMapper(), lessonId, teacherId);
+        try {
+            return jdbcTemplate.queryForObject(GET_ASSIGNMENT_BY_LESSON_ID_AND_TEACHER_ID, new AssignmentMapper(), lessonId, teacherId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Override

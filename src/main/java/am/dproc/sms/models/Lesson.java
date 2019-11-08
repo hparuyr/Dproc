@@ -50,4 +50,14 @@ public class Lesson {
         this.listOfTopics = listOfTopics;
     }
 
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "id=" + id +
+                ", courseId=" + courseId +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", listOfTopics=" + listOfTopics +
+                '}';
+    }
 }

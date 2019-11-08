@@ -41,8 +41,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public Assignment getAssignmentByLessonId(Integer lessonid, Integer teacherID) {
-        return assignmentDAO.getAssignmentByLessonIdAndTeacherId(lessonid, teacherID);
+    public Assignment getAssignmentByLessonIdAndTeacherId(Integer lessonId, Integer teacherID) {
+        return assignmentDAO.getAssignmentByLessonIdAndTeacherId(lessonId, teacherID);
     }
 
     @Override

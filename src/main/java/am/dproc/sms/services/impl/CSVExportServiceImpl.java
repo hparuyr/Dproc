@@ -3,6 +3,7 @@ package am.dproc.sms.services.impl;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import am.dproc.sms.models.*;
@@ -24,31 +25,31 @@ import am.dproc.sms.services.interfaces.TeacherService;
 public class CSVExportServiceImpl implements CSVExportService {
 
     @Autowired
-    TeacherService teacher;
+    TeacherService teacherService;
 
     @Autowired
-    TeacherInfoService teacherInfo;
+    TeacherInfoService teacherInfoService;
 
     @Autowired
-    GroupCourseService groupCourse;
+    GroupCourseService groupCourseService;
 
     @Autowired
-    StudentService student;
+    StudentService studentService;
 
     @Autowired
-    CourseService course;
+    CourseService courseService;
 
     @Autowired
-    LessonService lesson;
+    LessonService lessonService;
 
     @Autowired
-    GroupService group;
+    GroupService groupService;
 
     @Autowired
-    AssessmentService assessment;
+    AssessmentService assessmentService;
 
     @Autowired
-    AssignmentService assignment;
+    AssignmentService assignmentService;
 
     private static final String DEFAULT_SEPARATOR = ";";
     private static final String LINE_DIVIDER = "\n";
@@ -74,11 +75,15 @@ public class CSVExportServiceImpl implements CSVExportService {
         }
         csvWriter.append(LINE_DIVIDER);
 
-        List<GroupCourse> listOfGroupCourse = groupCourse.getByTeacherIDAndSchoolId(teacherID, schoolID);
+        List<GroupCourse> listOfGroupCourse = groupCourseService.getByTeacherIDAndSchoolId(teacherID, schoolID);
+
+        System.out.println(Arrays.toString(listOfGroupCourse.toArray()));
 
         for (GroupCourse value : listOfGroupCourse) {
             if (!value.getFinished()) {
-                List<Student> listOfStudents = student.getGroupStudents(value.getGroupId());
+                List<Student> listOfStudents = studentService.getGroupStudents(value.getGroupId());
+
+                System.out.println(Arrays.toString(listOfStudents.toArray()));
 
                 if (listOfStudents.size() != 0) {
                     for (Student listOfStudent : listOfStudents) {
@@ -88,34 +93,63 @@ public class CSVExportServiceImpl implements CSVExportService {
                         csvWriter.append(DEFAULT_SEPARATOR);
                         csvWriter.append(listOfStudent.getEmail());
                         csvWriter.append(DEFAULT_SEPARATOR);
-                        csvWriter.append(group.getGroup(value.getGroupId()).getName());
+                        csvWriter.append(groupService.getGroup(value.getGroupId()).getName());
                         csvWriter.append(DEFAULT_SEPARATOR);
 
-                        Course course = this.course.getCourse(value.getCourseId());
+                        Course course = courseService.getCourse(value.getCourseId());
 
                         csvWriter.append(course.getName());
                         csvWriter.append(DEFAULT_SEPARATOR);
 
                         List<Lesson> listOfLessons = course.getListOfLessons();
 
-                        for (Lesson listOfLesson : listOfLessons) {
-                            csvWriter.append(listOfLesson.getName());
+                        System.out.println(Arrays.toString(listOfLessons.toArray()));
+
+                        for (int i = 0; i < listOfLessons.size(); i++) {
+                            csvWriter.append(listOfLessons.get(i).getName());
                             csvWriter.append(DEFAULT_SEPARATOR);
 
-                            Assignment assignment = this.assignment.getAssignmentByLessonId(listOfLesson.getId(), teacherID);
+                            Assignment assignment = assignmentService.getAssignmentByLessonIdAndTeacherId(listOfLessons.get(i).getId(), teacherID);
 
-                            csvWriter.append(assignment.getTitle());
-                            csvWriter.append(DEFAULT_SEPARATOR);
+                            if (assignment != null) {
+                                System.out.println(assignment.toString());
+                                csvWriter.append(assignment.getTitle());
+                                csvWriter.append(DEFAULT_SEPARATOR);
 
-                            Assessment assessment = this.assessment.getAssessmentObjByStudentIdAndAssignmentId(listOfStudent.getId(), assignment.getId());
+                                Assessment assessment = assessmentService.getAssessmentObjByStudentIdAndAssignmentId(listOfStudent.getId(), assignment.getId());
 
-                            csvWriter.append(assessment.getComment());
-                            csvWriter.append(DEFAULT_SEPARATOR);
-                            csvWriter.append(assessment.getScore().toString());
-                            csvWriter.append(DEFAULT_SEPARATOR);
+                                if (assessment != null) {
+                                    System.out.println(assessment.toString());
+                                    csvWriter.append(assessment.getComment());
+                                    csvWriter.append(DEFAULT_SEPARATOR);
+                                    csvWriter.append(assessment.getScore().toString());
+                                    csvWriter.append(DEFAULT_SEPARATOR);
+                                } else {
+                                    csvWriter.append("-");
+                                    csvWriter.append(DEFAULT_SEPARATOR);
+                                    csvWriter.append("-");
+                                    csvWriter.append(DEFAULT_SEPARATOR);
+                                }
+                                csvWriter.append(LINE_DIVIDER);
+                                if (listOfLessons.size() - 1 != i) {
+                                    for (int j = 0; j < 5; j++) {
+                                        csvWriter.append(DEFAULT_SEPARATOR);
+                                    }
+                                }
 
+                            } else {
+                                for (int j = 0; j < 3; j++) {
+                                    csvWriter.append("-");
+                                    csvWriter.append(DEFAULT_SEPARATOR);
+                                }
+                                csvWriter.append(LINE_DIVIDER);
+                                if (listOfLessons.size() - 1 != i) {
+                                    for (int j = 0; j < 5; j++) {
+                                        csvWriter.append(DEFAULT_SEPARATOR);
+                                    }
+                                }
+                            }
                         }
-
                     }
                 }
             }

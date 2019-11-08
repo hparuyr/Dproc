@@ -37,9 +37,9 @@ public class QuestionDAODBImpl implements QuestionDAO {
     private static final String GET_ALL_QUESTIONS = "" +
             "SELECT ID, TEST_ID, CONTENT " +
             "FROM mydb.QUESTION";
-    private static final String UPDATE_QUESTION = "" +
+    private static final String UPDATE_QUESTION_CONTENT = "" +
             "UPDATE mydb.QUESTION " +
-            "SET CONTENT = ?, TEST_ID = ?, CHANGE_DATE = ? " +
+            "SET CONTENT = ?, CHANGE_DATE = ? " +
             "WHERE ID = ?";
     private static final String DELETE_QUESTION = "" +
             "DELETE " +
@@ -76,9 +76,8 @@ public class QuestionDAODBImpl implements QuestionDAO {
     }
 
     @Override
-    public Integer updateQuestion(Question question) {
-        return jdbcTemplate.update(UPDATE_QUESTION, question.getContent(), question.getTestId(), System.currentTimeMillis(),
-                question.getId());
+    public Integer updateQuestionContent(Integer id, String content) {
+        return jdbcTemplate.update(UPDATE_QUESTION_CONTENT, content, System.currentTimeMillis(), id);
     }
 
     @Override

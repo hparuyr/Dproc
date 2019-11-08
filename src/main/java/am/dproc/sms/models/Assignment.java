@@ -68,8 +68,14 @@ public class Assignment {
 
     @Override
     public String toString() {
-        return "Assignment [id=" + id + ", startDate=" + startDate + ", endDate=" + endDate
-                + ", teacherId=" + teacherId + ", title=" + title + ", description=" + description + "]";
+        return "Assignment{" +
+                "id=" + id +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", teacherId=" + teacherId +
+                ", lessonId=" + lessonId +
+                '}';
     }
-
 }

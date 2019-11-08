@@ -61,6 +61,14 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
             "UPDATE GROUP_COURSE " +
             "SET GROUP_ID = ?, COURSE_ID = ?, TEACHER_ID = ?, START_DATE = ?, FINISHED = ?, CHANGE_DATE = ? " +
             "WHERE ID = ?";
+    private static final String UPDATE_TEACHER_ID = "" +
+            "UPDATE GROUP_COURSE " +
+            "SET TEACHER_ID = ? " +
+            "WHERE ID = ?";
+    private static final String UPDATE_START_DATE = "" +
+            "UPDATE GROUP_COURSE " +
+            "SET START_DATE = ? " +
+            "WHERE ID = ?";
     private static final String DELETE_BY_GROUP = "" +
             "DELETE " +
             "FROM GROUP_COURSE " +
@@ -69,6 +77,10 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
             "DELETE " +
             "FROM GROUP_COURSE " +
             "WHERE COURSE_ID = ?";
+    private static final String DELETE_BY_ID = "" +
+            "DELETE " +
+            "FROM GROUP_COURSE " +
+            "WHERE ID = ? ";
     private static final String DELETE_ALL = "" +
             "DELETE " +
             "FROM GROUP_COURSE";
@@ -131,6 +143,21 @@ public class GroupCourseDAOImpl implements GroupCourseDAO {
         return jdbcTemplate.update(UPDATE, groupCourse.getGroupId(), groupCourse.getCourseId(),
                 groupCourse.getTeacherId(), groupCourse.getStartDate(), groupCourse.getFinished(),
                 System.currentTimeMillis(), groupCourse.getId());
+    }
+
+    @Override
+    public Integer updateTeacherId(Integer id, Integer teacherId) {
+        return jdbcTemplate.update(UPDATE_TEACHER_ID, teacherId, id);
+    }
+
+    @Override
+    public Integer updateStartDate(Integer id, Long startDate) {
+        return jdbcTemplate.update(UPDATE_START_DATE, startDate, id);
+    }
+
+    @Override
+    public Integer deleteById(Integer id) {
+        return jdbcTemplate.update(DELETE_BY_ID, id);
     }
 
     @Override

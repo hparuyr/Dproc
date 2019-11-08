@@ -33,9 +33,9 @@ public class TestDAODBImpl implements TestDAO {
     private static final String GET_ALL_TESTS = "" +
             "SELECT ID, TITLE, LESSON_ID " +
             "FROM mydb.TEST";
-    private static final String UPDATE_TEST = "" +
+    private static final String UPDATE_TEST_TITLE = "" +
             "UPDATE mydb.TEST " +
-            "SET TITLE = ?, LESSON_ID = ?, CHANGE_DATE = ? " +
+            "SET TITLE = ?, CHANGE_DATE = ? " +
             "WHERE ID = ?";
     private static final String DELETE_TEST = "" +
             "DELETE " +
@@ -68,9 +68,9 @@ public class TestDAODBImpl implements TestDAO {
     }
 
     @Override
-    public Integer updateTest(Test test) {
-        return jdbcTemplate.update(UPDATE_TEST, test.getTitle(), test.getLessonId(), System.currentTimeMillis(),
-                test.getId());
+    public Integer updateTest(Integer id, String title) {
+        return jdbcTemplate.update(UPDATE_TEST_TITLE, title, System.currentTimeMillis(),
+                id);
     }
 
     @Override

@@ -12,7 +12,7 @@ public interface TestDAO {
 	
 	List<Test> getAllTests();
 	
-	Integer updateTest(Test test);
+	Integer updateTest(Integer id, String title);
 	
 	Integer deleteTest(Integer id);
 

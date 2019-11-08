@@ -14,7 +14,7 @@ public interface AssignmentService {
 
 	List<Assignment> getAssignmentsByTeacherId(Integer teacherId);
 
-	Assignment getAssignmentByLessonId(Integer lessonId, Integer teacherId);
+	Assignment getAssignmentByLessonIdAndTeacherId(Integer lessonId, Integer teacherId);
 
 	Integer deleteAssignment(Integer id);
 

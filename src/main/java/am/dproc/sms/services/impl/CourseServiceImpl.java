@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
             }
         }
 
-        return this.courseDAO.addCourse(course);
+        return courseID;
     }
 
     @Override
@@ -50,18 +50,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-
     public List<Course> getCoursesByGroupId(Integer groupId) {
         return courseDAO.getCoursesByGroupId(groupId);
-    }
-
-
-    @Override
-    public Integer deleteCourse(Integer id) {
-        if (getCourse(id).getListOfLessons().size() == 0) {
-            return courseDAO.deleteCourse(id);
-        }
-        return 0;
     }
 
     public Integer updateCourse(Course course) {
@@ -94,5 +84,13 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return bool ? 1 : 0;
+    }
+
+    @Override
+    public Integer deleteCourse(Integer id) {
+        if (getCourse(id).getListOfLessons().size() == 0) {
+            return courseDAO.deleteCourse(id);
+        }
+        return 0;
     }
 }

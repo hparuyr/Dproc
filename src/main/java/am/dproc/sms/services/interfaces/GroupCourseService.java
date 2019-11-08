@@ -28,6 +28,8 @@ public interface GroupCourseService {
 
     Integer deleteByCourseId(Integer courseId);
 
+    Integer deleteById(Integer id);
+
     Integer deleteAll();
 
 }

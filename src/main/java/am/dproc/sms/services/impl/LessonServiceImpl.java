@@ -25,16 +25,16 @@ public class LessonServiceImpl implements LessonService {
 			return -1;
 		}
 
-		Integer lessonID = this.lessonDAO.addLesson(lesson, lesson.getCourseId());
+		Integer lessonId = this.lessonDAO.addLesson(lesson, lesson.getCourseId());
 
 		if (lesson.getListOfTopics() != null) {
 			for (int i = 0; i < lesson.getListOfTopics().size(); i++) {
-				lesson.getListOfTopics().get(i).setLessonId(lessonID);
+				lesson.getListOfTopics().get(i).setLessonId(lessonId);
 				topicService.addTopic(lesson.getListOfTopics().get(i));
 			}
 		}
 
-		return lessonID;
+		return lessonId;
 	}
 
 	@Override
